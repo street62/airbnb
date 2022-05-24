@@ -2,24 +2,27 @@ package kr.codesquad.airbnb.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+
 import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
 import kr.codesquad.airbnb.dto.ReserveRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
+import kr.codesquad.airbnb.service.AccommodationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/accommodation")
 public class AccommodationController {
 
+    private final AccommodationService accommodationService;
+
     @GetMapping("/search/{query}")
-    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(@PathVariable String query) {
+    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(@RequestParam Map<String, String> searchConditions) {
+        List<SearchQueryResponseDto> result = accommodationService.search(searchConditions);
         return ResponseEntity.ok(Collections.singletonList(new SearchQueryResponseDto()));
     }
 
