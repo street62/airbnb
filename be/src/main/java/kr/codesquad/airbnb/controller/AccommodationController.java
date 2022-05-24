@@ -1,5 +1,7 @@
 package kr.codesquad.airbnb.controller;
 
+import java.util.Collections;
+import java.util.List;
 import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
 import kr.codesquad.airbnb.dto.ReserveRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
@@ -17,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class AccommodationController {
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<SearchQueryResponseDto> getSearchResult(@PathVariable String query) {
-        return ResponseEntity.ok(new SearchQueryResponseDto());
+    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(@PathVariable String query) {
+        return ResponseEntity.ok(Collections.singletonList(new SearchQueryResponseDto()));
     }
 
     @GetMapping("/reserve/{accommodationId}")
