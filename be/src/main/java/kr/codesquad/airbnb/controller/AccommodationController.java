@@ -24,7 +24,7 @@ public class AccommodationController {
     }
 
     @GetMapping("/reserve/{accommodationId}")
-    public ResponseEntity<?> getReserveForm(@PathVariable String accommodationId) {
+    public ResponseEntity<ReserveFormResponseDto> getReserveForm(@PathVariable String accommodationId) {
         return ResponseEntity.ok(new ReserveFormResponseDto());
     }
 
