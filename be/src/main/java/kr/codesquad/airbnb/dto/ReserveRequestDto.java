@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ReserveRequestDto {
+
     private int feePerOneNight;
     private int nightNumber;
     private int cleaningFee;

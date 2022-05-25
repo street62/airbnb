@@ -17,7 +17,8 @@ public class SearchQueryResponseDto {
         SearchQueryResponseDto responseDto = new SearchQueryResponseDto();
         responseDto.name = accommodation.getName();
         responseDto.imgUrl = accommodation.getImgUrl();
-        responseDto.maxPeople = accomodation.getMaxPeople();
+        responseDto.maxPeople = accommodation.getPeopleConstraint().getSum();
         responseDto.feePerOneNight = accommodation.getFeePerOneNight();
+        return responseDto;
     }
 }
