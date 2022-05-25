@@ -1,11 +1,15 @@
 package kr.codesquad.airbnb.service;
 
 import kr.codesquad.airbnb.domain.Accommodation;
+import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
 import kr.codesquad.airbnb.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,17 +20,12 @@ import java.util.stream.Collectors;
 public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
 
-    public List<SearchQueryResponseDto> search(Map<String, String> searchConditions) {
-        List<Accommodation> filteredByCheckinDate = accommodationRepository.findByDateGreaterThanEqual(searchConditions.get("checkinDate"));
+    public List<SearchQueryResponseDto> search(SearchQueryRequestDto requestDto) {
+        List<Accommodation> filteredByCheckinDate = accommodationRepository.findByDateBetween(requestDto.getCheckinDate(), requestDto.getCheckoutDate());
         return filteredByCheckinDate.stream()
-                .filter(ac -> ac.isAvailableInDate(searchConditions.get("checkinDate"), searchConditions.get("checkoutDate")))
-                .filter(ac -> ac.isAvailableByPrice(searchConditions.get("minimumPrice"), searchConditions.get("maximumPrice")))
-                .filter(ac -> ac.isAvailableByPeople(searchConditions.get("adultCount"), searchConditions.get("childCount"), searchConditions.get("infantCount")))
+                .filter(ac -> ac.isAvailableByPrice(requestDto.getMinimumPrice(), requestDto.getMaximumPrice()))
+                .filter(ac -> ac.isAvailableByPeople(requestDto.getAdultCount(), requestDto.getAdultCount(), requestDto.getAdultCount()))
+                .map(SearchQueryResponseDto::of)
                 .collect(Collectors.toList());
-    }
-
-    private Map<String, Object> parseSearchCondition(Map<String, String> searchConditions) {
-        Map<String, Object> parsedConditions = new HashMap<>();
-
     }
 }

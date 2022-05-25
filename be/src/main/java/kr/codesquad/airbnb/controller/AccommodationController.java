@@ -6,6 +6,7 @@ import java.util.Map;
 
 import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
 import kr.codesquad.airbnb.dto.ReserveRequestDto;
+import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
 import kr.codesquad.airbnb.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +22,8 @@ public class AccommodationController {
     private final AccommodationService accommodationService;
 
     @GetMapping("/search/{query}")
-    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(@RequestParam Map<String, String> searchConditions) {
-        List<SearchQueryResponseDto> result = accommodationService.search(searchConditions);
+    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(@ModelAttribute SearchQueryRequestDto requestDto) {
+        List<SearchQueryResponseDto> result = accommodationService.search(requestDto);
         return ResponseEntity.ok(Collections.singletonList(new SearchQueryResponseDto()));
     }
 

@@ -1,12 +1,17 @@
 package kr.codesquad.airbnb.domain;
 
+import lombok.Getter;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+@Getter
 public class Accommodation {
 
+    private String name;
+    private String imgUrl;
     private Map<LocalDate, Boolean> nonAvailableDate = new HashMap<>();
     private int feePerOneNight;
     private Map<String, Integer> maxPeople;
@@ -17,31 +22,13 @@ public class Accommodation {
         this.maxPeople = maxPeople;
     }
 
-    public boolean isAvailableInDate(String checkinDateString, String checkoutDateString) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate checkinDate = LocalDate.parse(checkinDateString, formatter);
-        LocalDate checkoutDate = LocalDate.parse(checkinDateString, formatter);
-
-        for (LocalDate date = checkinDate; date.compareTo(checkoutDate) <= 0; date.plusDays(1)) {
-            if (nonAvailableDate.containsKey(date)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isAvailableByPrice(String minimumPriceString, String maximumPriceString) {
-        int minimumPrice = Integer.parseInt(minimumPriceString);
-        int maximumPrice = Integer.parseInt(maximumPriceString);
-
+    public boolean isAvailableByPrice(int minimumPrice, int maximumPrice) {
         return minimumPrice <= feePerOneNight && feePerOneNight <= maximumPrice;
     }
 
-    public boolean isAvailableByPeople(String adultCountString, String childCountString, String infantCountString) {
-        int adultCount = Integer.parseInt(adultCountString);
-        int childCount = Integer.parseInt(childCountString);
-        int infantCount = Integer.parseInt(infantCountString);
-
+    public boolean isAvailableByPeople(int adultCount, int childCount, int infantCount) {
         return maxPeople.get("adult") >= adultCount && maxPeople.get("child") >= childCount && maxPeople.get("infant") >= infantCount;
     }
+
+
 }
