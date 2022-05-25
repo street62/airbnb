@@ -1,5 +1,6 @@
 package kr.codesquad.airbnb.service;
 
+import kr.codesquad.airbnb.domain.Accommodation;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
 import kr.codesquad.airbnb.repository.AccommodationRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,11 +17,11 @@ public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
 
     public List<SearchQueryResponseDto> search(Map<String, String> searchConditions) {
-        List<Accomodation> filteredByCheckinDate = accommodationRepository.findByDateGreaterThanEqual(searchConditions.get("checkinDate"));
+        List<Accommodation> filteredByCheckinDate = accommodationRepository.findByDateGreaterThanEqual(searchConditions.get("checkinDate"));
         return filteredByCheckinDate.stream()
                 .filter(ac -> ac.isAvailableInDate(searchConditions.get("checkinDate"), searchConditions.get("checkoutDate")))
                 .filter(ac -> ac.isAvailableByPrice(searchConditions.get("minimumPrice"), searchConditions.get("maximumPrice")))
-                .filter(ac -> ac.isAvailableByPeople(searchConditions.get("adultCount"), searchConditions.get("childCount"), searchConditions.get("adultCount")))
+                .filter(ac -> ac.isAvailableByPeople(searchConditions.get("adultCount"), searchConditions.get("childCount"), searchConditions.get("infantCount")))
                 .collect(Collectors.toList());
     }
 
