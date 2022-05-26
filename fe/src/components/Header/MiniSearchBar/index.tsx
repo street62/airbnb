@@ -14,10 +14,8 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
       <PriceButton aria-label="요금 입력 버튼">₩100,000~1,000,000</PriceButton>
       <Divider orientation="vertical" />
       <MiniBarButton aria-label="인원 입력 버튼">인원 입력</MiniBarButton>
-      <MiniSearchBtn>
-        <StyledSearchButton type="button" aria-label="결과 찾기 버튼">
-          <MiniSearchIcon />
-        </StyledSearchButton>
+      <MiniSearchBtn type="button" aria-label="결과 찾기 버튼">
+        <MiniSearchIcon />
       </MiniSearchBtn>
     </MiniSearchBarWrap>
   );
@@ -39,6 +37,7 @@ const MiniSearchBtn = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  padding-top: 5px;
   background: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -48,11 +47,6 @@ const MiniBarButton = styled(Btn)`
 
 const PriceButton = styled(MiniBarButton)`
   color: ${({ theme }) => theme.colors.grey3};
-`;
-
-const StyledSearchButton = styled.button`
-  padding: 0;
-  padding-top: 5px;
 `;
 
 const MiniSearchIcon = styled(StyledSearchIcon)`
