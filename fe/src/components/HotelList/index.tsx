@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import { Divider } from '@mui/material';
 import Hotel from 'components/HotelList/Hotel';
+import SkeletonHotel from 'components/Skeleton/Hotel';
 
 function HotelList() {
   const SEARCH_FILTER = [
@@ -23,7 +25,8 @@ function HotelList() {
       {searchFilter}
       <TypographyH2>지도에서 선택한 지역의 숙소</TypographyH2>
       <Hotel />
-      <Hotel />
+      <StyledDevider />
+      <SkeletonHotel />
     </HotelListWrap>
   );
 }
@@ -32,7 +35,7 @@ const HotelListWrap = styled.div`
   width: 50%;
   height: 100%;
   max-width: 732px;
-  padding: 24px 32px;
+  padding: 24px 32px 0 32px;
 `;
 
 const TypographyH2 = styled.h2`
@@ -42,6 +45,13 @@ const TypographyH2 = styled.h2`
 
 const FilterText = styled.span`
   ${({ theme }) => theme.fontStyles.normal12px};
+`;
+
+const StyledDevider = styled(Divider)`
+  && {
+    width: 100%;
+    margin: 24px 0;
+  }
 `;
 
 export default HotelList;
