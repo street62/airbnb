@@ -13,7 +13,8 @@ function Menu() {
 
 const CustomBreadcrumbs = styled(Breadcrumbs)`
   && {
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     margin-bottom: 32px;
     border: none;
   }
@@ -30,7 +31,7 @@ const CustomLink = styled(Link)`
     &:hover {
       background: none;
       ${({ theme }) => theme.fontStyles.bold16px};
-      text-decoration: none;
+      text-decoration: underline;
     }
   }
 `;

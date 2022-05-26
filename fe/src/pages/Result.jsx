@@ -1,5 +1,5 @@
 function Result() {
-  return <div>result</div>;
+  return <div style={{ 'margin-top': '160px' }}>result</div>;
 }
 
 export default Result;

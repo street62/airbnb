@@ -1,18 +1,18 @@
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
-import { CssBaseline, ThemeProvider } from '@mui/material';
-import { theme as globalTheme } from 'styles/GlobalStyles';
-import { theme as StyledTheme } from 'styles/theme';
+import { CssBaseline, ThemeProvider as MuiThemeProvider } from '@mui/material';
+import { theme as MuiGlobalTheme } from 'styles/GlobalStyles';
+import { theme as ScGlobalTheme } from 'styles/theme';
 
 import Router from 'Router';
 
 function App() {
   return (
-    <ThemeProvider theme={globalTheme}>
+    <MuiThemeProvider theme={MuiGlobalTheme}>
       <CssBaseline />
-      <StyledThemeProvider theme={StyledTheme}>
+      <StyledThemeProvider theme={ScGlobalTheme}>
         <Router />
       </StyledThemeProvider>
-    </ThemeProvider>
+    </MuiThemeProvider>
   );
 }
 

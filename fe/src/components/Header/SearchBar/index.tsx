@@ -6,9 +6,9 @@ import Personnel from 'components/Header/SearchBar/Personnel';
 import Price from 'components/Header/SearchBar/Price';
 import SearchButton from 'components/Header/SearchBar/SearchButton';
 
-import PeriodModal from './Modals/PeriodModal';
-import PriceModal from './Modals/PriceModal';
-import PersonnelModal from './Modals/PersonnelModal';
+import PeriodModal from 'components/Modals/PeriodModal';
+import PriceModal from 'components/Modals/PriceModal';
+import PersonnelModal from 'components/Modals/PersonnelModal';
 
 function SearchBar() {
   return (

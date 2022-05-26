@@ -1,17 +1,21 @@
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
-import { SearchButton, StyledSearchIcon, Btn } from 'components/Header/SearchBar/searchBar.styled';
+import { StyledSearchIcon, Btn } from 'components/Header/SearchBar/searchBar.styled';
 
-function MiniSearchBar({ changeSearchBar }: any) {
+type MyProps = {
+  changeSearchBar: () => void;
+};
+
+function MiniSearchBar({ changeSearchBar }: MyProps) {
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
-      <MiniBarButton>일정 입력</MiniBarButton>
+      <MiniBarButton aria-label="일정 입력 버튼">일정 입력</MiniBarButton>
       <Divider orientation="vertical" />
-      <PriceButton>₩100,000~1,000,000</PriceButton>
+      <PriceButton aria-label="요금 입력 버튼">₩100,000~1,000,000</PriceButton>
       <Divider orientation="vertical" />
-      <MiniBarButton>인원 입력</MiniBarButton>
+      <MiniBarButton aria-label="인원 입력 버튼">인원 입력</MiniBarButton>
       <MiniSearchBtn>
-        <StyledSearchButton>
+        <StyledSearchButton type="button" aria-label="결과 찾기 버튼">
           <MiniSearchIcon />
         </StyledSearchButton>
       </MiniSearchBtn>
@@ -46,9 +50,9 @@ const PriceButton = styled(MiniBarButton)`
   color: ${({ theme }) => theme.colors.grey3};
 `;
 
-const StyledSearchButton = styled(SearchButton)`
+const StyledSearchButton = styled.button`
   padding: 0;
-  height: 0;
+  padding-top: 5px;
 `;
 
 const MiniSearchIcon = styled(StyledSearchIcon)`
