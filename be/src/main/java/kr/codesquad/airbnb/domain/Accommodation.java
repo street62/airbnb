@@ -1,8 +1,7 @@
 package kr.codesquad.airbnb.domain;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import lombok.Getter;
 
 @Getter
@@ -10,20 +9,21 @@ public class Accommodation {
 
     private String name;
     private String imgUrl;
-    private Map<LocalDate, Boolean> nonAvailableDate = new HashMap<>();
+    private List<Reservation> reservations;
     private int feePerOneNight;
     private PeopleConstraint peopleConstraint;
     private double[] coordinates = new double[2];
 
-    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint, double[] coordinates) {
+    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint,
+        double[] coordinates) {
         this.feePerOneNight = feePerOneNight;
         this.peopleConstraint = peopleConstraint;
         this.coordinates = coordinates;
     }
 
     public boolean isAvailableByDate(LocalDate checkinDate, LocalDate checkoutDate) {
-        for (LocalDate date = checkinDate; date.compareTo(checkoutDate) <= 0; date.plusDays(1)) {
-            if (nonAvailableDate.containsKey(date)) {
+        for (Reservation reservation : reservations) {
+            if (!reservation.isAvailableDate(checkinDate, checkoutDate)) {
                 return false;
             }
         }
