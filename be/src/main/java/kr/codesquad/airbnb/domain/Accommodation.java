@@ -13,11 +13,12 @@ public class Accommodation {
     private Map<LocalDate, Boolean> nonAvailableDate = new HashMap<>();
     private int feePerOneNight;
     private PeopleConstraint peopleConstraint;
-    private int[] coordinates = new int[2];
+    private double[] coordinates = new double[2];
 
-    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint) {
+    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint, double[] coordinates) {
         this.feePerOneNight = feePerOneNight;
         this.peopleConstraint = peopleConstraint;
+        this.coordinates = coordinates;
     }
 
     public boolean isAvailableByDate(LocalDate checkinDate, LocalDate checkoutDate) {
