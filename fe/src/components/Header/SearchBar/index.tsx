@@ -1,5 +1,9 @@
 import { Divider } from '@mui/material';
-import { SearchBarWrap, SearchBarContainer } from 'components/Header/SearchBar/searchBar.styled';
+import {
+  SearchBarWrap,
+  SearchBarContainer,
+  CommonContainer,
+} from 'components/Header/SearchBar/searchBar.styled';
 
 import Period from 'components/Header/SearchBar/Period';
 import Personnel from 'components/Header/SearchBar/Personnel';
@@ -15,11 +19,13 @@ function SearchBar() {
     <SearchBarContainer>
       <SearchBarWrap>
         <Period />
-        <Divider orientation="vertical" />
+        <Divider orientation="vertical" sx={{ height: '60%' }} />
         <Price />
-        <Divider orientation="vertical" />
-        <Personnel />
-        <SearchButton />
+        <Divider orientation="vertical" sx={{ height: '60%' }} />
+        <CommonContainer>
+          <Personnel />
+          <SearchButton />
+        </CommonContainer>
       </SearchBarWrap>
       <PeriodModal />
       <PriceModal />

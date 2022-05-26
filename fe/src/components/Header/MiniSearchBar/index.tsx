@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
-import { StyledSearchIcon, Btn } from 'components/Header/SearchBar/searchBar.styled';
+import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 type MyProps = {
   changeSearchBar: () => void;
@@ -22,6 +22,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
 }
 
 const MiniSearchBarWrap = styled.div`
+  margin: 0 auto;
   width: 410px;
   height: 48px;
   display: flex;
@@ -30,6 +31,11 @@ const MiniSearchBarWrap = styled.div`
   border-radius: 999px;
   padding: 8px 8px 8px 24px;
   border: 1px solid ${({ theme }) => theme.colors.grey4};
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 13px 2px rgba(51, 51, 51, 0.29);
+  }
 `;
 
 const MiniSearchBtn = styled.button`
@@ -40,7 +46,8 @@ const MiniSearchBtn = styled.button`
   background: ${({ theme }) => theme.colors.primary};
 `;
 
-const MiniBarButton = styled(Btn)`
+const MiniBarButton = styled.div`
+  ${({ theme }) => theme.fontStyles.normal16px};
   color: ${({ theme }) => theme.colors.grey3};
 `;
 
