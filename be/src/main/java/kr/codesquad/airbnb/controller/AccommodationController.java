@@ -30,6 +30,11 @@ public class AccommodationController {
         return ResponseEntity.ok(accommodationService.search(requestDto));
     }
 
+    @GetMapping("/prices")
+    public ResponseEntity<List<Integer>> getAllPrices() {
+        return ResponseEntity.ok(accommodationService.getAllPrices());
+    }
+
     @GetMapping("/{accommodationId}/reservation")
     public ResponseEntity<ReserveFormResponseDto> getReserveForm(
         @PathVariable String accommodationId) {
