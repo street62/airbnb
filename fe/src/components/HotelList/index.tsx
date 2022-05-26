@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import Hotel from 'components/Hotel';
+import Hotel from 'components/HotelList/Hotel';
 
 function HotelList() {
   const SEARCH_FILTER = [
