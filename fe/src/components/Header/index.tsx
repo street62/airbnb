@@ -52,6 +52,12 @@ const HeaderWrap = styled.header<Position>`
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
+<<<<<<< HEAD
+=======
+
+  margin-bottom: 20px;
+  padding: 24px;
+>>>>>>> c3e8218 (Refactor: PR 리뷰를 바탕으로 코드 수정)
   width: 1440px;
   margin-bottom: 20px;
   padding: 24px 32px;
@@ -72,6 +78,7 @@ const UserWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 8px;
   width: 76px;
   height: 40px;
   border-radius: 999px;

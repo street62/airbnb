@@ -34,10 +34,15 @@ const PersonnelModalContainer = styled(ModalWrap)`
 `;
 
 const StyledDevider = styled(Divider)`
+<<<<<<< HEAD:fe/src/components/Modals/PersonnelModal.tsx
   && {
     width: 100%;
     margin: 24px 0;
   }
+=======
+  width: 100%;
+  margin: 24px 0;
+>>>>>>> c3e8218 (Refactor: PR 리뷰를 바탕으로 코드 수정):fe/src/components/Header/SearchBar/Modals/PersonnelModal.tsx
 `;
 
 export default PersonnelModal;
