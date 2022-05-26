@@ -24,7 +24,7 @@ public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-    @GetMapping("/search/{query}")
+    @GetMapping("/search")
     public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(
         @ModelAttribute SearchQueryRequestDto requestDto) {
         return ResponseEntity.ok(accommodationService.search(requestDto));
