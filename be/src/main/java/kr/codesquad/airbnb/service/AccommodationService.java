@@ -28,4 +28,8 @@ public class AccommodationService {
             .map(SearchQueryResponseDto::of)
             .collect(Collectors.toList());
     }
+
+    public List<Integer> getAllPrices() {
+        return accommodationRepository.findAllprices();
+    }
 }
