@@ -62,6 +62,11 @@ const StyledButton = styled(Button)`
     background: ${({ theme }) => theme.colors.white};
     color: ${({ theme }) => theme.colors.grey1};
     border: 1px solid ${({ theme }) => theme.colors.grey5};
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.white};
+      border: 1px solid ${({ theme }) => theme.colors.grey5};
+    }
   }
 `;
 

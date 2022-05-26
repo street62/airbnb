@@ -72,7 +72,6 @@ const UserWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
   width: 76px;
   height: 40px;
   border-radius: 999px;
@@ -83,6 +82,7 @@ const UserWrapper = styled.button`
 const Hamburger = styled(HamburgerIcon)`
   width: 16px;
   height: 16px;
+  margin: 0 8px 0 10px;
 
   path {
     stroke: ${({ theme }) => theme.colors.black};

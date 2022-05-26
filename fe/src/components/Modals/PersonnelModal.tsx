@@ -34,8 +34,10 @@ const PersonnelModalContainer = styled(ModalWrap)`
 `;
 
 const StyledDevider = styled(Divider)`
-  width: 100%;
-  margin: 24px 0;
+  && {
+    width: 100%;
+    margin: 24px 0;
+  }
 `;
 
 export default PersonnelModal;

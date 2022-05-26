@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Checkbox } from '@mui/material';
 import { ReactComponent as StarIcon } from 'images/FE_숙소예약서비스/Property 1=star.svg';
 import { ReactComponent as HeartIcon } from 'images/FE_숙소예약서비스/Property 1=heart.svg';
 
@@ -9,20 +10,23 @@ function Hotel() {
       <HotelInfo>
         <HotelInfoTop>
           <RocationAndTitle>
-            <Rocation>주소</Rocation>
-            <Title>이름</Title>
+            <Rocation>어쩌구의 아파트 전체</Rocation>
+            <Title>Lorem ipsum dolor sit amet conse ctetur adipisicing elit.</Title>
+            <span className="maximum_people">최대 인원 4명</span>
           </RocationAndTitle>
-          <Heart />
+          <Checkbox icon={<Heart />} checkedIcon={<FillHeart />} style={{ padding: 0 }} />
         </HotelInfoTop>
         <HotelInfoBottom>
           <Point>
             <Star />
-            <Grade>평점</Grade>
-            <Review>후기 n개</Review>
+            <Grade>4.8</Grade>
+            <Review>(후기 n개)</Review>
           </Point>
           <Fee>
-            <OneDayFee>하루에 얼마 / 박</OneDayFee>
-            <TotalFee>총 얼마</TotalFee>
+            <OneDayFee>
+              <strong>₩10,000</strong> / 박
+            </OneDayFee>
+            <TotalFee>총액 ₩39,800</TotalFee>
           </Fee>
         </HotelInfoBottom>
       </HotelInfo>
@@ -35,12 +39,12 @@ const HotelWrap = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 24px;
-  padding: 24px 0;
 `;
 const HotelImg = styled.img`
   width: 50%;
   height: 200px;
   border-radius: 10px;
+  background: ${({ theme }) => theme.colors.primary};
 `;
 const HotelInfo = styled.div`
   width: 50%;
@@ -52,22 +56,42 @@ const HotelInfo = styled.div`
 const HotelInfoTop = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 const RocationAndTitle = styled.div`
-  width: 50%;
+  width: 268px;
+
+  .maximum_people {
+    color: ${({ theme }) => theme.colors.grey2};
+    ${({ theme }) => theme.fontStyles.normal12px};
+  }
 `;
-const Rocation = styled.div`
-  ${({ theme }) => theme.fontStyles.normal12px};
-  color: ${({ theme }) => theme.colors.grey2};
+const Rocation = styled.span`
   margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.grey2};
+  ${({ theme }) => theme.fontStyles.normal12px};
 `;
-const Title = styled.div`
+
+const Title = styled.h3`
   ${({ theme }) => theme.fontStyles.normal14px}
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
+
 const Heart = styled(HeartIcon)`
-  width: 20px;
-  height: 20px;
+  path {
+    stroke: ${({ theme }) => theme.colors.grey3};
+  }
 `;
+
+const FillHeart = styled(Heart)`
+  path {
+    stroke: ${({ theme }) => theme.colors.primary};
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
+
 const HotelInfoBottom = styled.div`
   width: 100%;
   display: flex;
@@ -77,8 +101,16 @@ const HotelInfoBottom = styled.div`
 const Point = styled.div`
   display: flex;
   height: 17px;
+  gap: 4px;
+  align-items: center;
 `;
-const Star = styled(StarIcon)``;
+const Star = styled(StarIcon)`
+  width: 16px;
+  height: 16px;
+  path {
+    fill: ${({ theme }) => theme.colors.primary};
+  }
+`;
 const Grade = styled.div`
   ${({ theme }) => theme.fontStyles.normal12px}
 `;
@@ -91,10 +123,10 @@ const Fee = styled.div`
   align-items: flex-end;
   gap: 5px;
 `;
-const OneDayFee = styled.div`
+const OneDayFee = styled.h4`
   ${({ theme }) => theme.fontStyles.normal14px}
 `;
-const TotalFee = styled.div`
+const TotalFee = styled.span`
   ${({ theme }) => theme.fontStyles.normal12px}
   color: ${({ theme }) => theme.colors.grey3}
 `;

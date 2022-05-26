@@ -22,7 +22,6 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
 }
 
 const MiniSearchBarWrap = styled.div`
-  margin: 0 auto;
   width: 410px;
   height: 48px;
   display: flex;
