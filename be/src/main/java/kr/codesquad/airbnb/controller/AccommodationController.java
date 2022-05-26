@@ -19,24 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accommodation")
+@RequestMapping("/accommodations")
 public class AccommodationController {
 
     private final AccommodationService accommodationService;
 
-    @GetMapping("/search/{query}")
+    @GetMapping
     public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(
         @ModelAttribute SearchQueryRequestDto requestDto) {
         return ResponseEntity.ok(accommodationService.search(requestDto));
     }
 
-    @GetMapping("/reserve/{accommodationId}")
+    @GetMapping("/{accommodationId}/reservation")
     public ResponseEntity<ReserveFormResponseDto> getReserveForm(
         @PathVariable String accommodationId) {
         return ResponseEntity.ok(new ReserveFormResponseDto());
     }
 
-    @PostMapping("/reserve/{accommodationId}")
+    @PostMapping("/{accommodationId}/reservation")
     public HttpStatus postReservation(@RequestBody ReserveRequestDto requestDto) {
         return HttpStatus.OK;
     }
