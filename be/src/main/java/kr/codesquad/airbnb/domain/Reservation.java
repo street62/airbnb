@@ -2,15 +2,19 @@ package kr.codesquad.airbnb.domain;
 
 import java.time.LocalDate;
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class Reservation {
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;
     private LocalDate checkinDate;
     private LocalDate checkoutDate;
-
-    public boolean isAvailableDate(LocalDate startDate, LocalDate endDate) {
-        return endDate.isBefore(checkinDate) || startDate.isAfter(checkoutDate);
-    }
 }

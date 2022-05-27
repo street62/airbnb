@@ -2,39 +2,31 @@ package kr.codesquad.airbnb.domain;
 
 import java.time.LocalDate;
 import java.util.List;
+
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+
+@Entity
 @Getter
+@NoArgsConstructor
 public class Accommodation {
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name="DISCOUNT_POLICY_ID")
+    private DiscountPolicy discountPolicy;
     private String name;
     private String imgUrl;
+    @OneToMany(mappedBy = "reservation")
     private List<Reservation> reservations;
     private int feePerOneNight;
-    private PeopleConstraint peopleConstraint;
-    private double[] coordinates = new double[2];
-
-    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint,
-        double[] coordinates) {
-        this.feePerOneNight = feePerOneNight;
-        this.peopleConstraint = peopleConstraint;
-        this.coordinates = coordinates;
-    }
-
-    public boolean isAvailableByDate(LocalDate checkinDate, LocalDate checkoutDate) {
-        for (Reservation reservation : reservations) {
-            if (!reservation.isAvailableDate(checkinDate, checkoutDate)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isAvailableByPrice(int minimumPrice, int maximumPrice) {
-        return minimumPrice <= feePerOneNight && feePerOneNight <= maximumPrice;
-    }
-
-    public boolean isAvailableByPeople(int adultCount, int childCount, int infantCount) {
-        return peopleConstraint.isAvailable(adultCount, childCount, infantCount);
+    private int adultChildCapacity;
+    private int infantCapacity;
+    private double coordinateX;
+    private double coordinateY;
+    private int cleaningFee;
     }
 }
