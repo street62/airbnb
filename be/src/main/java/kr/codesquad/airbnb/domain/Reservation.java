@@ -13,6 +13,9 @@ public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
+    @ManyToOne
     @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;
     private LocalDate checkinDate;
