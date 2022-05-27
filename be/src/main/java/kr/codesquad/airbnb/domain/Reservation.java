@@ -20,4 +20,9 @@ public class Reservation {
     private Accommodation accommodation;
     private LocalDate checkinDate;
     private LocalDate checkoutDate;
+    private int serviceCommissionFee;
+    private int cleaningFee;
+    private int tax;
+    private int feePerOneNight;
+    private int discountAmount;
 }
