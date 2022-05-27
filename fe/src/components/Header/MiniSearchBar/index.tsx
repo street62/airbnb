@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
-import { StyledSearchIcon, Btn } from 'components/Header/SearchBar/searchBar.styled';
+import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 type MyProps = {
   changeSearchBar: () => void;
@@ -14,10 +14,8 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
       <PriceButton aria-label="요금 입력 버튼">₩100,000~1,000,000</PriceButton>
       <Divider orientation="vertical" />
       <MiniBarButton aria-label="인원 입력 버튼">인원 입력</MiniBarButton>
-      <MiniSearchBtn>
-        <StyledSearchButton type="button" aria-label="결과 찾기 버튼">
-          <MiniSearchIcon />
-        </StyledSearchButton>
+      <MiniSearchBtn type="button" aria-label="결과 찾기 버튼">
+        <MiniSearchIcon />
       </MiniSearchBtn>
     </MiniSearchBarWrap>
   );
@@ -33,26 +31,28 @@ const MiniSearchBarWrap = styled.div`
   border-radius: 999px;
   padding: 8px 8px 8px 24px;
   border: 1px solid ${({ theme }) => theme.colors.grey4};
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: 0px 0px 13px 2px rgba(51, 51, 51, 0.29);
+  }
 `;
 
 const MiniSearchBtn = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  padding-top: 5px;
   background: ${({ theme }) => theme.colors.primary};
 `;
 
-const MiniBarButton = styled(Btn)`
+const MiniBarButton = styled.div`
+  ${({ theme }) => theme.fontStyles.normal16px};
   color: ${({ theme }) => theme.colors.grey3};
 `;
 
 const PriceButton = styled(MiniBarButton)`
   color: ${({ theme }) => theme.colors.grey3};
-`;
-
-const StyledSearchButton = styled.button`
-  padding: 0;
-  padding-top: 5px;
 `;
 
 const MiniSearchIcon = styled(StyledSearchIcon)`

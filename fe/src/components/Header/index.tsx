@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Avatar, Link } from '@mui/material';
 import { ReactComponent as HamburgerIcon } from 'images/FE_숙소예약서비스/Property 1=menu.svg';
 import { ReactComponent as LogoImg } from 'images/logo.svg';
@@ -52,17 +52,26 @@ const HeaderWrap = styled.header<Position>`
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
-
-  margin-bottom: 20px;
-  padding: 24px;
   width: 1440px;
+  margin-bottom: 20px;
+  padding: 24px 32px;
+
+  ${({ position }) =>
+    position === '/result'
+      ? css`
+          border-bottom: 1px solid black;
+          background: ${({ theme }) => theme.colors.white};
+        `
+      : css`
+          background: none;
+        `};
+  z-index: 1;
 `;
 
 const UserWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 8px;
   width: 76px;
   height: 40px;
   border-radius: 999px;
@@ -73,6 +82,7 @@ const UserWrapper = styled.button`
 const Hamburger = styled(HamburgerIcon)`
   width: 16px;
   height: 16px;
+  margin: 0 8px 0 10px;
 
   path {
     stroke: ${({ theme }) => theme.colors.black};
