@@ -1,39 +1,35 @@
 package kr.codesquad.airbnb.domain;
 
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Entity
 @Getter
+@NoArgsConstructor
 public class Accommodation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @ManyToOne
+    @JoinColumn(name = "DISCOUNT_POLICY_ID")
+    private DiscountPolicy discountPolicy;
     private String name;
     private String imgUrl;
-    private Map<LocalDate, Boolean> nonAvailableDate = new HashMap<>();
+    @OneToMany(mappedBy = "reservation")
+    private List<Reservation> reservations;
     private int feePerOneNight;
-    private PeopleConstraint peopleConstraint;
-    private int[] coordinates = new int[2];
-
-    public Accommodation(int feePerOneNight, PeopleConstraint peopleConstraint) {
-        this.feePerOneNight = feePerOneNight;
-        this.peopleConstraint = peopleConstraint;
-    }
-
-    public boolean isAvailableByDate(LocalDate checkinDate, LocalDate checkoutDate) {
-        for (LocalDate date = checkinDate; date.compareTo(checkoutDate) <= 0; date.plusDays(1)) {
-            if (nonAvailableDate.containsKey(date)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public boolean isAvailableByPrice(int minimumPrice, int maximumPrice) {
-        return minimumPrice <= feePerOneNight && feePerOneNight <= maximumPrice;
-    }
-
-    public boolean isAvailableByPeople(int adultCount, int childCount, int infantCount) {
-        return peopleConstraint.isAvailable(adultCount, childCount, infantCount);
-    }
+    private int adultChildCapacity;
+    private int infantCapacity;
+    private double coordinateX;
+    private double coordinateY;
+    private int cleaningFee;
 }

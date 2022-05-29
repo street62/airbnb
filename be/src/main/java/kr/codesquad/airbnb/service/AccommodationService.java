@@ -16,16 +16,19 @@ public class AccommodationService {
     private final AccommodationRepository accommodationRepository;
 
     public List<SearchQueryResponseDto> search(SearchQueryRequestDto requestDto) {
-        List<Accommodation> accommodations = accommodationRepository.findAll();
-        return accommodations.stream()
-            .filter(ac -> ac.isAvailableByDate(requestDto.getCheckinDate(),
-                requestDto.getCheckoutDate()))
-            .filter(ac -> ac.isAvailableByPrice(requestDto.getMinimumPrice(),
-                requestDto.getMaximumPrice()))
-            .filter(
-                ac -> ac.isAvailableByPeople(requestDto.getAdultCount(), requestDto.getAdultCount(),
-                    requestDto.getAdultCount()))
-            .map(SearchQueryResponseDto::of)
+        List<Accommodation> searchResult = accommodationRepository.findAllBySearchCondition(
+            requestDto.getCheckinDate(),
+            requestDto.getCheckoutDate(),
+            requestDto.getMinimumPrice(),
+            requestDto.getMaximumPrice(),
+            requestDto.getAdultCount() + requestDto.getChildCount(),
+            requestDto.getInfantCount()
+        );
+        return searchResult.stream().map(SearchQueryResponseDto::of)
             .collect(Collectors.toList());
+    }
+
+    public List<Integer> getAllPrices() {
+        return accommodationRepository.findAllprices();
     }
 }
