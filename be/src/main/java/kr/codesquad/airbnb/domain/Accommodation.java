@@ -11,9 +11,9 @@ import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Getter
 @NoArgsConstructor
+@Getter
+@Entity
 public class Accommodation {
 
     @Id
