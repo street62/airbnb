@@ -2,7 +2,7 @@ import {
   CommonContainer,
   CommonButton,
   Label,
-  InputState,
+  SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
 
@@ -11,7 +11,7 @@ function Price() {
     <CommonContainer>
       <CommonButton aria-label="요금 입력 버튼">
         <Label>요금</Label>
-        <InputState>₩100,000~1,000,000</InputState>
+        <SelectedOption>₩100,000~1,000,000</SelectedOption>
       </CommonButton>
       <button type="button" aria-label="요금 입력 취소 버튼">
         <StyledCrossIcon />

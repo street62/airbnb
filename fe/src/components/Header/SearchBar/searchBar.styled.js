@@ -49,7 +49,7 @@ export const Label = styled.span`
   ${({ theme }) => theme.fontStyles.bold12px};
 `;
 
-export const InputState = styled.span`
+export const SelectedOption = styled.span`
   width: 100%;
   text-align: left;
   color: ${({ theme }) => theme.colors.grey2};
