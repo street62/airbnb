@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Avatar, Link } from '@mui/material';
 import { ReactComponent as HamburgerIcon } from 'images/FE_숙소예약서비스/Property 1=menu.svg';
 import { ReactComponent as LogoImg } from 'images/logo.svg';
@@ -18,9 +18,8 @@ function Header() {
   const location = useLocation();
   const [miniFocus, setMiniFocus] = useState(true);
 
-  const changeSearchBar = () => {
-    return miniFocus ? setMiniFocus(false) : setMiniFocus(true);
-  };
+  const changeSearchBar = () => setMiniFocus((focus) => !focus);
+
   return (
     <HeaderWrap position={location.pathname}>
       <Link href="/" style={{ height: '26px' }}>
@@ -38,13 +37,9 @@ function Header() {
           setMiniFocus={setMiniFocus}
         />
       )}
-      <UserWrapper>
-        <CustomButton type="button" aria-label="유저 정보 메뉴">
-          <Hamburger>햄버거</Hamburger>
-        </CustomButton>
-        <button type="button" aria-label="유저 아바타">
-          <CustomAvatar src="images/FE_숙소예약서비스/Property 1=user.svg" />
-        </button>
+      <UserWrapper type="button" aria-label="유저 정보 메뉴">
+        <Hamburger />
+        <CustomAvatar src="images/FE_숙소예약서비스/Property 1=user.svg" />
       </UserWrapper>
     </HeaderWrap>
   );
@@ -53,18 +48,27 @@ function Header() {
 const HeaderWrap = styled.header<Position>`
   display: flex;
   justify-content: space-between;
-  position: ${(props) => {
-    return props.position === '/' ? 'fixed' : 'sticky';
-  }};
+  position: fixed;
   top: 0;
   left: 50%;
   transform: translate(-50%, 0);
-  margin-bottom: 20px;
-  padding: 24px;
   width: 1440px;
+  margin-bottom: 20px;
+  padding: 24px 32px;
+
+  ${({ position }) =>
+    position === '/result'
+      ? css`
+          border-bottom: 1px solid black;
+          background: ${({ theme }) => theme.colors.white};
+        `
+      : css`
+          background: none;
+        `};
+  z-index: 1;
 `;
 
-const UserWrapper = styled.div`
+const UserWrapper = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -75,16 +79,13 @@ const UserWrapper = styled.div`
   background: ${({ theme }) => theme.colors.white};
 `;
 
-const CustomButton = styled.button`
-  padding: 16px 8px;
-`;
-
 const Hamburger = styled(HamburgerIcon)`
   width: 16px;
   height: 16px;
+  margin: 0 8px 0 10px;
 
   path {
-    stroke: ${({ theme }) => theme.colors.grey2};
+    stroke: ${({ theme }) => theme.colors.black};
   }
 `;
 

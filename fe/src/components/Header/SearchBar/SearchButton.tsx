@@ -5,7 +5,7 @@ import {
 
 function SearchButton() {
   return (
-    <SearchButtonContainer>
+    <SearchButtonContainer aria-label="결과 찾기 버튼">
       <StyledSearchIcon />
       <span>검색</span>
     </SearchButtonContainer>

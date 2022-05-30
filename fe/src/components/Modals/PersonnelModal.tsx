@@ -15,9 +15,7 @@ function PersonnelModal() {
     return (
       <>
         <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && (
-          <Divider style={{ width: '100%', margin: '24px 0' }} />
-        )}
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider />}
       </>
     );
   });
@@ -33,6 +31,13 @@ const PersonnelModalContainer = styled(ModalWrap)`
   display: flex;
   display: none;
   flex-direction: column;
+`;
+
+const StyledDevider = styled(Divider)`
+  && {
+    width: 100%;
+    margin: 24px 0;
+  }
 `;
 
 export default PersonnelModal;

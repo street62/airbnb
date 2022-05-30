@@ -7,44 +7,40 @@ export const SearchBarContainer = styled.div`
 `;
 
 export const SearchBarWrap = styled.div`
+  display: flex;
+  align-items: center;
   width: 916px;
   height: 76px;
-  display: flex;
-  align-items: center;
   border: 1px solid ${({ theme }) => theme.colors.grey4};
   border-radius: 999px;
-  padding: 16px 0px 16px 20px;
-  justify-content: space-around;
   background: ${({ theme }) => theme.colors.white};
 `;
-export const Period = styled.div`
-  height: 100%;
+
+export const CommonContainer = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  border-radius: 999px;
+  padding: 0px 24px;
+  flex-grow: 1;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors.grey6};
+  }
+
+  /* props로 넘겨받도록 수정 */
+  &.focus {
+    background: ${({ theme }) => theme.colors.white};
+    box-shadow: 0px 0px 13px 2px rgba(51, 51, 51, 0.29);
+  }
 `;
 
-export const CommonWrapper = styled.div`
+export const CommonButton = styled.button`
   display: flex;
   flex-direction: column;
-`;
-
-export const PriceWrapper = styled(CommonWrapper)`
-  width: 200px;
-`;
-
-export const Price = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
-export const Personnel = styled.div`
-  display: flex;
-  align-items: center;
-
-  div {
-    width: 96px;
-  }
+  text-align: left;
+  width: 100%;
 `;
 
 export const Label = styled.span`
@@ -53,18 +49,12 @@ export const Label = styled.span`
   ${({ theme }) => theme.fontStyles.bold12px};
 `;
 
-export const Btn = styled.button`
+export const InputState = styled.span`
+  width: 100%;
+  text-align: left;
   color: ${({ theme }) => theme.colors.grey2};
   ${({ theme }) => theme.fontStyles.normal16px};
-  text-align: left;
 `;
-
-export const CheckIn = styled(Label)`
-  width: 112px;
-  height: 17px;
-`;
-
-export const CheckOut = styled(CheckIn)``;
 
 export const SearchButton = styled.button`
   display: flex;
@@ -91,5 +81,11 @@ export const StyledSearchIcon = styled(SearchIcon)`
 export const StyledCrossIcon = styled(CrossIcon)`
   path {
     fill: ${({ theme }) => theme.colors.grey6};
+  }
+
+  &:hover {
+    path {
+      fill: ${({ theme }) => theme.colors.grey5};
+    }
   }
 `;
