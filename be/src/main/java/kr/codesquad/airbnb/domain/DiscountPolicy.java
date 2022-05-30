@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 @NoArgsConstructor
+@Entity
 public class DiscountPolicy {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
