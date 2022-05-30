@@ -19,6 +19,12 @@ const initialState: Period = {
 
 export function PeriodPriovider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <PeriodStateContext.Provider value={state}>
+      <PeriodDispatchContext.Provider value={dispatch}>{children}</PeriodDispatchContext.Provider>
+    </PeriodStateContext.Provider>
+  );
 }
 
 function reducer(state: Period, action: Action): Period {
