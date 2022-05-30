@@ -9,8 +9,10 @@ import javax.persistence.Id;
 
 @NoArgsConstructor
 @Entity
-public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String refreshToken;
