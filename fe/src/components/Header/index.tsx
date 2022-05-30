@@ -10,6 +10,8 @@ import Menu from 'components/Header/Menu';
 import SearchBar from 'components/Header/SearchBar/index';
 import SearchWrapper, { SearchWrap } from './SearchWrapper';
 
+// type Router = '/' | '/result';
+
 type Position = {
   position: string;
 };
@@ -20,12 +22,14 @@ function Header() {
 
   const changeSearchBar = () => setMiniFocus((focus) => !focus);
 
+  const path = location.pathname;
+
   return (
-    <HeaderWrap position={location.pathname}>
+    <HeaderWrap position={path}>
       <Link href="/" style={{ height: '26px' }}>
         <LogoImg aria-label="로고이미지" />
       </Link>
-      {location.pathname === '/' ? (
+      {path === '/' ? (
         <SearchWrap>
           <Menu />
           <SearchBar />
