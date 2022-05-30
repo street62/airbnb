@@ -36,7 +36,7 @@ const PersonnelModalContainer = styled(ModalWrap)`
   right: 0;
   padding: 64px;
   display: flex;
-  // display: none;
+  display: none;
   flex-direction: column;
 `;
 
