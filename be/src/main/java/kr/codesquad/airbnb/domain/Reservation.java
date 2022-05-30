@@ -13,8 +13,8 @@ public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
     @ManyToOne
     @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;

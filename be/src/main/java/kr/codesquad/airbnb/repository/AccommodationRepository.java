@@ -12,36 +12,15 @@ import java.util.List;
 @Repository
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
 
-    @Query(value = ""
-        + "SELECT AC2"
-        + "FROM"
-
-        + "(SELECT AC1"
-        + "FROM Accommodation AS AC1"
-        + "WHERE "
-        + ":minPrice <= AC.feePerOneNight AND"
-        + "AC.feePerOneNight <= :maxPrice AND"
-        + ":adultChildCapacity <= AC.adultChildCapacity AND"
-        + ":infantCount <= AC.infantCapacity"
-        + ") AS AC2 "
-
-        + "LEFT JOIN"
-
-        + "(SELECT "
-        + "FROM Reservation AS RS1"
-        + "WHERE"
-        + "RS1.checkinDate <= :checkinDate AND"
-        + ":checkoutDate <= RS1.checkoutDate"
-        + ") AS RS2"
-
-        + "ON AC2.id = RS2.accommodation_id"
-        )
+    @Query(value = "SELECT AC FROM Accommodation AS AC LEFT JOIN Reservation AS RS on AC = RS.accommodation "
+        + "WHERE :minPrice <= AC.feePerOneNight AND AC.feePerOneNight <= :maxPrice AND :adultChildCount <= AC.adultChildCapacity AND :infantCount <= AC.infantCapacity AND ( RS.checkinDate <= :checkinDate OR RS.checkinDate IS NULL) AND ( :checkoutDate <= RS.checkoutDate OR RS.checkoutDate IS NULL )"
+    )
     List<Accommodation> findAllBySearchCondition(
         @Param("checkinDate") LocalDate checkinDate,
         @Param("checkoutDate") LocalDate checkoutDate,
         @Param("minPrice") int minPrice,
         @Param("maxPrice") int maxPrice,
-        @Param("adultChildCount") int adultCount,
+        @Param("adultChildCount") int adultChildCount,
         @Param("infantCount") int infantCount
         );
 

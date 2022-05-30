@@ -24,7 +24,7 @@ public class Accommodation {
     private DiscountPolicy discountPolicy;
     private String name;
     private String imgUrl;
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "accommodation")
     private List<Reservation> reservations;
     private int feePerOneNight;
     private int adultChildCapacity;
@@ -32,4 +32,8 @@ public class Accommodation {
     private double coordinateX;
     private double coordinateY;
     private int cleaningFee;
+
+    public int getSumOfPeopleCapacity() {
+        return adultChildCapacity + infantCapacity;
+    }
 }
