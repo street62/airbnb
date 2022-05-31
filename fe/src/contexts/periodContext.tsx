@@ -1,4 +1,3 @@
-import { log } from 'console';
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 
 type Period = {
@@ -6,15 +5,16 @@ type Period = {
   checkOut: string;
 };
 
-type Action = { type: 'SET_CHECK_IN'; action: string } | { type: 'SET_CHECK_OUT'; action: string };
+type Action =
+  | { type: 'SET_CHECK_IN'; checkIn: string }
+  | { type: 'SET_CHECK_OUT'; checkOut: string };
 
 type PeriodDispatch = Dispatch<Action>;
-const date = new Date();
 const PeriodStateContext = createContext<Period | null>(null);
 const PeriodDispatchContext = createContext<PeriodDispatch | null>(null);
 const initialState: Period = {
-  checkIn: date.toString(),
-  checkOut: date.toString(),
+  checkIn: '',
+  checkOut: '',
 };
 
 export function PeriodPriovider({ children }: { children: ReactNode }) {
@@ -28,19 +28,19 @@ export function PeriodPriovider({ children }: { children: ReactNode }) {
 }
 
 function reducer(state: Period, action: Action): Period {
+  const date: Date = new Date();
   switch (action.type) {
     case 'SET_CHECK_IN':
-      console.log('체크인');
-
+      console.log(state);
       return {
-        checkIn: '체크인',
-        checkOut: '',
+        ...state,
+        checkIn: date.toString(),
       };
     case 'SET_CHECK_OUT':
-      console.log('체크아웃');
+      console.log(state);
       return {
-        checkIn: '',
-        checkOut: '체크아웃',
+        ...state,
+        checkOut: date.toString(),
       };
     default:
       throw new Error();
@@ -58,8 +58,8 @@ export function usePeriodDispatch() {
   const dispatch = useContext(PeriodDispatchContext);
   if (!dispatch) throw new Error();
 
-  const setCheckIn = (action: string) => dispatch({ type: 'SET_CHECK_IN', action });
-  const setCheckOut = (action: string) => dispatch({ type: 'SET_CHECK_OUT', action });
+  const setCheckIn = (checkIn: string) => dispatch({ type: 'SET_CHECK_IN', checkIn });
+  const setCheckOut = (checkOut: string) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
 
   return { setCheckIn, setCheckOut };
 }
