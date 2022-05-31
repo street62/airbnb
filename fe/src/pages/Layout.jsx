@@ -1,13 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import Header from 'components/Header/index';
 import styled from 'styled-components';
+import { ModalProvider } from 'contexts/ModalContext';
 
 function Layout() {
   return (
-    <Container>
-      <Header />
-      <Outlet />
-    </Container>
+    <ModalProvider>
+      <Container>
+        <Header />
+        <Outlet />
+      </Container>
+    </ModalProvider>
   );
 }
 

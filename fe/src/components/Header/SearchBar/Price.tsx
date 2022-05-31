@@ -1,3 +1,7 @@
+import { ModalContext } from 'contexts/ModalContext';
+import { usePriceState } from 'contexts/PriceContext';
+import { useContext } from 'react';
+
 import {
   CommonContainer,
   CommonButton,
@@ -5,14 +9,19 @@ import {
   SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
-import { usePriceState } from 'contexts/PriceContext';
 
 function Price() {
   const { rangeText } = usePriceState();
+  const { clickModalFocus } = useContext(ModalContext);
+
+  const ClickModal = (e: React.MouseEvent<HTMLElement>) => {
+    const option: string = 'PRICE';
+    clickModalFocus?.(option);
+  };
 
   return (
     <CommonContainer>
-      <CommonButton aria-label="요금 입력 버튼">
+      <CommonButton onClick={ClickModal} aria-label="요금 입력 버튼">
         <Label>요금</Label>
         <SelectedOption>{rangeText}</SelectedOption>
       </CommonButton>

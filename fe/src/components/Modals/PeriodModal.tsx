@@ -29,7 +29,6 @@ function PeriodModal() {
 const PeriodModalWrap = styled(ModalWrap)`
   width: 916px;
   height: 512px;
-  display: none;
 `;
 const CheckInBtn = styled.button``;
 const CheckOutBtn = styled(CheckInBtn)``;

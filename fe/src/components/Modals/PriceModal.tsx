@@ -21,7 +21,6 @@ function PriceModal() {
 const PriceModalWrap = styled(ModalWrap)`
   width: 493px;
   height: 364px;
-  display: none;
   right: 200px;
   padding: 52px 64px;
   justify-content: left;

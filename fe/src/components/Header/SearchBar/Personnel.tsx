@@ -1,3 +1,7 @@
+import { useContext } from 'react';
+import { usePersonnelState } from 'contexts/PersonnelContext';
+import { ModalContext } from 'contexts/ModalContext';
+
 import styled from 'styled-components';
 import {
   CommonButton,
@@ -6,14 +10,18 @@ import {
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
 
-import { usePersonnelState } from 'contexts/PersonnelContext';
-
 function Personnel() {
   const { counterText } = usePersonnelState();
+  const { clickModalFocus } = useContext(ModalContext);
+
+  const ClickModal = (e: React.MouseEvent<HTMLElement>) => {
+    const option: string = 'PERSONNEL';
+    clickModalFocus?.(option);
+  };
 
   return (
     <>
-      <CommonButton aria-label="게스트 추가 버튼" style={{ width: '124px' }}>
+      <CommonButton onClick={ClickModal} aria-label="게스트 추가 버튼" style={{ width: '124px' }}>
         <Label>인원</Label>
         <PersonnelSelectedOption>{counterText}</PersonnelSelectedOption>
       </CommonButton>

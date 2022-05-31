@@ -22,7 +22,7 @@ function PersonnelModal() {
     return (
       <>
         <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider />}
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id} />}
       </>
     );
   });
@@ -36,7 +36,6 @@ const PersonnelModalContainer = styled(ModalWrap)`
   right: 0;
   padding: 64px;
   display: flex;
-  display: none;
   flex-direction: column;
 `;
 
