@@ -42,8 +42,8 @@ public class AccommodationController {
     }
 
     @PostMapping("/{accommodationId}/reservation")
-    public HttpStatus postReservation(@RequestBody ReserveRequestDto requestDto) {
-        return HttpStatus.OK;
+    public HttpStatus postReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
+        return accommodationService.generateNewReservation(requestDto, accommodationId);
     }
 
 }
