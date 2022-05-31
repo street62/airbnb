@@ -38,7 +38,7 @@ public class AccommodationController {
     @GetMapping("/{accommodationId}/reservation")
     public ResponseEntity<ReserveFormResponseDto> getReserveForm(
         @PathVariable String accommodationId) {
-        return ResponseEntity.ok(new ReserveFormResponseDto());
+        return ResponseEntity.ok(accommodationService.getReservationPage(accommodationId));
     }
 
     @PostMapping("/{accommodationId}/reservation")

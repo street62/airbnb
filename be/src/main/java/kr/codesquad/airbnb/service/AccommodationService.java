@@ -3,6 +3,7 @@ package kr.codesquad.airbnb.service;
 import java.util.List;
 import java.util.stream.Collectors;
 import kr.codesquad.airbnb.domain.Accommodation;
+import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
 import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
 import kr.codesquad.airbnb.repository.AccommodationRepository;
@@ -30,5 +31,12 @@ public class AccommodationService {
 
     public List<Integer> getAllPrices() {
         return accommodationRepository.findAllprices();
+    }
+
+    public ReserveFormResponseDto getReservationPage(String accommodationId) {
+        Accommodation accommodation = accommodationRepository.findById(
+                Long.valueOf(accommodationId))
+            .orElseThrow(RuntimeException::new);
+        return ReserveFormResponseDto.of(accommodation);
     }
 }
