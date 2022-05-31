@@ -40,11 +40,11 @@ function SearchBar() {
     <SearchBarContainer>
       <SearchBarWrap isClicked={isClicked}>
         <Period clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
-        <Divider orientation="vertical" sx={{ height: '60%' }} />
+        {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
         <Price clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
-        <Divider orientation="vertical" sx={{ height: '60%' }} />
+        {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
         <CommonContainer isClicked={isClicked} focusModal={focusModal} id="PERSONNEL">
-          <Personnel clickModal={clickModal} />
+          <Personnel clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
           <SearchButton />
         </CommonContainer>
       </SearchBarWrap>

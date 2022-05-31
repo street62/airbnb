@@ -12,7 +12,7 @@ function Period({ clickModal, isClicked, focusModal }: ClickModal) {
   return (
     <>
       <CheckIn clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
-      <Divider orientation="vertical" sx={{ height: '60%' }} />
+      {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
       <CheckOut clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
     </>
   );
@@ -32,9 +32,11 @@ function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
         <Label>체크인</Label>
         <SelectedOption>날짜 입력</SelectedOption>
       </CommonButton>
-      <button type="button" aria-label="날짜 입력 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="날짜 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
     </CommonContainer>
   );
 }
@@ -48,9 +50,11 @@ function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
         <Label>체크아웃</Label>
         <SelectedOption>날짜 입력</SelectedOption>
       </CommonButton>
-      <button type="button" aria-label="날짜 입력 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="날짜 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
     </CommonContainer>
   );
 }

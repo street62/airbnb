@@ -20,9 +20,11 @@ function Price({ clickModal, isClicked, focusModal }: ClickModal) {
         <Label>요금</Label>
         <SelectedOption>{rangeText}</SelectedOption>
       </CommonButton>
-      <button type="button" aria-label="요금 입력 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="요금 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
     </CommonContainer>
   );
 }

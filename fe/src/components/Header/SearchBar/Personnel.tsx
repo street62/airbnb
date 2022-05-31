@@ -9,7 +9,7 @@ import {
 } from 'components/Header/SearchBar/searchBar.styled';
 import { ClickModal } from '.';
 
-function Personnel({ clickModal }: ClickModal) {
+function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
   const { counterText } = usePersonnelState();
 
   const FILTER_ID = 'PERSONNEL';
@@ -25,9 +25,11 @@ function Personnel({ clickModal }: ClickModal) {
         <Label>인원</Label>
         <PersonnelSelectedOption>{counterText}</PersonnelSelectedOption>
       </CommonButton>
-      <button type="button" aria-label="게스트 추가 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="게스트 추가 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
     </>
   );
 }
