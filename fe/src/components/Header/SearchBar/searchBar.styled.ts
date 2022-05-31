@@ -47,7 +47,6 @@ export const CommonContainer = styled.div<ContainerType>`
     background: ${({ theme }) => theme.colors.grey6};
   }
 
-  /* props로 넘겨받도록 수정 */
   ${({ focusModal, id, isClicked }) =>
     focusModal === id &&
     isClicked &&
