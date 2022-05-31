@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.accommodation;
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import kr.codesquad.airbnb.domain.discountpolicy.DiscountPolicy;
+import kr.codesquad.airbnb.domain.reservation.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Getter
 @NoArgsConstructor
+@Getter
+@Entity
 public class Accommodation {
 
     @Id
@@ -24,7 +26,7 @@ public class Accommodation {
     private DiscountPolicy discountPolicy;
     private String name;
     private String imgUrl;
-    @OneToMany(mappedBy = "reservation")
+    @OneToMany(mappedBy = "accommodation")
     private List<Reservation> reservations;
     private int feePerOneNight;
     private int adultChildCapacity;
@@ -32,4 +34,8 @@ public class Accommodation {
     private double coordinateX;
     private double coordinateY;
     private int cleaningFee;
+
+    public int getSumOfPeopleCapacity() {
+        return adultChildCapacity + infantCapacity;
+    }
 }

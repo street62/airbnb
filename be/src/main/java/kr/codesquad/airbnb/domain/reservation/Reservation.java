@@ -1,20 +1,24 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.reservation;
 
 import java.time.LocalDate;
+import kr.codesquad.airbnb.domain.accommodation.Accommodation;
+import kr.codesquad.airbnb.domain.member.Member;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Reservation {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User user;
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
     @ManyToOne
     @JoinColumn(name = "ACCOMMODATION_ID")
     private Accommodation accommodation;

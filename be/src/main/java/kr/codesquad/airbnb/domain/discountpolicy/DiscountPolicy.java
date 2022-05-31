@@ -1,5 +1,6 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.discountpolicy;
 
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
@@ -7,11 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 @NoArgsConstructor
+@Getter
+@Entity
 public class DiscountPolicy {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private double discountRate;
 
     public DiscountPolicy(double discountRate) {

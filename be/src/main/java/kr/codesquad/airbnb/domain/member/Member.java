@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.member;
 
 import lombok.NoArgsConstructor;
 
@@ -7,10 +7,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity
 @NoArgsConstructor
-public class User {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity
+public class Member {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String refreshToken;

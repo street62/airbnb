@@ -1,10 +1,9 @@
 package kr.codesquad.airbnb.dto;
 
-import kr.codesquad.airbnb.domain.Accommodation;
+import kr.codesquad.airbnb.domain.accommodation.Accommodation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -22,10 +21,10 @@ public class SearchQueryResponseDto {
         return SearchQueryResponseDto.builder()
                 .name(accommodation.getName())
                 .imgUrl(accommodation.getImgUrl())
-                .maxPeople(accommodation.getPeopleConstraint().getSum())
+                .maxPeople(accommodation.getSumOfPeopleCapacity())
                 .feePerOneNight(accommodation.getFeePerOneNight())
-                .coordinateX(accommodation.getCoordinates()[0])
-                .coordinateY(accommodation.getCoordinates()[1])
+                .coordinateX(accommodation.getCoordinateX())
+                .coordinateY(accommodation.getCoordinateY())
                 .build();
     }
 }
