@@ -14,6 +14,7 @@ public class ReserveFormResponseDto {
     private int cleaningFee;
     private int adultChildCapacity;
     private int infantCapacity;
+    private double discountRate;
 
     public static ReserveFormResponseDto of(Accommodation accommodation) {
         return ReserveFormResponseDto.builder()
@@ -21,6 +22,7 @@ public class ReserveFormResponseDto {
             .cleaningFee(accommodation.getCleaningFee())
             .adultChildCapacity(accommodation.getAdultChildCapacity())
             .infantCapacity(accommodation.getInfantCapacity())
+            .discountRate(accommodation.getDiscountPolicy().getDiscountRate())
             .build();
     }
 }
