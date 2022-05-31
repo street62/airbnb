@@ -12,12 +12,14 @@ import { ClickModal } from '.';
 function Personnel({ clickModal }: ClickModal) {
   const { counterText } = usePersonnelState();
 
+  const FILTER_ID = 'PERSONNEL';
+
   return (
     <>
       <CommonButton
         onClick={clickModal}
         aria-label="게스트 추가 버튼"
-        id="PERSONNEL"
+        id={FILTER_ID}
         style={{ width: '124px' }}
       >
         <Label>인원</Label>

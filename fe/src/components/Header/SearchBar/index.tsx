@@ -19,10 +19,17 @@ import PriceModal from 'components/Modals/PriceModal';
 
 export type ClickModal = {
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
+  isClicked?: boolean;
+  focusModal?: string;
+  id?: string;
+};
+
+type Focus = {
+  focus: string;
 };
 
 function SearchBar() {
-  const { focusModal, clickModalFocus } = useContext(ModalContext);
+  const { focusModal, clickModalFocus, isClicked } = useContext(ModalContext);
 
   const clickModal = (e: React.MouseEvent<HTMLElement>) => {
     const ID: string = e.currentTarget.id;
@@ -31,12 +38,12 @@ function SearchBar() {
 
   return (
     <SearchBarContainer>
-      <SearchBarWrap>
-        <Period clickModal={clickModal} />
+      <SearchBarWrap isClicked={isClicked}>
+        <Period clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
         <Divider orientation="vertical" sx={{ height: '60%' }} />
-        <Price clickModal={clickModal} />
+        <Price clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
         <Divider orientation="vertical" sx={{ height: '60%' }} />
-        <CommonContainer>
+        <CommonContainer isClicked={isClicked} focusModal={focusModal} id="PERSONNEL">
           <Personnel clickModal={clickModal} />
           <SearchButton />
         </CommonContainer>
@@ -46,7 +53,7 @@ function SearchBar() {
   );
 }
 
-function FocusModal({ focus }: any) {
+function FocusModal({ focus }: Focus) {
   switch (focus) {
     case 'CHECK_IN':
     case 'CHECK_OUT':

@@ -9,12 +9,14 @@ import {
 } from 'components/Header/SearchBar/searchBar.styled';
 import { ClickModal } from '.';
 
-function Price({ clickModal }: ClickModal) {
+function Price({ clickModal, isClicked, focusModal }: ClickModal) {
   const { rangeText } = usePriceState();
 
+  const FILTER_ID = 'PRICE';
+
   return (
-    <CommonContainer>
-      <CommonButton onClick={clickModal} aria-label="요금 입력 버튼" id="PRICE">
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
+      <CommonButton onClick={clickModal} aria-label="요금 입력 버튼" id={FILTER_ID}>
         <Label>요금</Label>
         <SelectedOption>{rangeText}</SelectedOption>
       </CommonButton>

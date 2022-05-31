@@ -8,24 +8,26 @@ import {
 } from 'components/Header/SearchBar/searchBar.styled';
 import { ClickModal } from '.';
 
-function Period({ clickModal }: ClickModal) {
+function Period({ clickModal, isClicked, focusModal }: ClickModal) {
   return (
     <>
-      <CheckIn clickModal={clickModal} />
+      <CheckIn clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
       <Divider orientation="vertical" sx={{ height: '60%' }} />
-      <CheckOut clickModal={clickModal} />
+      <CheckOut clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
     </>
   );
 }
 
-function CheckIn({ clickModal }: ClickModal) {
+function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
+  const FILTER_ID = 'CHECK_IN';
+
   return (
-    <CommonContainer>
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
       <CommonButton
         onClick={clickModal}
         aria-label="체크인 날짜 입력 버튼"
         style={{ paddingLeft: '24px' }}
-        id="CHECK_IN"
+        id={FILTER_ID}
       >
         <Label>체크인</Label>
         <SelectedOption>날짜 입력</SelectedOption>
@@ -37,10 +39,12 @@ function CheckIn({ clickModal }: ClickModal) {
   );
 }
 
-function CheckOut({ clickModal }: ClickModal) {
+function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
+  const FILTER_ID = 'CHECK_OUT';
+
   return (
-    <CommonContainer>
-      <CommonButton onClick={clickModal} aria-label="체크아웃 날짜 입력 버튼" id="CHECK_OUT">
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
+      <CommonButton onClick={clickModal} aria-label="체크아웃 날짜 입력 버튼" id={FILTER_ID}>
         <Label>체크아웃</Label>
         <SelectedOption>날짜 입력</SelectedOption>
       </CommonButton>
