@@ -1,6 +1,4 @@
-import { useContext } from 'react';
 import { usePersonnelState } from 'contexts/PersonnelContext';
-import { ModalContext } from 'contexts/ModalContext';
 
 import styled from 'styled-components';
 import {
@@ -9,15 +7,10 @@ import {
   SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
+import { ClickModal } from '.';
 
-function Personnel() {
+function Personnel({ clickModal }: ClickModal) {
   const { counterText } = usePersonnelState();
-  const { clickModalFocus } = useContext(ModalContext);
-
-  const clickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const ID: string = e.currentTarget.id;
-    clickModalFocus?.(ID);
-  };
 
   return (
     <>

@@ -17,18 +17,27 @@ import PeriodModal from 'components/Modals/PeriodModal';
 import PersonnelModal from 'components/Modals/PersonnelModal';
 import PriceModal from 'components/Modals/PriceModal';
 
+export type ClickModal = {
+  clickModal: (e: React.MouseEvent<HTMLElement>) => void;
+};
+
 function SearchBar() {
-  const { focusModal } = useContext(ModalContext);
+  const { focusModal, clickModalFocus } = useContext(ModalContext);
+
+  const clickModal = (e: React.MouseEvent<HTMLElement>) => {
+    const ID: string = e.currentTarget.id;
+    clickModalFocus?.(ID);
+  };
 
   return (
     <SearchBarContainer>
       <SearchBarWrap>
-        <Period />
+        <Period clickModal={clickModal} />
         <Divider orientation="vertical" sx={{ height: '60%' }} />
-        <Price />
+        <Price clickModal={clickModal} />
         <Divider orientation="vertical" sx={{ height: '60%' }} />
         <CommonContainer>
-          <Personnel />
+          <Personnel clickModal={clickModal} />
           <SearchButton />
         </CommonContainer>
       </SearchBarWrap>

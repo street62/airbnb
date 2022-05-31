@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import { ModalContext } from 'contexts/ModalContext';
-
 import { Divider } from '@mui/material';
 import {
   CommonContainer,
@@ -9,19 +6,9 @@ import {
   SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
+import { ClickModal } from '.';
 
-type ClickModal = {
-  clickModal: (e: React.MouseEvent<HTMLElement>) => void;
-};
-
-function Period() {
-  const { clickModalFocus } = useContext(ModalContext);
-
-  const clickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const ID: string = e.currentTarget.id;
-    clickModalFocus?.(ID);
-  };
-
+function Period({ clickModal }: ClickModal) {
   return (
     <>
       <CheckIn clickModal={clickModal} />
