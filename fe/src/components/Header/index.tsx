@@ -5,9 +5,7 @@ import styled, { css } from 'styled-components';
 import { Link } from '@mui/material';
 import { ReactComponent as LogoImg } from 'images/logo.svg';
 
-import Menu from 'components/Header/Menu';
-import SearchBar from 'components/Header/SearchBar/index';
-import SearchWrapper, { SearchWrap } from './SearchWrapper';
+import SearchWrapper from './SearchWrapper';
 import UserMenu from './UserMenu';
 
 // type Router = '/' | '/result';
@@ -29,18 +27,12 @@ function Header() {
       <Link href="/" style={{ height: '26px' }}>
         <LogoImg aria-label="로고이미지" />
       </Link>
-      {path === '/' ? (
-        <SearchWrap>
-          <Menu />
-          <SearchBar />
-        </SearchWrap>
-      ) : (
-        <SearchWrapper
-          changeSearchBar={changeSearchBar}
-          miniFocus={miniFocus}
-          setMiniFocus={setMiniFocus}
-        />
-      )}
+      <SearchWrapper
+        changeSearchBar={changeSearchBar}
+        miniFocus={miniFocus}
+        setMiniFocus={setMiniFocus}
+        path={path}
+      />
       <UserMenu />
     </HeaderWrap>
   );
