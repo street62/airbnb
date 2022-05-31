@@ -14,7 +14,7 @@ type Style = {
 type InputButtonType = {
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
   buttonInfo: ButtonInfo;
-  styleOptions: Style | undefined;
+  styleOptions?: Style;
 };
 
 function InputButton({ clickModal, buttonInfo, styleOptions }: InputButtonType) {
@@ -30,5 +30,9 @@ function InputButton({ clickModal, buttonInfo, styleOptions }: InputButtonType) 
     </CommonButton>
   );
 }
+
+InputButton.defaultProps = {
+  styleOptions: undefined,
+};
 
 export default InputButton;

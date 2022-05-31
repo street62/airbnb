@@ -48,7 +48,7 @@ function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
 
   return (
     <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
-      <InputButton clickModal={clickModal} buttonInfo={BUTTON_INFO} styleOptions={undefined} />
+      <InputButton clickModal={clickModal} buttonInfo={BUTTON_INFO} />
       {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
     </CommonContainer>
   );
