@@ -75,6 +75,10 @@ export const SelectedOption = styled.span`
   text-align: left;
   color: ${({ theme }) => theme.colors.grey2};
   ${({ theme }) => theme.fontStyles.normal16px};
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const SearchButton = styled.button`
