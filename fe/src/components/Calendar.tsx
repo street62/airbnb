@@ -15,10 +15,10 @@ function Calendar({ month }: CalendarProps) {
   const { setCheckIn, setCheckOut, setMonth } = usePeriodDispatch();
 
   function increaseMonth() {
-    setMonth(month + 2);
+    if (month < 10) setMonth(month + 2);
   }
   function decreaseMonth() {
-    setMonth(month - 2);
+    if (month > 0) setMonth(month - 2);
   }
   return (
     <>
