@@ -27,7 +27,7 @@ public class AccommodationService {
     private final MemberRepository memberRepository;
     private final ReservationRepository reservationRepository;
 
-    public List<SearchQueryResponseDto> search(SearchQueryRequestDto requestDto) {
+    public List<SearchQueryResponseDto> getSearchResult(SearchQueryRequestDto requestDto) {
         List<Accommodation> searchResult = accommodationRepository.findAllBySearchCondition(
                 requestDto.getCheckinDate(),
                 requestDto.getCheckoutDate(),
@@ -51,7 +51,7 @@ public class AccommodationService {
         return ReserveFormResponseDto.of(accommodation);
     }
 
-    public HttpStatus generateNewReservation(ReserveRequestDto requestDto, Long accommodationId) {
+    public HttpStatus registerReservation(ReserveRequestDto requestDto, Long accommodationId) {
         Member member = memberRepository.findById(requestDto.getUserId())
                 .orElseThrow(MemberNotFoundException::new);
         Accommodation accommodation = accommodationRepository.findById(accommodationId)
