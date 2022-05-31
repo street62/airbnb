@@ -22,7 +22,7 @@ function PersonnelModal() {
     return (
       <>
         <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider />}
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id * 8} />}
       </>
     );
   });
@@ -36,26 +36,14 @@ const PersonnelModalContainer = styled(ModalWrap)`
   right: 0;
   padding: 64px;
   display: flex;
-  display: none;
   flex-direction: column;
 `;
 
 const StyledDevider = styled(Divider)`
-<<<<<<< HEAD
-<<<<<<< HEAD:fe/src/components/Modals/PersonnelModal.tsx
-=======
->>>>>>> 5646458 ([FE] result페이지 UI 구현 (#33))
   && {
     width: 100%;
     margin: 24px 0;
   }
-<<<<<<< HEAD
-=======
-  width: 100%;
-  margin: 24px 0;
->>>>>>> c3e8218 (Refactor: PR 리뷰를 바탕으로 코드 수정):fe/src/components/Header/SearchBar/Modals/PersonnelModal.tsx
-=======
->>>>>>> 5646458 ([FE] result페이지 UI 구현 (#33))
 `;
 
 export default PersonnelModal;

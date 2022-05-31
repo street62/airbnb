@@ -6,30 +6,56 @@ import {
   SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
+import { ClickModal } from '.';
 
-function Period() {
+function Period({ clickModal, isClicked, focusModal }: ClickModal) {
   return (
     <>
-      <CommonContainer>
-        <CommonButton aria-label="체크인 날짜 입력 버튼" style={{ paddingLeft: '24px' }}>
-          <Label>체크인</Label>
-          <SelectedOption>날짜 입력</SelectedOption>
-        </CommonButton>
-        <button type="button" aria-label="날짜 입력 취소 버튼">
-          <StyledCrossIcon />
-        </button>
-      </CommonContainer>
-      <Divider orientation="vertical" sx={{ height: '60%' }} />
-      <CommonContainer>
-        <CommonButton aria-label="체크아웃 날짜 입력 버튼">
-          <Label>체크아웃</Label>
-          <SelectedOption>날짜 입력</SelectedOption>
-        </CommonButton>
-        <button type="button" aria-label="날짜 입력 취소 버튼">
-          <StyledCrossIcon />
-        </button>
-      </CommonContainer>
+      <CheckIn clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
+      {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
+      <CheckOut clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
     </>
+  );
+}
+
+function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
+  const FILTER_ID = 'CHECK_IN';
+
+  return (
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
+      <CommonButton
+        onClick={clickModal}
+        aria-label="체크인 날짜 입력 버튼"
+        style={{ paddingLeft: '24px' }}
+        id={FILTER_ID}
+      >
+        <Label>체크인</Label>
+        <SelectedOption>날짜 입력</SelectedOption>
+      </CommonButton>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="날짜 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
+    </CommonContainer>
+  );
+}
+
+function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
+  const FILTER_ID = 'CHECK_OUT';
+
+  return (
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
+      <CommonButton onClick={clickModal} aria-label="체크아웃 날짜 입력 버튼" id={FILTER_ID}>
+        <Label>체크아웃</Label>
+        <SelectedOption>날짜 입력</SelectedOption>
+      </CommonButton>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="날짜 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
+    </CommonContainer>
   );
 }
 
