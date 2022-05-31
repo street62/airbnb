@@ -10,7 +10,7 @@ import {
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
 
-type PeriodProps = {
+type ClickModal = {
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
@@ -18,8 +18,8 @@ function Period() {
   const { clickModalFocus } = useContext(ModalContext);
 
   const clickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const option: string = 'CHECK';
-    clickModalFocus?.(option);
+    const ID: string = e.currentTarget.id;
+    clickModalFocus?.(ID);
   };
 
   return (
@@ -31,13 +31,14 @@ function Period() {
   );
 }
 
-function CheckIn({ clickModal }: PeriodProps) {
+function CheckIn({ clickModal }: ClickModal) {
   return (
     <CommonContainer>
       <CommonButton
         onClick={clickModal}
         aria-label="체크인 날짜 입력 버튼"
         style={{ paddingLeft: '24px' }}
+        id="CHECK_IN"
       >
         <Label>체크인</Label>
         <SelectedOption>날짜 입력</SelectedOption>
@@ -49,10 +50,10 @@ function CheckIn({ clickModal }: PeriodProps) {
   );
 }
 
-function CheckOut({ clickModal }: PeriodProps) {
+function CheckOut({ clickModal }: ClickModal) {
   return (
     <CommonContainer>
-      <CommonButton onClick={clickModal} aria-label="체크아웃 날짜 입력 버튼">
+      <CommonButton onClick={clickModal} aria-label="체크아웃 날짜 입력 버튼" id="CHECK_OUT">
         <Label>체크아웃</Label>
         <SelectedOption>날짜 입력</SelectedOption>
       </CommonButton>

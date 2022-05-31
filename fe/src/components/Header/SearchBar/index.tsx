@@ -39,7 +39,8 @@ function SearchBar() {
 
 function FocusModal({ focus }: any) {
   switch (focus) {
-    case 'CHECK':
+    case 'CHECK_IN':
+    case 'CHECK_OUT':
       return <PeriodModal />;
     case 'PERSONNEL':
       return <PersonnelModal />;

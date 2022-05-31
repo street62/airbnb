@@ -14,14 +14,14 @@ function Price() {
   const { rangeText } = usePriceState();
   const { clickModalFocus } = useContext(ModalContext);
 
-  const ClickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const option: string = 'PRICE';
-    clickModalFocus?.(option);
+  const clickModal = (e: React.MouseEvent<HTMLElement>) => {
+    const ID: string = e.currentTarget.id;
+    clickModalFocus?.(ID);
   };
 
   return (
     <CommonContainer>
-      <CommonButton onClick={ClickModal} aria-label="요금 입력 버튼">
+      <CommonButton onClick={clickModal} aria-label="요금 입력 버튼" id="PRICE">
         <Label>요금</Label>
         <SelectedOption>{rangeText}</SelectedOption>
       </CommonButton>

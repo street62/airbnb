@@ -14,14 +14,19 @@ function Personnel() {
   const { counterText } = usePersonnelState();
   const { clickModalFocus } = useContext(ModalContext);
 
-  const ClickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const option: string = 'PERSONNEL';
-    clickModalFocus?.(option);
+  const clickModal = (e: React.MouseEvent<HTMLElement>) => {
+    const ID: string = e.currentTarget.id;
+    clickModalFocus?.(ID);
   };
 
   return (
     <>
-      <CommonButton onClick={ClickModal} aria-label="게스트 추가 버튼" style={{ width: '124px' }}>
+      <CommonButton
+        onClick={clickModal}
+        aria-label="게스트 추가 버튼"
+        id="PERSONNEL"
+        style={{ width: '124px' }}
+      >
         <Label>인원</Label>
         <PersonnelSelectedOption>{counterText}</PersonnelSelectedOption>
       </CommonButton>
