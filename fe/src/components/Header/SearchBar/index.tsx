@@ -1,5 +1,4 @@
-import { useContext } from 'react';
-import { ModalContext } from 'contexts/ModalContext';
+import { useModal } from 'hooks/useModal';
 
 import { Divider } from '@mui/material';
 import {
@@ -29,7 +28,7 @@ type Focus = {
 };
 
 function SearchBar() {
-  const { focusModal, clickModalFocus, isClicked } = useContext(ModalContext);
+  const { focusModal, clickModalFocus, isClicked } = useModal();
 
   const clickModal = (e: React.MouseEvent<HTMLElement>) => {
     if (!e.currentTarget.dataset.id) return;
