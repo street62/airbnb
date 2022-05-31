@@ -1,3 +1,5 @@
+import { usePriceState } from 'contexts/PriceContext';
+
 import {
   CommonContainer,
   CommonButton,
@@ -5,20 +7,24 @@ import {
   SelectedOption,
   StyledCrossIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
-import { usePriceState } from 'contexts/PriceContext';
+import { ClickModal } from '.';
 
-function Price() {
+function Price({ clickModal, isClicked, focusModal }: ClickModal) {
   const { rangeText } = usePriceState();
 
+  const FILTER_ID = 'PRICE';
+
   return (
-    <CommonContainer>
-      <CommonButton aria-label="요금 입력 버튼">
+    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
+      <CommonButton onClick={clickModal} aria-label="요금 입력 버튼" id={FILTER_ID}>
         <Label>요금</Label>
         <SelectedOption>{rangeText}</SelectedOption>
       </CommonButton>
-      <button type="button" aria-label="요금 입력 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      {isClicked && focusModal === FILTER_ID && (
+        <button type="button" aria-label="요금 입력 취소 버튼">
+          <StyledCrossIcon />
+        </button>
+      )}
     </CommonContainer>
   );
 }
