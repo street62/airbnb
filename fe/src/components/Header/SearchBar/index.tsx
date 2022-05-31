@@ -32,8 +32,9 @@ function SearchBar() {
   const { focusModal, clickModalFocus, isClicked } = useContext(ModalContext);
 
   const clickModal = (e: React.MouseEvent<HTMLElement>) => {
-    const ID: string = e.currentTarget.id;
-    clickModalFocus?.(ID);
+    if (!e.currentTarget.dataset.id) return;
+    const datasetID: string = e.currentTarget.dataset.id;
+    clickModalFocus?.(datasetID);
   };
 
   return (

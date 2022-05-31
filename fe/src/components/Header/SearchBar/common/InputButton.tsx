@@ -1,7 +1,7 @@
 import { CommonButton, Label, SelectedOption } from 'components/Header/SearchBar/searchBar.styled';
 
 type ButtonInfo = {
-  id: string;
+  id: string | undefined;
   title: string;
   inputText: string;
   ariaLabel: string;
@@ -23,7 +23,7 @@ function InputButton({ clickModal, buttonInfo, styleOptions }: InputButtonType) 
       onClick={clickModal}
       aria-label={buttonInfo.ariaLabel}
       style={styleOptions}
-      id={buttonInfo.id}
+      data-id={buttonInfo.id}
     >
       <Label>{buttonInfo.title}</Label>
       <SelectedOption>{buttonInfo.inputText}</SelectedOption>
