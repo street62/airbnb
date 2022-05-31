@@ -21,7 +21,4 @@ const PeriodModalWrap = styled(ModalWrap)`
   /* display: none; */
 `;
 
-// const CheckInBtn = styled.button``;
-// const CheckOutBtn = styled(CheckInBtn)``;
-
 export default PeriodModal;

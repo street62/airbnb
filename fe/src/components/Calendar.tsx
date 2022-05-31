@@ -8,6 +8,10 @@ type CalendarProps = {
 };
 
 function Calendar({ month }: CalendarProps) {
+  const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
+  const daysComp = days.map((day) => {
+    return <Day>{day}</Day>;
+  });
   const { setCheckIn, setCheckOut, setMonth } = usePeriodDispatch();
 
   function increaseMonth() {
@@ -33,7 +37,7 @@ function Calendar({ month }: CalendarProps) {
         />
       </SlideBtnWrap>
       <CalendarWrap>
-        <ThisMonth>이번달</ThisMonth>
+        <ThisMonth>{daysComp}</ThisMonth>
         <NextMonth>다음달</NextMonth>
       </CalendarWrap>
     </>
@@ -74,6 +78,15 @@ const ThisMonth = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+const Day = styled.div`
+  width: 48px;
+  height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  ${({ theme }) => theme.fontStyles.normal12px}
+  color : ${({ theme }) => theme.colors.grey3}
 `;
 const NextMonth = styled(ThisMonth)``;
 export default Calendar;
