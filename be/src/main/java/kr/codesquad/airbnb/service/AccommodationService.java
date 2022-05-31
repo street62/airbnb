@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import kr.codesquad.airbnb.domain.accommodation.Accommodation;
 import kr.codesquad.airbnb.domain.member.Member;
-import kr.codesquad.airbnb.domain.Reservation;
+import kr.codesquad.airbnb.domain.reservation.Reservation;
 import kr.codesquad.airbnb.domain.accommodation.AccommodationNotFoundException;
 import kr.codesquad.airbnb.domain.member.MemberNotFoundException;
 import kr.codesquad.airbnb.dto.ReserveFormResponseDto;

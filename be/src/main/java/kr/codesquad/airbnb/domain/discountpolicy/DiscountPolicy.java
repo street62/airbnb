@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.discountpolicy;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

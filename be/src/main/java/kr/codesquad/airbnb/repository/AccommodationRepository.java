@@ -1,7 +1,7 @@
 package kr.codesquad.airbnb.repository;
 
 import java.time.LocalDate;
-import kr.codesquad.airbnb.domain.Accommodation;
+import kr.codesquad.airbnb.domain.accommodation.Accommodation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

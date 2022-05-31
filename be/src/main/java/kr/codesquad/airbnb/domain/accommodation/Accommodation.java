@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.accommodation;
 
 import java.util.List;
 import javax.persistence.Entity;
@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import kr.codesquad.airbnb.domain.discountpolicy.DiscountPolicy;
+import kr.codesquad.airbnb.domain.reservation.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
