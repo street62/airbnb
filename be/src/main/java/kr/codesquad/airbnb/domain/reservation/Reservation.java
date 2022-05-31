@@ -1,6 +1,8 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.reservation;
 
 import java.time.LocalDate;
+import kr.codesquad.airbnb.domain.accommodation.Accommodation;
+import kr.codesquad.airbnb.domain.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;

@@ -25,25 +25,25 @@ public class AccommodationController {
     private final AccommodationService accommodationService;
 
     @GetMapping
-    public ResponseEntity<List<SearchQueryResponseDto>> getSearchResult(
+    public ResponseEntity<List<SearchQueryResponseDto>> loadAccommodationsBySearchCondition(
         @ModelAttribute SearchQueryRequestDto requestDto) {
-        return ResponseEntity.ok(accommodationService.search(requestDto));
+        return ResponseEntity.ok(accommodationService.getSearchResult(requestDto));
     }
 
     @GetMapping("/prices")
-    public ResponseEntity<List<Integer>> getAllPrices() {
+    public ResponseEntity<List<Integer>> loadAllAccommodationPrices() {
         return ResponseEntity.ok(accommodationService.getAllPrices());
     }
 
     @GetMapping("/{accommodationId}/reservation")
-    public ResponseEntity<ReserveFormResponseDto> getReserveForm(
+    public ResponseEntity<ReserveFormResponseDto> loadReservationForm(
         @PathVariable String accommodationId) {
         return ResponseEntity.ok(accommodationService.getReservationPage(accommodationId));
     }
 
     @PostMapping("/{accommodationId}/reservation")
-    public HttpStatus postReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
-        return accommodationService.generateNewReservation(requestDto, accommodationId);
+    public HttpStatus registerReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
+        return accommodationService.registerReservation(requestDto, accommodationId);
     }
 
 }

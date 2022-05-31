@@ -1,10 +1,9 @@
 package kr.codesquad.airbnb.dto;
 
-import kr.codesquad.airbnb.domain.Accommodation;
+import kr.codesquad.airbnb.domain.accommodation.Accommodation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 @Builder

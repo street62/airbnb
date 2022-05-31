@@ -1,4 +1,4 @@
-package kr.codesquad.airbnb.domain;
+package kr.codesquad.airbnb.domain.member;
 
 import lombok.NoArgsConstructor;
 
