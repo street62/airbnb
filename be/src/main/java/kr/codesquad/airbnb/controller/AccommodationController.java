@@ -7,7 +7,6 @@ import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
 import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
 import kr.codesquad.airbnb.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,8 +41,8 @@ public class AccommodationController {
     }
 
     @PostMapping("/{accommodationId}/reservation")
-    public HttpStatus registerReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
-        return accommodationService.registerReservation(requestDto, accommodationId);
+    public ResponseEntity<Void> registerReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
+           return new ResponseEntity<>(accommodationService.registerReservation(requestDto, accommodationId));
     }
 
 }
