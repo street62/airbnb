@@ -80,7 +80,7 @@ export const SelectedOption = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const SearchButton = styled.button`
+export const SearchButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;
