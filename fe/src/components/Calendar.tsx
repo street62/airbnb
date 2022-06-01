@@ -10,17 +10,19 @@ type CalendarProps = {
 
 function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
+  const thisYear = date.getFullYear();
   const month = date.getMonth();
-
+  const nextDate = new Date(thisYear, month + 1);
   const thisMonth = date.getMonth() + 1;
   const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
-  const thisYear = date.getFullYear();
-  console.log(thisYear, month);
+
   const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
-  const year: number = 2022;
   const thisDate: Date = new Date();
   const daysComp = days.map((day: string) => <WeekDay id={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
-  const calendarDays = getDays(month).map((day) => {
+  const thisCalendarDays = getDays(month).map((day) => {
+    return <Day key={day}>{day}</Day>;
+  });
+  const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
     return <Day key={day}>{day}</Day>;
   });
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
@@ -55,11 +57,11 @@ function Calendar({ date }: CalendarProps) {
       <CalendarWrap>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap>{calendarDays}</DaysWrap>
+          <DaysWrap>{thisCalendarDays}</DaysWrap>
         </Month>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap>{calendarDays}</DaysWrap>
+          <DaysWrap>{nextCalendarDays}</DaysWrap>
         </Month>
       </CalendarWrap>
     </>
