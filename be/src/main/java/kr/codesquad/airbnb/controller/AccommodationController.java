@@ -1,10 +1,8 @@
 package kr.codesquad.airbnb.controller;
 
 import java.util.List;
-import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
-import kr.codesquad.airbnb.dto.ReserveRequestDto;
-import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
-import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
+
+import kr.codesquad.airbnb.dto.*;
 import kr.codesquad.airbnb.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +39,8 @@ public class AccommodationController {
     }
 
     @PostMapping("/{accommodationId}/reservation")
-    public ResponseEntity<Void> registerReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
-           return new ResponseEntity<>(accommodationService.registerReservation(requestDto, accommodationId));
+    public ResponseEntity<ReserveResponseDto> registerReservation(@RequestBody ReserveRequestDto requestDto, @PathVariable Long accommodationId) {
+           return ResponseEntity.ok(accommodationService.registerReservation(requestDto, accommodationId));
     }
 
 }

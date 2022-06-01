@@ -8,10 +8,7 @@ import kr.codesquad.airbnb.domain.member.Member;
 import kr.codesquad.airbnb.domain.reservation.Reservation;
 import kr.codesquad.airbnb.domain.accommodation.AccommodationNotFoundException;
 import kr.codesquad.airbnb.domain.member.MemberNotFoundException;
-import kr.codesquad.airbnb.dto.ReserveFormResponseDto;
-import kr.codesquad.airbnb.dto.ReserveRequestDto;
-import kr.codesquad.airbnb.dto.SearchQueryRequestDto;
-import kr.codesquad.airbnb.dto.SearchQueryResponseDto;
+import kr.codesquad.airbnb.dto.*;
 import kr.codesquad.airbnb.repository.AccommodationRepository;
 import kr.codesquad.airbnb.repository.MemberRepository;
 import kr.codesquad.airbnb.repository.ReservationRepository;
@@ -51,7 +48,7 @@ public class AccommodationService {
         return ReserveFormResponseDto.of(accommodation);
     }
 
-    public HttpStatus registerReservation(ReserveRequestDto requestDto, Long accommodationId) {
+    public ReserveResponseDto registerReservation(ReserveRequestDto requestDto, Long accommodationId) {
         Member member = memberRepository.findById(requestDto.getUserId())
                 .orElseThrow(MemberNotFoundException::new);
         Accommodation accommodation = accommodationRepository.findById(accommodationId)
@@ -69,6 +66,6 @@ public class AccommodationService {
                 .build();
 
         reservationRepository.save(reservation);
-        return HttpStatus.OK;
+        return new ReserveResponseDto(200, "예약 요청이 완료되었습니다.");
     }
 }
