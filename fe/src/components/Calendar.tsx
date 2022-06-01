@@ -11,8 +11,12 @@ type CalendarProps = {
 function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
   const month = date.getMonth();
+
   const thisMonth = date.getMonth() + 1;
   const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
+  const thisYear = date.getFullYear();
+  console.log(thisYear, month);
+  const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
   const year: number = 2022;
   const thisDate: Date = new Date();
   const daysComp = days.map((day: string) => <WeekDay id={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
@@ -22,10 +26,10 @@ function Calendar({ date }: CalendarProps) {
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;
   function increaseMonth() {
-    setDate(new Date(year, month + monthAfterNext));
+    setDate(new Date(thisYear, month + monthAfterNext));
   }
   function decreaseMonth() {
-    if (date > thisDate) setDate(new Date(year, month - monthAfterNext));
+    if (date > thisDate) setDate(new Date(thisYear, month - monthAfterNext));
   }
 
   return (
@@ -36,8 +40,12 @@ function Calendar({ date }: CalendarProps) {
             decreaseMonth();
           }}
         />
-        <MonthTitle>{thisMonth}월</MonthTitle>
-        <MonthTitle>{nextMonth}월</MonthTitle>
+        <MonthTitle>
+          {thisYear}년 {thisMonth}월
+        </MonthTitle>
+        <MonthTitle>
+          {nextYear}년 {nextMonth}월
+        </MonthTitle>
         <NextBtn
           onClick={() => {
             increaseMonth();
