@@ -2,6 +2,7 @@ import { usePeriodDispatch } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
 import styled from 'styled-components';
+import { getDays } from 'util/getDays';
 
 type CalendarProps = {
   month: number;
@@ -9,16 +10,20 @@ type CalendarProps = {
 
 function Calendar({ month }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
-  const daysComp = days.map((day) => {
-    return <Day>{day}</Day>;
+  const year: number = new Date().getFullYear();
+  getDays(year, month);
+  const daysComp = days.map((day: string) => {
+    return <WeekDay>{day}</WeekDay>;
   });
   const { setCheckIn, setCheckOut, setMonth } = usePeriodDispatch();
-
+  const monthAfterNext: number = 2;
   function increaseMonth() {
-    if (month < 10) setMonth(month + 2);
+    const november: number = 10;
+    if (month < november) setMonth(month + monthAfterNext);
   }
   function decreaseMonth() {
-    if (month > 0) setMonth(month - 2);
+    const january: number = 0;
+    if (month > january) setMonth(month - monthAfterNext);
   }
   return (
     <>
@@ -28,8 +33,8 @@ function Calendar({ month }: CalendarProps) {
             decreaseMonth();
           }}
         />
-        <ThisMonthTitle>{month + 1}월</ThisMonthTitle>
-        <NextMonthTitle>{month + 2}월</NextMonthTitle>
+        <MonthTitle>{month + 1}월</MonthTitle>
+        <MonthTitle>{month + 2}월</MonthTitle>
         <NextBtn
           onClick={() => {
             increaseMonth();
@@ -37,8 +42,14 @@ function Calendar({ month }: CalendarProps) {
         />
       </SlideBtnWrap>
       <CalendarWrap>
-        <ThisMonth>{daysComp}</ThisMonth>
-        <NextMonth>다음달</NextMonth>
+        <ThisMonth>
+          <WeekDays> {daysComp}</WeekDays>
+          <DaysWrap>day</DaysWrap>
+        </ThisMonth>
+        <NextMonth>
+          <WeekDays> {daysComp}</WeekDays>
+          <DaysWrap>day</DaysWrap>
+        </NextMonth>
       </CalendarWrap>
     </>
   );
@@ -55,13 +66,12 @@ const SlideBtnWrap = styled.div`
 const PrevBtn = styled(LeftIcon)`
   position: absolute;
 `;
-const ThisMonthTitle = styled.div`
+const MonthTitle = styled.div`
   width: 336px;
   display: flex;
   justify-content: center;
   ${({ theme }) => theme.fontStyles.bold16px};
 `;
-const NextMonthTitle = styled(ThisMonthTitle)``;
 const NextBtn = styled(RightIcon)`
   position: absolute;
   right: 0;
@@ -78,8 +88,13 @@ const ThisMonth = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 `;
-const Day = styled.div`
+const WeekDays = styled.div`
+  width: 100%;
+  display: flex;
+`;
+const WeekDay = styled.div`
   width: 48px;
   height: 24px;
   display: flex;
@@ -89,4 +104,12 @@ const Day = styled.div`
   color : ${({ theme }) => theme.colors.grey3}
 `;
 const NextMonth = styled(ThisMonth)``;
+const DaysWrap = styled.div`
+  width: 100%;
+  border: 1px solid black;
+  display: grid;
+  grid-auto-columns: 48px;
+  grid-auto-rows: 48px;
+`;
+const Day = styled.div``;
 export default Calendar;
