@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { usePersonnelState } from 'contexts/PersonnelContext';
 
 import { ClickModal } from '.';
@@ -24,8 +25,41 @@ function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
         styleOptions={{ width: '124px' }}
       />
       {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
+=======
+import styled from 'styled-components';
+import {
+  CommonButton,
+  Label,
+  SelectedOption,
+  StyledCrossIcon,
+} from 'components/Header/SearchBar/searchBar.styled';
+
+import { usePersonnelState } from 'contexts/PersonnelContext';
+
+function Personnel() {
+  const { counterText } = usePersonnelState();
+
+  return (
+    <>
+      <CommonButton aria-label="게스트 추가 버튼" style={{ width: '124px' }}>
+        <Label>인원</Label>
+        <PersonnelSelectedOption>{counterText}</PersonnelSelectedOption>
+      </CommonButton>
+      <button type="button" aria-label="게스트 추가 취소 버튼">
+        <StyledCrossIcon />
+      </button>
+>>>>>>> 6393f49d26b18f11e2d832f960bdac9b70c20313
     </>
   );
 }
 
+<<<<<<< HEAD
+=======
+const PersonnelSelectedOption = styled(SelectedOption)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
+>>>>>>> 6393f49d26b18f11e2d832f960bdac9b70c20313
 export default Personnel;

@@ -10,6 +10,8 @@ import UserMenu from './UserMenu';
 
 // type Router = '/' | '/result';
 
+// type Router = '/' | '/result';
+
 type Position = {
   position: string;
 };
@@ -27,6 +29,7 @@ function Header() {
       <Link href="/" style={{ height: '26px' }}>
         <LogoImg aria-label="로고이미지" />
       </Link>
+<<<<<<< HEAD
       <SearchWrapper
         changeSearchBar={changeSearchBar}
         miniFocus={miniFocus}
@@ -34,6 +37,24 @@ function Header() {
         path={path}
       />
       <UserMenu />
+=======
+      {path === '/' ? (
+        <SearchWrap>
+          <Menu />
+          <SearchBar />
+        </SearchWrap>
+      ) : (
+        <SearchWrapper
+          changeSearchBar={changeSearchBar}
+          miniFocus={miniFocus}
+          setMiniFocus={setMiniFocus}
+        />
+      )}
+      <UserWrapper type="button" aria-label="유저 정보 메뉴">
+        <Hamburger />
+        <CustomAvatar src="images/FE_숙소예약서비스/Property 1=user.svg" />
+      </UserWrapper>
+>>>>>>> 6393f49d26b18f11e2d832f960bdac9b70c20313
     </HeaderWrap>
   );
 }
