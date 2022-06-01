@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { ModalWrap } from './styled';
+import { ModalWrap } from 'components/Modals/styled';
 
 function PriceModal() {
   return (
