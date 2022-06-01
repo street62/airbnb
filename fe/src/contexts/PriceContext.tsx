@@ -7,7 +7,7 @@ type range = {
 
 type State = {
   range: range;
-  rangeText: string;
+  priceRangeText: string;
 };
 
 type Action = { type: 'SET_RANGE'; age: string };
@@ -19,7 +19,7 @@ const PriceDispatchContext = createContext<PriceDispatch | null>(null);
 
 const initState: State = {
   range: { minPrice: 0, maxPrice: 0 },
-  rangeText: '금액대 설정',
+  priceRangeText: '금액대 설정',
 };
 
 export function PriceProvider({ children }: { children: ReactNode }) {
@@ -43,7 +43,7 @@ export function usePriceState() {
   const state = useContext(PriceStateContext);
   if (!state) throw new Error();
 
-  return { range: state.range, rangeText: state.rangeText };
+  return { range: state.range, priceRangeText: state.priceRangeText };
 }
 
 export function usePriceDispatch() {

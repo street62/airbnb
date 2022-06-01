@@ -5,7 +5,7 @@ import MiniSearchBar from './MiniSearchBar';
 import SearchBar from './SearchBar';
 
 type SearchWrapperType = {
-  changeSearchBar: () => void;
+  changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
   miniFocus: boolean;
   setMiniFocus: Dispatch<React.SetStateAction<boolean>>;
   path: string;
