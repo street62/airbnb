@@ -4,9 +4,11 @@ import { ModalWrap } from 'components/Modals/styled';
 import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
 import { toLocalString } from 'utils/helper';
 
+import Chart from './Chart';
+
 const priceInfo = (priceData: Array<number>) => {
-  const minPrice = priceData[0];
-  const maxPrice = priceData[priceData.length - 1];
+  const minPrice = Math.min(...priceData);
+  const maxPrice = Math.max(...priceData);
   const avgPrice = Math.floor(
     priceData.reduce((prev: number, curr: number) => prev + curr) / priceData.length,
   );
@@ -28,7 +30,7 @@ function PriceModal() {
         <PriceRange>{priceRangeText}</PriceRange>
         <p className="price_avg">{avgPriceText}</p>
       </PriceInfo>
-      <div>범위 슬라이더</div>
+      <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={PRICE_DATA} />
     </PriceModalWrap>
   );
 }
