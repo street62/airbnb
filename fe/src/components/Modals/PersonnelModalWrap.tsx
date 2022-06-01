@@ -1,8 +1,17 @@
+import { usePersonnelState } from 'contexts/PersonnelContext';
+
 import styled from 'styled-components';
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/Property 1=plus-circle.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/Property 1=minus-circle.svg';
+import { PersonnselInfo } from './PersonnelModal';
 
-function PersonnelModalWrap({ info }: any) {
+type InfoProps = {
+  info: PersonnselInfo;
+};
+
+function PersonnelModalWrap({ info }: InfoProps) {
+  const { counter } = usePersonnelState();
+
   return (
     <PersonnelModalWrapContainer>
       <PeopleInfo>
@@ -11,7 +20,7 @@ function PersonnelModalWrap({ info }: any) {
       </PeopleInfo>
       <CounterButtons>
         <StyledMinusIcon />
-        <span>0</span>
+        <span>{counter[info.desc]}</span>
         <StyledPlusIcon />
       </CounterButtons>
     </PersonnelModalWrapContainer>

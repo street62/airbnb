@@ -2,18 +2,24 @@ import styled from 'styled-components';
 import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
+import { usePersonnelState } from 'contexts/PersonnelContext';
+import { usePriceState } from 'contexts/PriceContext';
+
 type MyProps = {
   changeSearchBar: () => void;
 };
 
 function MiniSearchBar({ changeSearchBar }: MyProps) {
+  const { counterText } = usePersonnelState();
+  const { rangeText } = usePriceState();
+
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
       <MiniBarButton aria-label="일정 입력 버튼">일정 입력</MiniBarButton>
       <Divider orientation="vertical" />
-      <PriceButton aria-label="요금 입력 버튼">₩100,000~1,000,000</PriceButton>
+      <PriceButton aria-label="요금 입력 버튼">{rangeText}</PriceButton>
       <Divider orientation="vertical" />
-      <MiniBarButton aria-label="인원 입력 버튼">인원 입력</MiniBarButton>
+      <MiniBarButton aria-label="인원 입력 버튼">{counterText}</MiniBarButton>
       <MiniSearchBtn type="button" aria-label="결과 찾기 버튼">
         <MiniSearchIcon />
       </MiniSearchBtn>

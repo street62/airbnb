@@ -4,18 +4,25 @@ import PersonnelModalWrap from './PersonnelModalWrap';
 
 import { ModalWrap } from './styled';
 
+export type PersonnselInfo = {
+  id: number;
+  title: string;
+  info: string;
+  desc: string;
+};
+
 function PersonnelModal() {
   const PERSONNEL_INFO = [
-    { id: 1, title: '성인', info: '만 13세 이상' },
-    { id: 2, title: '어린이', info: '만 2~12세' },
-    { id: 3, title: '유아', info: '만 2세 미만' },
+    { id: 1, title: '성인', info: '만 13세 이상', desc: 'adult' },
+    { id: 2, title: '어린이', info: '만 2~12세', desc: 'child' },
+    { id: 3, title: '유아', info: '만 2세 미만', desc: 'toddler' },
   ];
 
-  const PersonnelInfo = PERSONNEL_INFO.map((info, index) => {
+  const PersonnelInfo = PERSONNEL_INFO.map((info: PersonnselInfo, index: number) => {
     return (
       <>
         <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider />}
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id} />}
       </>
     );
   });
@@ -29,7 +36,6 @@ const PersonnelModalContainer = styled(ModalWrap)`
   right: 0;
   padding: 64px;
   display: flex;
-  display: none;
   flex-direction: column;
 `;
 

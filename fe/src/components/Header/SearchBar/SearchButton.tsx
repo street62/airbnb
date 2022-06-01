@@ -2,12 +2,16 @@ import {
   SearchButton as SearchButtonContainer,
   StyledSearchIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
+import { ModalContext } from 'contexts/ModalContext';
+import { useContext } from 'react';
 
 function SearchButton() {
+  const { focusModal } = useContext(ModalContext);
+
   return (
-    <SearchButtonContainer aria-label="결과 찾기 버튼">
+    <SearchButtonContainer href="/result" aria-label="결과 찾기 버튼">
       <StyledSearchIcon />
-      <span>검색</span>
+      {focusModal !== '' && <span>검색</span>}
     </SearchButtonContainer>
   );
 }

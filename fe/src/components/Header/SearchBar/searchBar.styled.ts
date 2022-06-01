@@ -1,22 +1,40 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { ReactComponent as SearchIcon } from 'images/FE_숙소예약서비스/Property 1=search.svg';
 import { ReactComponent as CrossIcon } from 'images/FE_숙소예약서비스/Property 1=x-circle.svg';
+
+type SearchBarContainerType = {
+  isClicked: boolean;
+};
 
 export const SearchBarContainer = styled.div`
   position: relative;
 `;
 
-export const SearchBarWrap = styled.div`
+export const SearchBarWrap = styled.div<SearchBarContainerType>`
   display: flex;
   align-items: center;
   width: 916px;
   height: 76px;
   border: 1px solid ${({ theme }) => theme.colors.grey4};
   border-radius: 999px;
-  background: ${({ theme }) => theme.colors.white};
+
+  background: ${({ isClicked }) =>
+    isClicked
+      ? css`
+          ${({ theme }) => theme.colors.grey5};
+        `
+      : css`
+          ${({ theme }) => theme.colors.white}
+        `};
 `;
 
-export const CommonContainer = styled.div`
+interface ContainerType {
+  isClicked?: boolean;
+  focusModal?: string;
+  id: string;
+}
+
+export const CommonContainer = styled.div<ContainerType>`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -29,11 +47,13 @@ export const CommonContainer = styled.div`
     background: ${({ theme }) => theme.colors.grey6};
   }
 
-  /* props로 넘겨받도록 수정 */
-  &.focus {
-    background: ${({ theme }) => theme.colors.white};
-    box-shadow: 0px 0px 13px 2px rgba(51, 51, 51, 0.29);
-  }
+  ${({ focusModal, id, isClicked }) =>
+    focusModal === id &&
+    isClicked &&
+    css`
+      background: ${({ theme }) => theme.colors.white};
+      box-shadow: 0px 0px 13px 2px rgba(51, 51, 51, 0.29);
+    `};
 `;
 
 export const CommonButton = styled.button`
@@ -49,14 +69,18 @@ export const Label = styled.span`
   ${({ theme }) => theme.fontStyles.bold12px};
 `;
 
-export const InputState = styled.span`
+export const SelectedOption = styled.span`
   width: 100%;
   text-align: left;
   color: ${({ theme }) => theme.colors.grey2};
   ${({ theme }) => theme.fontStyles.normal16px};
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-export const SearchButton = styled.button`
+export const SearchButton = styled.a`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,29 +1,31 @@
-import styled from 'styled-components';
-import {
-  CommonButton,
-  Label,
-  InputState,
-  StyledCrossIcon,
-} from 'components/Header/SearchBar/searchBar.styled';
+import { usePersonnelState } from 'contexts/PersonnelContext';
 
-function Personnel() {
+import { ClickModal } from '.';
+import ResetButton from './common/ResetButton';
+import InputButton from './common/InputButton';
+
+function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
+  const { counterText } = usePersonnelState();
+
+  const FILTER_ID = 'PERSONNEL';
+  const BUTTON_INFO = {
+    id: FILTER_ID,
+    title: '인원',
+    inputText: counterText,
+    ariaLabel: '게스트 추가 버튼',
+  };
+  const RESET_BUTTON_ARIA_LABEL = '게스트 추가 취소 버튼';
+
   return (
     <>
-      <CommonButton aria-label="게스트 추가 버튼" style={{ width: '124px' }}>
-        <Label>인원</Label>
-        <PersonnelInputState>게스트 2명, 유아 2명</PersonnelInputState>
-      </CommonButton>
-      <button type="button" aria-label="게스트 추가 취소 버튼">
-        <StyledCrossIcon />
-      </button>
+      <InputButton
+        clickModal={clickModal}
+        buttonInfo={BUTTON_INFO}
+        styleOptions={{ width: '124px' }}
+      />
+      {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
     </>
   );
 }
-
-const PersonnelInputState = styled(InputState)`
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-`;
 
 export default Personnel;
