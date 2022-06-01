@@ -16,7 +16,6 @@ function PeriodModal() {
 const PeriodModalWrap = styled(ModalWrap)`
   width: 916px;
   height: 512px;
-  /* display: none; */
   padding: 64px 88px;
   flex-direction: column;
 `;

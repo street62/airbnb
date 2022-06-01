@@ -33,7 +33,6 @@ export function PeriodPriovider({ children }: { children: ReactNode }) {
 }
 
 function reducer(state: Period, action: Action): Period {
-  const date: Date = new Date();
   switch (action.type) {
     case 'SET_CHECK_IN':
       console.log('체크인');
@@ -43,7 +42,7 @@ function reducer(state: Period, action: Action): Period {
         checkOut: '',
       };
     case 'SET_CHECK_OUT':
-      console.log(state);
+      console.log('체크아웃');
       return {
         ...state,
         checkIn: '',
