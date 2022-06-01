@@ -5,13 +5,13 @@ import ResetButton from './common/ResetButton';
 import InputButton from './common/InputButton';
 
 function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
-  const { counterText } = usePersonnelState();
+  const { personnelCounterText } = usePersonnelState();
 
   const FILTER_ID = 'PERSONNEL';
   const BUTTON_INFO = {
     id: FILTER_ID,
     title: '인원',
-    inputText: counterText,
+    inputText: personnelCounterText,
     ariaLabel: '게스트 추가 버튼',
   };
   const RESET_BUTTON_ARIA_LABEL = '게스트 추가 취소 버튼';

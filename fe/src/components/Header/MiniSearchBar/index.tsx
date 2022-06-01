@@ -10,16 +10,16 @@ type MyProps = {
 };
 
 function MiniSearchBar({ changeSearchBar }: MyProps) {
-  const { counterText } = usePersonnelState();
-  const { rangeText } = usePriceState();
+  const { personnelCounterText } = usePersonnelState();
+  const { priceRangeText } = usePriceState();
 
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
       <MiniBarButton aria-label="일정 입력 버튼">일정 입력</MiniBarButton>
       <Divider orientation="vertical" />
-      <PriceButton aria-label="요금 입력 버튼">{rangeText}</PriceButton>
+      <PriceButton aria-label="요금 입력 버튼">{priceRangeText}</PriceButton>
       <Divider orientation="vertical" />
-      <MiniBarButton aria-label="인원 입력 버튼">{counterText}</MiniBarButton>
+      <MiniBarButton aria-label="인원 입력 버튼">{personnelCounterText}</MiniBarButton>
       <MiniSearchBtn type="button" aria-label="결과 찾기 버튼">
         <MiniSearchIcon />
       </MiniSearchBtn>

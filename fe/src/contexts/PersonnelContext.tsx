@@ -9,7 +9,7 @@ type Counter = {
 
 type State = {
   counter: Counter;
-  counterText: string;
+  personnelCounterText: string;
 };
 
 type Action = { type: 'INCREASE_COUNT'; age: string } | { type: 'DECREASE_COUNT'; age: string };
@@ -21,7 +21,7 @@ const PersonnelDispatchContext = createContext<PersonnelDispatch | null>(null);
 
 const initState: State = {
   counter: { adult: 0, child: 0, toddler: 0 },
-  counterText: '인원 선택',
+  personnelCounterText: '인원 선택',
 };
 
 export function PersonnalProvider({ children }: { children: ReactNode }) {
@@ -51,7 +51,7 @@ export function usePersonnelState() {
   const state = useContext(PersonnelStateContext);
   if (!state) throw new Error();
 
-  return { counter: state.counter, counterText: state.counterText };
+  return { counter: state.counter, personnelCounterText: state.personnelCounterText };
 }
 
 export function usePersonnelDispatch() {
