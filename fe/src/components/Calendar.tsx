@@ -1,30 +1,33 @@
 import { usePeriodDispatch } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
-import { useMemo } from 'react';
 import styled from 'styled-components';
-import { getDays } from 'util/getDays';
+import { getDays } from 'util/util';
 
 type CalendarProps = {
-  month: number;
+  date: Date;
 };
 
-function Calendar({ month }: CalendarProps) {
+function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
-  const year: number = new Date().getFullYear();
-  getDays(year, month);
+  const month = date.getMonth();
+  const thisMonth = date.getMonth() + 1;
+  const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
+  const year: number = 2022;
+  const thisDate: Date = new Date();
   const daysComp = days.map((day: string) => <WeekDay id={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
-
-  const { setCheckIn, setCheckOut, setMonth } = usePeriodDispatch();
+  const calendarDays = getDays(month).map((day) => {
+    return <Day key={day}>{day}</Day>;
+  });
+  const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;
   function increaseMonth() {
-    const november: number = 10;
-    if (month < november) setMonth(month + monthAfterNext);
+    setDate(new Date(year, month + monthAfterNext));
   }
   function decreaseMonth() {
-    const january: number = 0;
-    if (month > january) setMonth(month - monthAfterNext);
+    if (date > thisDate) setDate(new Date(year, month - monthAfterNext));
   }
+
   return (
     <>
       <SlideBtnWrap>
@@ -33,8 +36,8 @@ function Calendar({ month }: CalendarProps) {
             decreaseMonth();
           }}
         />
-        <MonthTitle>{month + 1}월</MonthTitle>
-        <MonthTitle>{month + 2}월</MonthTitle>
+        <MonthTitle>{thisMonth}월</MonthTitle>
+        <MonthTitle>{nextMonth}월</MonthTitle>
         <NextBtn
           onClick={() => {
             increaseMonth();
@@ -42,14 +45,14 @@ function Calendar({ month }: CalendarProps) {
         />
       </SlideBtnWrap>
       <CalendarWrap>
-        <ThisMonth>
+        <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap>day</DaysWrap>
-        </ThisMonth>
-        <NextMonth>
+          <DaysWrap>{calendarDays}</DaysWrap>
+        </Month>
+        <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap>day</DaysWrap>
-        </NextMonth>
+          <DaysWrap>{calendarDays}</DaysWrap>
+        </Month>
       </CalendarWrap>
     </>
   );
@@ -82,7 +85,7 @@ const CalendarWrap = styled.div`
   display: flex;
   justify-content: space-between;
 `;
-const ThisMonth = styled.div`
+const Month = styled.div`
   width: 336px;
   height: 336px;
   display: flex;
@@ -103,13 +106,17 @@ const WeekDay = styled.div`
   ${({ theme }) => theme.fontStyles.normal12px}
   color : ${({ theme }) => theme.colors.grey3}
 `;
-const NextMonth = styled(ThisMonth)``;
 const DaysWrap = styled.div`
   width: 100%;
-  border: 1px solid black;
   display: grid;
-  grid-auto-columns: 48px;
-  grid-auto-rows: 48px;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(7, 1fr);
 `;
-const Day = styled.div``;
+const Day = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
+`;
 export default Calendar;
