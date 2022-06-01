@@ -13,8 +13,8 @@ import java.util.List;
 public interface AccommodationRepository extends JpaRepository<Accommodation, Long> {
 
     @Query(value = "SELECT AC FROM Accommodation AS AC LEFT JOIN Reservation AS RS on AC = RS.accommodation "
-        + "WHERE :minPrice <= AC.feePerOneNight AND AC.feePerOneNight <= :maxPrice AND :adultChildCount <= AC.adultChildCapacity AND :infantCount <= AC.infantCapacity AND "
-        + "(( RS.checkinDate IS NULL AND RS.checkoutDate IS NULL) OR RS.checkoutDate <= :checkinDate OR :checkoutDate <= RS.checkinDate)"
+        + "WHERE (:minPrice <= AC.feePerOneNight AND AC.feePerOneNight <= :maxPrice) AND (:adultChildCount <= AC.adultChildCapacity AND :infantCount <= AC.infantCapacity) AND "
+        + "( (:checkinDate IS NULL AND :checkoutDate IS NULL) OR ( RS.checkinDate IS NULL AND RS.checkoutDate IS NULL) OR RS.checkoutDate <= :checkinDate OR :checkoutDate <= RS.checkinDate)"
     )
     List<Accommodation> findAllBySearchCondition(
         @Param("checkinDate") LocalDate checkinDate,
