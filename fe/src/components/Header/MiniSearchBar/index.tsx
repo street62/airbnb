@@ -6,7 +6,7 @@ import { usePersonnelState } from 'contexts/PersonnelContext';
 import { usePriceState } from 'contexts/PriceContext';
 
 type MyProps = {
-  changeSearchBar: () => void;
+  changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
 };
 
 function MiniSearchBar({ changeSearchBar }: MyProps) {
