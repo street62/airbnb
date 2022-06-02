@@ -2,7 +2,7 @@ import { usePeriodDispatch } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
 import styled from 'styled-components';
-import { getDays } from 'util/util';
+import { getDays, keyMaker } from 'util/util';
 
 type CalendarProps = {
   date: Date;
@@ -10,20 +10,20 @@ type CalendarProps = {
 
 function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
-  const thisYear = date.getFullYear();
   const month = date.getMonth();
-  const nextDate = new Date(thisYear, month + 1);
   const thisMonth = date.getMonth() + 1;
   const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
-
+  const thisYear = date.getFullYear();
   const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
-  const thisDate: Date = new Date();
-  const daysComp = days.map((day: string) => <WeekDay id={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
+  const nextDate = new Date(thisYear, month + 1);
+  const daysComp = days.map((day: string) => <WeekDay key={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
   const thisCalendarDays = getDays(month).map((day) => {
-    return <Day key={day}>{day}</Day>;
+    const key: string = keyMaker();
+    return day === 0 ? <Day key={key} /> : <Day key={key}>{day}</Day>;
   });
   const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
-    return <Day key={day}>{day}</Day>;
+    const key: string = keyMaker();
+    return day === 0 ? <Day key={key} /> : <Day key={key}>{day}</Day>;
   });
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;
@@ -31,7 +31,7 @@ function Calendar({ date }: CalendarProps) {
     setDate(new Date(thisYear, month + monthAfterNext));
   }
   function decreaseMonth() {
-    if (date > thisDate) setDate(new Date(thisYear, month - monthAfterNext));
+    if (date > new Date()) setDate(new Date(thisYear, month - monthAfterNext));
   }
 
   return (
