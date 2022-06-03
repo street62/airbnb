@@ -63,12 +63,14 @@ function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
 
       dataValues.forEach((data: number, idx: number) => {
         const sectionWidth = Math.floor(WIDTH / (SECTIONS - 1));
-        const perY = Math.floor((data / Math.max(...dataValues)) * HEIGHT);
+        const pointY = Math.floor((data / Math.max(...dataValues)) * HEIGHT);
+        const prevPointY =
+          idx === 0 ? HEIGHT : HEIGHT - (dataValues[idx - 1] / Math.max(...dataValues)) * HEIGHT;
 
-        const moveCoord = { x: sectionWidth * idx, y: HEIGHT - perY };
+        const moveCoord = { x: sectionWidth * idx, y: HEIGHT - pointY };
         const controlPoint = {
           x: moveCoord.x - sectionWidth / 2,
-          y: idx === 0 ? HEIGHT : HEIGHT - (dataValues[idx - 1] / Math.max(...dataValues)) * HEIGHT,
+          y: prevPointY,
         };
 
         ctx.bezierCurveTo(
