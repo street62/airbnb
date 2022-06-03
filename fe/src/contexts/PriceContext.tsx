@@ -1,12 +1,12 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 
-type range = {
-  minPrice: number;
-  maxPrice: number;
+type PriceRange = {
+  min: number;
+  max: number;
 };
 
 type State = {
-  range: range;
+  priceRange: PriceRange;
   priceRangeText: string;
 };
 
@@ -18,7 +18,7 @@ const PriceStateContext = createContext<State | null>(null);
 const PriceDispatchContext = createContext<PriceDispatch | null>(null);
 
 const initState: State = {
-  range: { minPrice: 0, maxPrice: 0 },
+  priceRange: { min: 0, max: 0 },
   priceRangeText: '금액대 설정',
 };
 
@@ -43,9 +43,10 @@ export function usePriceState() {
   const state = useContext(PriceStateContext);
   if (!state) throw new Error();
 
-  return { range: state.range, priceRangeText: state.priceRangeText };
+  return { priceRange: state.priceRange, priceRangeText: state.priceRangeText };
 }
 
+// 내부에 함수 추가 예정
 export function usePriceDispatch() {
   const dispatch = useContext(PriceDispatchContext);
   if (!dispatch) throw new Error();
