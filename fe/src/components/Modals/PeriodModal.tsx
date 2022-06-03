@@ -5,10 +5,10 @@ import { ModalWrap } from './styled';
 
 function PeriodModal() {
   const state = usePeriodState();
-  const thisMonth: number = state.month;
+  const thisDate: Date = state.date;
   return (
     <PeriodModalWrap>
-      <Calendar month={thisMonth} />
+      <Calendar date={thisDate} />
     </PeriodModalWrap>
   );
 }
