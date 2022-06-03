@@ -5,6 +5,7 @@ import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
 import { toLocalString } from 'utils/helper';
 
 import Chart from './Chart';
+import RangeSlider from './RangeSlider';
 
 const priceInfo = (priceData: Array<number>) => {
   const minPrice = Math.min(...priceData);
@@ -30,7 +31,10 @@ function PriceModal() {
         <PriceRange>{priceRangeText}</PriceRange>
         <p className="price_avg">{avgPriceText}</p>
       </PriceInfo>
-      <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={PRICE_DATA} />
+      <SliderWrap>
+        <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={PRICE_DATA} />
+        <RangeSlider minPrice={minPrice} maxPrice={maxPrice} />
+      </SliderWrap>
     </PriceModalWrap>
   );
 }
@@ -62,6 +66,10 @@ const PriceRange = styled.div`
   margin-bottom: 4px;
 
   ${({ theme }) => theme.fontStyles.normal18px}
+`;
+
+const SliderWrap = styled.div`
+  height: 110px;
 `;
 
 export default PriceModal;
