@@ -1,17 +1,24 @@
-import { usePeriodDispatch } from 'contexts/periodContext';
+import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { getDays, keyMaker } from 'util/util';
+import Day from './Day';
 
 type CalendarProps = {
   date: Date;
 };
 
+// type DayProps = {
+//   isClicked?: boolean;
+// };
+
 function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
   const month = date.getMonth();
   const thisMonth = date.getMonth() + 1;
+  const [isClicked, setIsClicked] = useState(false);
   const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
   const thisYear = date.getFullYear();
   const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
@@ -19,11 +26,13 @@ function Calendar({ date }: CalendarProps) {
   const daysComp = days.map((day: string) => <WeekDay key={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
   const thisCalendarDays = getDays(month).map((day) => {
     const key: string = keyMaker();
-    return day === 0 ? <Day key={key} /> : <Day key={key}>{day}</Day>;
+    const dateInfo: Date = day.date;
+    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
     const key: string = keyMaker();
-    return day === 0 ? <Day key={key} /> : <Day key={key}>{day}</Day>;
+    const dateInfo: Date = day.date;
+    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;
@@ -33,7 +42,9 @@ function Calendar({ date }: CalendarProps) {
   function decreaseMonth() {
     if (date > new Date()) setDate(new Date(thisYear, month - monthAfterNext));
   }
-
+  function showCircle(e: React.MouseEvent<HTMLElement>) {
+    setIsClicked(!isClicked);
+  }
   return (
     <>
       <SlideBtnWrap>
@@ -57,7 +68,13 @@ function Calendar({ date }: CalendarProps) {
       <CalendarWrap>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap>{thisCalendarDays}</DaysWrap>
+          <DaysWrap
+            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+              showCircle(e);
+            }}
+          >
+            {thisCalendarDays}
+          </DaysWrap>
         </Month>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
@@ -122,11 +139,14 @@ const DaysWrap = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
 `;
-const Day = styled.div`
+/* const Day = styled.div<DayProps>`
+  background: ${(props) => (props.isClicked ? `black` : `none`)};
+  color: ${(props) => (props.isClicked ? 'white' : 'black')};
   display: flex;
   justify-content: center;
   align-items: center;
   width: 48px;
   height: 48px;
-`;
+  border-radius: 999px;
+`; */
 export default Calendar;

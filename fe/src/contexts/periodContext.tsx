@@ -1,9 +1,12 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 
-type Period = {
-  date: Date;
+type CheckInOut = {
   checkIn: string;
   checkOut: string;
+};
+type Period = {
+  date: Date;
+  checkInOut: CheckInOut;
 };
 
 type Action =
@@ -17,8 +20,10 @@ const PeriodStateContext = createContext<Period | null>(null);
 const PeriodDispatchContext = createContext<PeriodDispatch | null>(null);
 const initialState: Period = {
   date: thisDate,
-  checkIn: thisDate.toString(),
-  checkOut: thisDate.toString(),
+  checkInOut: {
+    checkIn: thisDate.toString(),
+    checkOut: thisDate.toString(),
+  },
 };
 
 export function PeriodPriovider({ children }: { children: ReactNode }) {
@@ -34,16 +39,20 @@ export function PeriodPriovider({ children }: { children: ReactNode }) {
 function reducer(state: Period, action: Action): Period {
   switch (action.type) {
     case 'SET_CHECK_IN':
-      console.log('체크인');
       return {
         ...state,
-        checkIn: action.checkIn,
+        checkInOut: {
+          ...state.checkInOut,
+          checkIn: action.checkIn,
+        },
       };
     case 'SET_CHECK_OUT':
-      console.log('체크아웃');
       return {
         ...state,
-        checkOut: action.checkOut,
+        checkInOut: {
+          ...state.checkInOut,
+          checkOut: action.checkOut,
+        },
       };
     case 'SET_DATE':
       return {
@@ -59,7 +68,11 @@ export function usePeriodState() {
   const state = useContext(PeriodStateContext);
   if (!state) throw new Error();
 
-  return { checkIn: state.checkIn, checkOut: state.checkOut, date: state.date };
+  return {
+    checkIn: state.checkInOut.checkIn,
+    checkOut: state.checkInOut.checkOut,
+    date: state.date,
+  };
 }
 
 export function usePeriodDispatch() {
