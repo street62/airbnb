@@ -1,4 +1,4 @@
-import { usePeriodDispatch } from 'contexts/periodContext';
+import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
 import styled from 'styled-components';
 
 type DayProps = {
@@ -9,10 +9,19 @@ type DayProps = {
 
 function Day({ isClicked, date, isThisMonth }: DayProps) {
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
+  const state = usePeriodState();
+  function changeCheckInOut(date: Date) {}
   return !isThisMonth ? (
     <DayWrap isClicked={false} />
   ) : (
-    <DayWrap isClicked={isClicked}>{date.getDate()}</DayWrap>
+    <DayWrap
+      isClicked={isClicked}
+      onClick={() => {
+        changeCheckInOut(date);
+      }}
+    >
+      {date.getDate()}
+    </DayWrap>
   );
 }
 const DayWrap = styled.div<{ isClicked: boolean }>`
