@@ -1,11 +1,11 @@
 import { Dispatch } from 'react';
 import styled from 'styled-components';
-import Menu from './Menu';
-import MiniSearchBar from './MiniSearchBar';
-import SearchBar from './SearchBar';
+import Menu from 'components/Header/Menu';
+import MiniSearchBar from 'components/Header/SearchBar/MiniSearchBar';
+import SearchBar from 'components/Header/SearchBar/';
 
 type SearchWrapperType = {
-  changeSearchBar: () => void;
+  changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
   miniFocus: boolean;
   setMiniFocus: Dispatch<React.SetStateAction<boolean>>;
   path: string;

@@ -7,13 +7,13 @@ import InputButton from './common/InputButton';
 import { ClickModal } from '.';
 
 function Price({ clickModal, isClicked, focusModal }: ClickModal) {
-  const { rangeText } = usePriceState();
+  const { priceRangeText } = usePriceState();
 
   const FILTER_ID = 'PRICE';
   const BUTTON_INFO = {
     id: FILTER_ID,
     title: '요금',
-    inputText: rangeText,
+    inputText: priceRangeText,
     ariaLabel: '요금 입력 버튼',
   };
   const RESET_BUTTON_ARIA_LABEL = '요금 입력 취소 버튼';

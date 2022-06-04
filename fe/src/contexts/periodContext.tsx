@@ -1,25 +1,29 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
 
-type Period = {
-  month: number;
+type CheckInOut = {
   checkIn: string;
   checkOut: string;
 };
+type Period = {
+  date: Date;
+  checkInOut: CheckInOut;
+};
 
 type Action =
-  | { type: 'SET_CHECK_IN'; action: string }
-  | { type: 'SET_CHECK_OUT'; action: string }
-  | { type: 'SET_MONTH'; month: number };
+  | { type: 'SET_CHECK_IN'; checkIn: string }
+  | { type: 'SET_CHECK_OUT'; checkOut: string }
+  | { type: 'SET_DATE'; date: Date };
 
 type PeriodDispatch = Dispatch<Action>;
-const date = new Date();
-const monthData: number = date.getMonth();
+const thisDate = new Date();
 const PeriodStateContext = createContext<Period | null>(null);
 const PeriodDispatchContext = createContext<PeriodDispatch | null>(null);
 const initialState: Period = {
-  month: monthData,
-  checkIn: date.toString(),
-  checkOut: date.toString(),
+  date: thisDate,
+  checkInOut: {
+    checkIn: thisDate.toString(),
+    checkOut: thisDate.toString(),
+  },
 };
 
 export function PeriodPriovider({ children }: { children: ReactNode }) {
@@ -33,26 +37,27 @@ export function PeriodPriovider({ children }: { children: ReactNode }) {
 }
 
 function reducer(state: Period, action: Action): Period {
-  const date: Date = new Date();
   switch (action.type) {
     case 'SET_CHECK_IN':
-      console.log('체크인');
       return {
         ...state,
-        checkIn: '체크인',
-        checkOut: '',
+        checkInOut: {
+          ...state.checkInOut,
+          checkIn: action.checkIn,
+        },
       };
     case 'SET_CHECK_OUT':
-      console.log(state);
       return {
         ...state,
-        checkIn: '',
-        checkOut: '체크아웃',
+        checkInOut: {
+          ...state.checkInOut,
+          checkOut: action.checkOut,
+        },
       };
-    case 'SET_MONTH':
+    case 'SET_DATE':
       return {
         ...state,
-        month: action.month,
+        date: action.date,
       };
     default:
       throw new Error();
@@ -63,15 +68,19 @@ export function usePeriodState() {
   const state = useContext(PeriodStateContext);
   if (!state) throw new Error();
 
-  return { checkIn: state.checkIn, checkOut: state.checkOut, month: state.month };
+  return {
+    checkIn: state.checkInOut.checkIn,
+    checkOut: state.checkInOut.checkOut,
+    date: state.date,
+  };
 }
 
 export function usePeriodDispatch() {
   const dispatch = useContext(PeriodDispatchContext);
   if (!dispatch) throw new Error();
 
-  const setCheckIn = (action: string) => dispatch({ type: 'SET_CHECK_IN', action });
-  const setCheckOut = (action: string) => dispatch({ type: 'SET_CHECK_OUT', action });
-  const setMonth = (month: number) => dispatch({ type: 'SET_MONTH', month });
-  return { setCheckIn, setCheckOut, setMonth };
+  const setCheckIn = (checkIn: string) => dispatch({ type: 'SET_CHECK_IN', checkIn });
+  const setCheckOut = (checkOut: string) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
+  const setDate = (date: Date) => dispatch({ type: 'SET_DATE', date });
+  return { setCheckIn, setCheckOut, setDate };
 }

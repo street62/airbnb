@@ -5,8 +5,8 @@ import styled, { css } from 'styled-components';
 import { Link } from '@mui/material';
 import { ReactComponent as LogoImg } from 'images/logo.svg';
 
-import SearchWrapper from './SearchWrapper';
-import UserMenu from './UserMenu';
+import SearchWrapper from 'components/Header/SearchWrapper';
+import UserMenu from 'components/Header/UserMenu';
 
 // type Router = '/' | '/result';
 
@@ -18,7 +18,7 @@ function Header() {
   const location = useLocation();
   const [miniFocus, setMiniFocus] = useState(true);
 
-  const changeSearchBar = () => setMiniFocus((focus) => !focus);
+  const changeSearchBar = (e: React.MouseEvent<HTMLElement>) => setMiniFocus((focus) => !focus);
 
   const path = location.pathname;
 

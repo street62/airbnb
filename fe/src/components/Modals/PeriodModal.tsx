@@ -1,14 +1,14 @@
 import { usePeriodState } from 'contexts/periodContext';
-import Calendar from 'components/Calendar';
+import Calendar from 'components/Calender/Calendar';
 import styled from 'styled-components';
 import { ModalWrap } from './styled';
 
 function PeriodModal() {
   const state = usePeriodState();
-  const thisMonth: number = state.month;
+  const thisDate: Date = state.date;
   return (
     <PeriodModalWrap>
-      <Calendar month={thisMonth} />
+      <Calendar date={thisDate} />
     </PeriodModalWrap>
   );
 }
@@ -16,7 +16,6 @@ function PeriodModal() {
 const PeriodModalWrap = styled(ModalWrap)`
   width: 916px;
   height: 512px;
-  /* display: none; */
   padding: 64px 88px;
   flex-direction: column;
 `;
