@@ -28,12 +28,12 @@ function Calendar({ date }: CalendarProps) {
   const thisCalendarDays = getDays(month).map((day) => {
     const key: string = keyMaker();
     const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
     const key: string = keyMaker();
     const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;

@@ -1,5 +1,7 @@
 import { Divider } from '@mui/material';
 import { CommonContainer } from 'components/Header/SearchBar/searchBar.styled';
+import { usePeriodState } from 'contexts/periodContext';
+import { makeDateString, mockDate } from 'utils/util';
 import { ClickModal } from '.';
 import InputButton from './common/InputButton';
 import ResetButton from './common/ResetButton';
@@ -15,11 +17,14 @@ function Period({ clickModal, isClicked, focusModal }: ClickModal) {
 }
 
 function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
+  const checkinDate = usePeriodState().checkIn;
+  const checkInString =
+    checkinDate.getTime() === mockDate.getTime() ? '날짜 입력' : makeDateString(checkinDate);
   const FILTER_ID = 'CHECK_IN';
   const BUTTON_INFO = {
     id: FILTER_ID,
     title: '체크인',
-    inputText: '날짜 입력',
+    inputText: checkInString,
     ariaLabel: '체크인 날짜 입력 버튼',
   };
   const RESET_BUTTON_ARIA_LABEL = '날짜 입력 취소 버튼';
@@ -38,10 +43,13 @@ function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
 
 function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
   const FILTER_ID = 'CHECK_OUT';
+  const checkOutDate = usePeriodState().checkOut;
+  const checkOutString =
+    checkOutDate.getTime() === mockDate.getTime() ? '날짜 입력' : makeDateString(checkOutDate);
   const BUTTON_INFO = {
     id: FILTER_ID,
     title: '체크아웃',
-    inputText: '날짜 입력',
+    inputText: checkOutString,
     ariaLabel: '체크아웃 날짜 입력 버튼',
   };
   const RESET_BUTTON_ARIA_LABEL = '날짜 입력 취소 버튼';

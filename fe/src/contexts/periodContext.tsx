@@ -1,8 +1,9 @@
 import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
+import { mockDate } from 'utils/util';
 
 type CheckInOut = {
-  checkIn: string;
-  checkOut: string;
+  checkIn: Date;
+  checkOut: Date;
 };
 type Period = {
   date: Date;
@@ -10,8 +11,8 @@ type Period = {
 };
 
 type Action =
-  | { type: 'SET_CHECK_IN'; checkIn: string }
-  | { type: 'SET_CHECK_OUT'; checkOut: string }
+  | { type: 'SET_CHECK_IN'; checkIn: Date }
+  | { type: 'SET_CHECK_OUT'; checkOut: Date }
   | { type: 'SET_DATE'; date: Date };
 
 type PeriodDispatch = Dispatch<Action>;
@@ -21,8 +22,8 @@ const PeriodDispatchContext = createContext<PeriodDispatch | null>(null);
 const initialState: Period = {
   date: thisDate,
   checkInOut: {
-    checkIn: thisDate.toString(),
-    checkOut: thisDate.toString(),
+    checkIn: mockDate,
+    checkOut: mockDate,
   },
 };
 
@@ -79,8 +80,8 @@ export function usePeriodDispatch() {
   const dispatch = useContext(PeriodDispatchContext);
   if (!dispatch) throw new Error();
 
-  const setCheckIn = (checkIn: string) => dispatch({ type: 'SET_CHECK_IN', checkIn });
-  const setCheckOut = (checkOut: string) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
+  const setCheckIn = (checkIn: Date) => dispatch({ type: 'SET_CHECK_IN', checkIn });
+  const setCheckOut = (checkOut: Date) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
   const setDate = (date: Date) => dispatch({ type: 'SET_DATE', date });
   return { setCheckIn, setCheckOut, setDate };
 }
