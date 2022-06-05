@@ -14,7 +14,7 @@ import SearchButton from 'components/Header/SearchBar/SearchButton';
 
 import PeriodModal from 'components/Modals/PeriodModal';
 import PersonnelModal from 'components/Modals/PersonnelModal';
-import PriceModal from 'components/Modals/PriceModal';
+import PriceModal from 'components/Modals/Price';
 
 export type ClickModal = {
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
