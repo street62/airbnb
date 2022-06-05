@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { ObjType, PriceInfoType, DataInfo } from './priceTypes';
 
 const CANVAS_INFO = {
@@ -83,7 +84,11 @@ function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
     draw();
   }, []);
 
-  return <canvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
+  return <StyledCanvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
 }
+
+const StyledCanvas = styled.canvas`
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
+`;
 
 export default Chart;
