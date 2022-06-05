@@ -1,4 +1,4 @@
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+import { usePeriodDispatch } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
 import { useState } from 'react';
@@ -27,12 +27,12 @@ function Calendar({ date }: CalendarProps) {
   const thisCalendarDays = getDays(month).map((day) => {
     const key: string = keyMaker();
     const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
     const key: string = keyMaker();
     const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
   });
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   const monthAfterNext: number = 2;
