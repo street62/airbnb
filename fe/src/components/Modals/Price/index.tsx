@@ -4,7 +4,7 @@ import { ModalWrap } from 'components/Modals/styled';
 import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
 import { toLocalString } from 'utils/helper';
 
-import Chart from './Chart';
+import Chart from './RangeChart';
 import RangeSlider from './RangeSlider';
 
 const priceInfo = (priceData: Array<number>) => {

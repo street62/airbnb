@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { ObjType, PriceInfoType, DataInfo } from './priceTypes';
+import { ObjType, PriceInfoType, DataInfo } from './types';
 
 const CANVAS_INFO = {
   WIDTH: 365,
