@@ -1,46 +1,18 @@
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
-import { useEffect, useState } from 'react';
+import { usePeriodDispatch } from 'contexts/periodContext';
 import styled from 'styled-components';
-import { mockDate } from 'utils/util';
 
 type DayProps = {
+  isClicked: boolean;
   date: Date;
   isThisMonth: boolean;
 };
 
-function Day({ date, isThisMonth }: DayProps) {
+function Day({ isClicked, date, isThisMonth }: DayProps) {
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
-  const state = usePeriodState();
-  const [isClicked, setIsClicked] = useState(false);
-  function showCirle() {
-    state.checkIn.getTime() === date.getTime() || state.checkOut.getTime() === date.getTime()
-      ? setIsClicked(true)
-      : setIsClicked(false);
-  }
-  useEffect(() => {
-    showCirle();
-  }, []);
-  function makingCheckInOut() {
-    if (state.checkIn.getTime() === mockDate.getTime()) {
-      setCheckIn(date);
-    } else if (state.checkIn > date) {
-      setCheckOut(state.checkIn);
-      setCheckIn(date);
-    } else if (state.checkIn < date) {
-      setCheckOut(date);
-    }
-  }
   return !isThisMonth ? (
-    <DayWrap isClicked={isClicked} />
+    <DayWrap isClicked={false} />
   ) : (
-    <DayWrap
-      isClicked={isClicked}
-      onClick={() => {
-        makingCheckInOut();
-      }}
-    >
-      {date.getDate()}
-    </DayWrap>
+    <DayWrap isClicked={isClicked}>{date.getDate()}</DayWrap>
   );
 }
 const DayWrap = styled.div<{ isClicked: boolean }>`
