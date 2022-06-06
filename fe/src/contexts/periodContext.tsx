@@ -13,12 +13,16 @@ type Period = {
 type Action =
   | { type: 'SET_CHECK_IN'; checkIn: Date }
   | { type: 'SET_CHECK_OUT'; checkOut: Date }
-  | { type: 'SET_DATE'; date: Date };
+  | { type: 'SET_DATE'; date: Date }
+  | { type: 'RESET_DATE'; payload: null };
 
 type PeriodDispatch = Dispatch<Action>;
+
 const thisDate = new Date();
+
 const PeriodStateContext = createContext<Period | null>(null);
 const PeriodDispatchContext = createContext<PeriodDispatch | null>(null);
+
 const initialState: Period = {
   date: thisDate,
   checkInOut: {
@@ -60,6 +64,8 @@ function reducer(state: Period, action: Action): Period {
         ...state,
         date: action.date,
       };
+    case 'RESET_DATE':
+      return { ...initialState };
     default:
       throw new Error();
   }
@@ -83,5 +89,7 @@ export function usePeriodDispatch() {
   const setCheckIn = (checkIn: Date) => dispatch({ type: 'SET_CHECK_IN', checkIn });
   const setCheckOut = (checkOut: Date) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
   const setDate = (date: Date) => dispatch({ type: 'SET_DATE', date });
-  return { setCheckIn, setCheckOut, setDate };
+  const resetDate = () => dispatch({ type: 'RESET_DATE', payload: null });
+
+  return { setCheckIn, setCheckOut, setDate, resetDate };
 }
