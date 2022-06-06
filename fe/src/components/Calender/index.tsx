@@ -1,9 +1,9 @@
-import { usePeriodDispatch } from 'contexts/periodContext';
+import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { getDays, keyMaker } from 'util/util';
+import { getDays, keyMaker } from 'utils/util';
 import Day from './Day';
 
 type CalendarProps = {
@@ -16,10 +16,9 @@ type CalendarProps = {
 
 function Calendar({ date }: CalendarProps) {
   const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
-  const [isClicked, setIsClicked] = useState(false);
   const month = date.getMonth();
   const thisMonth = date.getMonth() + 1;
-
+  const [isClicked, setIsClicked] = useState(false);
   const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
   const thisYear = date.getFullYear();
   const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
