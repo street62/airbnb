@@ -1,5 +1,5 @@
-import { usePersonnelState } from 'contexts/PersonnelContext';
-
+import { useEffect } from 'react';
+import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
 import styled from 'styled-components';
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/Property 1=plus-circle.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/Property 1=minus-circle.svg';
@@ -11,7 +11,32 @@ type InfoProps = {
 
 function PersonnelModalWrap({ info }: InfoProps) {
   const { counter } = usePersonnelState();
-
+  const { increaseCount, decreaseCount, setText } = usePersonnelDispatch();
+  const [MAX, MIN] = [8, 0];
+  function makeText() {
+    const { adult, child, toddler } = counter;
+    const guest = adult + child;
+    let text;
+    if (toddler === 0) {
+      text = `게스트 ${guest}명`;
+    } else {
+      text = `게스트 ${guest}명,유아 ${toddler}명`;
+    }
+    return text;
+  }
+  function increaseCounter() {
+    if (counter[info.desc] < MAX) {
+      increaseCount(info.desc);
+    }
+  }
+  function decreaseCounter() {
+    if (counter[info.desc] > MIN) {
+      decreaseCount(info.desc);
+    }
+  }
+  useEffect(() => {
+    setText(makeText());
+  }, [makeText]);
   return (
     <PersonnelModalWrapContainer>
       <PeopleInfo>
@@ -19,9 +44,19 @@ function PersonnelModalWrap({ info }: InfoProps) {
         <Caption>{info.info}</Caption>
       </PeopleInfo>
       <CounterButtons>
-        <StyledMinusIcon />
+        <StyledMinusIcon
+          onClick={() => {
+            decreaseCounter();
+            setText(makeText());
+          }}
+        />
         <span>{counter[info.desc]}</span>
-        <StyledPlusIcon />
+        <StyledPlusIcon
+          onClick={() => {
+            increaseCounter();
+            setText(makeText());
+          }}
+        />
       </CounterButtons>
     </PersonnelModalWrapContainer>
   );
