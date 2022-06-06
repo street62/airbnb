@@ -3,7 +3,7 @@ import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 import { usePersonnelState } from 'contexts/PersonnelContext';
-import { usePriceState } from 'contexts/PriceContext';
+import { usePriceState } from 'hooks/usePrice';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;

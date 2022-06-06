@@ -3,7 +3,7 @@ import { ChangeEvent, Dispatch, useRef } from 'react';
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
 
-import { usePriceDispatch, usePriceState } from 'contexts/PriceContext';
+import { usePriceDispatch, usePriceState } from 'hooks/usePrice';
 
 type PriceInfoType = {
   dataPriceInfo: { [key: string]: number };

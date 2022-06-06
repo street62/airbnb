@@ -1,4 +1,4 @@
-import { usePriceState } from 'contexts/PriceContext';
+import { usePriceState } from 'hooks/usePrice';
 
 import { CommonContainer } from 'components/Header/SearchBar/searchBar.styled';
 import ResetButton from './common/ResetButton';

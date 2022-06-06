@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { ModalWrap } from 'components/Modals/styled';
 
-import { usePriceState } from 'contexts/PriceContext';
 import { toLocalString } from 'utils/helper';
+import { usePriceState } from 'hooks/usePrice';
 
 import Chart from './RangeChart';
 import RangeSlider from './RangeSlider';
