@@ -23,7 +23,7 @@ function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
         buttonInfo={BUTTON_INFO}
         styleOptions={{ width: '124px' }}
       />
-      {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
+      {/* {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />} */}
     </>
   );
 }
