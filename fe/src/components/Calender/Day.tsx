@@ -10,6 +10,7 @@ type DayProps = {
 
 function Day({ date, isThisMonth }: DayProps) {
   const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
+  const isOver = new Date().getTime() > date.getTime();
   const state = usePeriodState();
   const [isClicked, setIsClicked] = useState(false);
   function showCirle() {
@@ -31,10 +32,11 @@ function Day({ date, isThisMonth }: DayProps) {
     }
   }
   return !isThisMonth ? (
-    <DayWrap isClicked={isClicked} />
+    <DayWrap isClicked={isClicked} disabled={isOver} />
   ) : (
     <DayWrap
       isClicked={isClicked}
+      disabled={isOver}
       onClick={() => {
         makingCheckInOut();
       }}
@@ -43,9 +45,19 @@ function Day({ date, isThisMonth }: DayProps) {
     </DayWrap>
   );
 }
-const DayWrap = styled.div<{ isClicked: boolean }>`
+const DayWrap = styled.button<{ isClicked: boolean }>`
   background: ${({ isClicked }) => (isClicked ? `black` : `none`)};
-  color: ${({ isClicked }) => (isClicked ? 'white' : 'black')};
+  color: ${({ isClicked, disabled }) => {
+    let color: string = '';
+    if (disabled) {
+      color = `#bdbdbd`;
+    } else if (isClicked) {
+      color = `#ffffff`;
+    } else {
+      color = `#000000`;
+    }
+    return color;
+  }};
   display: flex;
   justify-content: center;
   align-items: center;
