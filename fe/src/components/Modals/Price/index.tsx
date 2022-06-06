@@ -18,21 +18,18 @@ const priceInfo = (priceData: Array<number>) => {
 };
 
 function PriceModal() {
-  const PRICE_DATA = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
-  const { minPrice, maxPrice, avgPrice } = priceInfo(PRICE_DATA);
-
-  const priceRangeText = `₩${toLocalString(minPrice)} - ₩${toLocalString(maxPrice)}`;
-  const avgPriceText = `평균 1박 요금은 ₩${toLocalString(avgPrice)}원 입니다.`;
+  const priceData = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
+  const { minPrice, maxPrice, avgPrice } = priceInfo(priceData);
 
   return (
     <PriceModalWrap>
       <PriceInfo>
         <p className="price_title">가격 범위</p>
-        <PriceRange>{priceRangeText}</PriceRange>
-        <p className="price_avg">{avgPriceText}</p>
+        <PriceRange>{`₩${toLocalString(minPrice)} - ₩${toLocalString(maxPrice)}`}</PriceRange>
+        <p className="price_avg">{`평균 1박 요금은 ₩${toLocalString(avgPrice)}원 입니다.`}</p>
       </PriceInfo>
       <SliderWrap>
-        <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={PRICE_DATA} />
+        <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={priceData} />
         <RangeSlider minPrice={minPrice} maxPrice={maxPrice} />
       </SliderWrap>
     </PriceModalWrap>
