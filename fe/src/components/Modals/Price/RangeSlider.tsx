@@ -1,6 +1,7 @@
 import { ChangeEvent, Dispatch } from 'react';
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
+import { useRef } from 'react';
 
 type PriceInfoType = {
   range: { [key: string]: number };
@@ -9,14 +10,33 @@ type PriceInfoType = {
 };
 
 function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
-  const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setSliderValue.min(Number(e.target.value));
-  };
-  const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setSliderValue.max(Number(e.target.value));
+  const STEP = 1000;
+  const THUMB_GAP = 6;
+
+  const leftInput = useRef<HTMLInputElement>(null);
+  const rightInput = useRef<HTMLInputElement>(null);
+
+  const thumbPercent = (target: HTMLInputElement) => {
+    const { value, min, max } = target;
+    const percent = ((Number(value) - Number(min)) / (Number(max) - Number(min))) * 100;
+    return percent;
   };
 
-  const STEP = 1000;
+  const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    if (rightInput.current === null) return;
+
+    if (thumbPercent(e.target) > thumbPercent(rightInput.current) - THUMB_GAP) return;
+
+    setSliderValue.min(Number(e.target.value));
+  };
+
+  const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    if (leftInput.current === null) return;
+
+    if (thumbPercent(e.target) < thumbPercent(leftInput.current) + THUMB_GAP) return;
+
+    setSliderValue.max(Number(e.target.value));
+  };
 
   return (
     <SliderWrap>
@@ -27,6 +47,7 @@ function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
         step={STEP}
         value={sliderValue.min}
         onChange={leftChangeHandle}
+        ref={leftInput}
       />
       <CustomInput
         type="range"
@@ -35,6 +56,7 @@ function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
         step={STEP}
         value={sliderValue.max}
         onChange={RightChangeHandle}
+        ref={rightInput}
       />
     </SliderWrap>
   );
