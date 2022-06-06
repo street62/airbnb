@@ -17,6 +17,7 @@ import PersonnelModal from 'components/Modals/PersonnelModal';
 import PriceModal from 'components/Modals/Price';
 
 export type ClickModal = {
+  onClickEvent?: (e: React.MouseEvent<HTMLElement>) => void;
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
   isClicked?: boolean;
   focusModal?: string;
