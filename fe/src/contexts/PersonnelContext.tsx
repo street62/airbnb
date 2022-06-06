@@ -6,8 +6,8 @@ type Counter = {
   child: number;
   toddler: number;
 };
-
 type State = {
+  [key: string]: Counter | string;
   counter: Counter;
   personnelCounterText: string;
 };
@@ -39,9 +39,23 @@ export function PersonnalProvider({ children }: { children: ReactNode }) {
 function personnalReducer(state: State, action: Action) {
   switch (action.type) {
     case 'INCREASE_COUNT':
-      return state;
+      console.log(state);
+      return {
+        ...state,
+        counter: {
+          ...state.counter,
+          [action.age]: state.counter[action.age] + 1,
+        },
+      };
     case 'DECREASE_COUNT':
-      return state;
+      console.log(state);
+      return {
+        ...state,
+        counter: {
+          ...state.counter,
+          [action.age]: state.counter[action.age] - 1,
+        },
+      };
     default:
       throw new Error();
   }
@@ -58,5 +72,8 @@ export function usePersonnelDispatch() {
   const dispatch = useContext(PersonnelDispatchContext);
   if (!dispatch) throw new Error();
 
-  return dispatch;
+  const increaseCount = (age: string) => dispatch({ type: 'INCREASE_COUNT', age });
+  const decreaseCount = (age: string) => dispatch({ type: 'DECREASE_COUNT', age });
+
+  return { increaseCount, decreaseCount };
 }
