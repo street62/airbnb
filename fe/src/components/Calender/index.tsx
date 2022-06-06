@@ -1,50 +1,47 @@
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+import { usePeriodDispatch } from 'contexts/periodContext';
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
-import { useState } from 'react';
 import styled from 'styled-components';
-import { getDays, keyMaker } from 'util/util';
+import { getDays, keyMaker } from 'utils/util';
 import Day from './Day';
 
 type CalendarProps = {
   date: Date;
 };
 
-// type DayProps = {
-//   isClicked?: boolean;
-// };
+function CalendarData(date: Date) {
+  const DAYS: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
+  const month: number = date.getMonth();
+  const thisMonth: number = date.getMonth() + 1;
+  const nextMonth: number = thisMonth === 12 ? 1 : thisMonth + 1;
+  const thisYear: number = date.getFullYear();
+  const nextYear: number = thisMonth === 12 ? thisYear + 1 : thisYear;
+  const nextDate: Date = new Date(thisYear, month + 1);
+  const monthAfterNext: number = 2;
+  return { DAYS, month, thisMonth, nextMonth, thisYear, nextYear, nextDate, monthAfterNext };
+}
 
 function Calendar({ date }: CalendarProps) {
-  const days: Array<string> = ['일', '월', '화', '수', '목', '금', '토'];
-  const month = date.getMonth();
-  const thisMonth = date.getMonth() + 1;
-  const [isClicked, setIsClicked] = useState(false);
-  const nextMonth = thisMonth === 12 ? 1 : thisMonth + 1;
-  const thisYear = date.getFullYear();
-  const nextYear = thisMonth === 12 ? thisYear + 1 : thisYear;
-  const nextDate = new Date(thisYear, month + 1);
-  const daysComp = days.map((day: string) => <WeekDay key={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
-  const thisCalendarDays = getDays(month).map((day) => {
-    const key: string = keyMaker();
-    const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
-  });
-  const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
-    const key: string = keyMaker();
-    const dateInfo: Date = day.date;
-    return <Day key={key} isClicked={isClicked} date={dateInfo} isThisMonth={day.isThisMonth} />;
-  });
-  const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
-  const monthAfterNext: number = 2;
+  const { DAYS, month, thisMonth, nextMonth, thisYear, nextYear, nextDate, monthAfterNext } =
+    CalendarData(date);
+  const setDate = usePeriodDispatch().setDate;
   function increaseMonth() {
     setDate(new Date(thisYear, month + monthAfterNext));
   }
   function decreaseMonth() {
     if (date > new Date()) setDate(new Date(thisYear, month - monthAfterNext));
   }
-  function showCircle(e: React.MouseEvent<HTMLElement>) {
-    setIsClicked(!isClicked);
-  }
+  const daysComp = DAYS.map((day: string) => <WeekDay key={day}>{day}</WeekDay>); // useMemo 사용시 오류 발생, 타입스크립트문제? airbnb 디자인 페턴 문제?
+  const thisCalendarDays = getDays(month).map((day) => {
+    const key: string = keyMaker();
+    const dateInfo: Date = day.date;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
+  });
+  const nextCalendarDays = getDays(nextDate.getMonth()).map((day) => {
+    const key: string = keyMaker();
+    const dateInfo: Date = day.date;
+    return <Day key={key} date={dateInfo} isThisMonth={day.isThisMonth} />;
+  });
   return (
     <>
       <SlideBtnWrap>
@@ -68,13 +65,7 @@ function Calendar({ date }: CalendarProps) {
       <CalendarWrap>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
-          <DaysWrap
-            onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-              showCircle(e);
-            }}
-          >
-            {thisCalendarDays}
-          </DaysWrap>
+          <DaysWrap>{thisCalendarDays}</DaysWrap>
         </Month>
         <Month>
           <WeekDays>{daysComp}</WeekDays>
@@ -139,14 +130,4 @@ const DaysWrap = styled.div`
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(7, 1fr);
 `;
-/* const Day = styled.div<DayProps>`
-  background: ${(props) => (props.isClicked ? `black` : `none`)};
-  color: ${(props) => (props.isClicked ? 'white' : 'black')};
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 999px;
-`; */
 export default Calendar;
