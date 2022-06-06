@@ -115,7 +115,7 @@ function Chart({ sliderValue, priceData, range }: PriceInfoType) {
 }
 
 const StyledCanvas = styled.canvas`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.grey5};
 `;
 
 export default Chart;
