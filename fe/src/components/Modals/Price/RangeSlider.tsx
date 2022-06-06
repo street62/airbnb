@@ -1,7 +1,6 @@
-import { ChangeEvent, Dispatch } from 'react';
+import { ChangeEvent, Dispatch, useRef } from 'react';
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
-import { useRef } from 'react';
 
 type PriceInfoType = {
   range: { [key: string]: number };
