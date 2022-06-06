@@ -1,47 +1,43 @@
-import { useState } from 'react';
-
 import styled from 'styled-components';
 import { ModalWrap } from 'components/Modals/styled';
 
-import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
+import { usePriceState } from 'contexts/PriceContext';
 import { toLocalString } from 'utils/helper';
 
 import Chart from './RangeChart';
 import RangeSlider from './RangeSlider';
 
-const priceInfo = (priceData: Array<number>) => {
-  const minPrice = Math.min(...priceData);
-  const maxPrice = Math.max(...priceData);
-  const avgPrice = Math.floor(
-    priceData.reduce((prev: number, curr: number) => prev + curr) / priceData.length,
-  );
-
-  return { minPrice, maxPrice, avgPrice };
-};
-
 function PriceModal() {
-  const priceData = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
-  const { minPrice, maxPrice, avgPrice } = priceInfo(priceData);
+  const { priceData, priceRange, dataPriceInfo, initSliderRange, setSliderRange } = usePriceState();
 
-  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
-  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
+  const { min: minSliderValue, max: maxSliderValue } = initSliderRange;
 
-  const range = { min: minPrice, max: maxPrice };
-  const sliderValue = { min: minSliderValue, max: maxSliderValue };
-  const setSliderValue = { min: setMinSliderValue, max: setMaxSliderValue };
+  const minValue = priceRange.min === 0 ? minSliderValue : priceRange.min;
+  const maxValue = priceRange.max === 0 ? maxSliderValue : priceRange.max;
+
+  const currentPriceRange = { min: minValue, max: maxValue };
 
   return (
     <PriceModalWrap>
       <PriceInfo>
         <p className="price_title">가격 범위</p>
-        <PriceRange>{`₩${toLocalString(minSliderValue)} - ₩${toLocalString(
-          maxSliderValue,
-        )}`}</PriceRange>
-        <p className="price_avg">{`평균 1박 요금은 ₩${toLocalString(avgPrice)}원 입니다.`}</p>
+        <PriceRange>{`₩${toLocalString(minValue)} - ₩${toLocalString(maxValue)}`}</PriceRange>
+        <p className="price_avg">{`평균 1박 요금은 ₩${toLocalString(
+          dataPriceInfo.avg,
+        )}원 입니다.`}</p>
       </PriceInfo>
       <SliderWrap>
-        <Chart range={range} sliderValue={sliderValue} priceData={priceData} />
-        <RangeSlider range={range} sliderValue={sliderValue} setSliderValue={setSliderValue} />
+        <Chart
+          priceData={priceData}
+          dataPriceInfo={dataPriceInfo}
+          initSliderRange={initSliderRange}
+          currentPriceRange={currentPriceRange}
+        />
+        <RangeSlider
+          dataPriceInfo={dataPriceInfo}
+          initSliderRange={initSliderRange}
+          setSliderRange={setSliderRange}
+        />
       </SliderWrap>
     </PriceModalWrap>
   );

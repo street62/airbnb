@@ -1,14 +1,26 @@
 import { ChangeEvent, Dispatch, useRef } from 'react';
+
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
 
+import { usePriceDispatch, usePriceState } from 'contexts/PriceContext';
+
 type PriceInfoType = {
-  range: { [key: string]: number };
-  sliderValue: { [key: string]: number };
-  setSliderValue: { [key: string]: Dispatch<React.SetStateAction<number>> };
+  dataPriceInfo: { [key: string]: number };
+  initSliderRange: { [key: string]: number };
+  setSliderRange: { [key: string]: Dispatch<React.SetStateAction<number>> };
 };
 
-function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
+const thumbPercent = (target: HTMLInputElement) => {
+  const { value, min, max } = target;
+  const percent = ((Number(value) - Number(min)) / (Number(max) - Number(min))) * 100;
+  return percent;
+};
+
+function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceInfoType) {
+  const { priceRange } = usePriceState();
+  const { setRange } = usePriceDispatch();
+
   const STEP = 1000;
   const THUMB_GAP = 6;
 
@@ -16,18 +28,13 @@ function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
   const leftInput = useRef<HTMLInputElement>(null);
   const rightInput = useRef<HTMLInputElement>(null);
 
-  const thumbPercent = (target: HTMLInputElement) => {
-    const { value, min, max } = target;
-    const percent = ((Number(value) - Number(min)) / (Number(max) - Number(min))) * 100;
-    return percent;
-  };
-
   const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
     if (rightInput.current === null || processRef.current === null) return;
 
     if (thumbPercent(e.target) > thumbPercent(rightInput.current) - THUMB_GAP) return;
 
-    setSliderValue.min(Number(e.target.value));
+    setSliderRange.min(Number(e.target.value));
+    setRange({ min: Number(e.target.value), max: Number(rightInput.current.value) });
 
     Object.assign(processRef.current.style, {
       left: `${thumbPercent(e.target)}%`,
@@ -40,7 +47,8 @@ function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
 
     if (thumbPercent(e.target) < thumbPercent(leftInput.current) + THUMB_GAP) return;
 
-    setSliderValue.max(Number(e.target.value));
+    setSliderRange.max(Number(e.target.value));
+    setRange({ min: Number(leftInput.current.value), max: Number(e.target.value) });
 
     Object.assign(processRef.current.style, {
       right: `${100 - thumbPercent(e.target)}%`,
@@ -53,19 +61,19 @@ function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
       <Progress ref={processRef} />
       <CustomInput
         type="range"
-        min={range.min}
-        max={range.max}
+        min={dataPriceInfo.min}
+        max={dataPriceInfo.max}
         step={STEP}
-        value={sliderValue.min}
+        value={priceRange.min === 0 ? initSliderRange.min : priceRange.min}
         onChange={leftChangeHandle}
         ref={leftInput}
       />
       <CustomInput
         type="range"
-        min={range.min}
-        max={range.max}
+        min={dataPriceInfo.min}
+        max={dataPriceInfo.max}
         step={STEP}
-        value={sliderValue.max}
+        value={priceRange.max === 0 ? initSliderRange.max : priceRange.max}
         onChange={RightChangeHandle}
         ref={rightInput}
       />

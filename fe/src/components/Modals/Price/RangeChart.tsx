@@ -52,24 +52,30 @@ const drawLine = (
 
 const fillGraph = (
   gradient: CanvasGradient,
-  value: { [key: string]: number },
-  range: { [key: string]: number },
+  initSliderRange: { [key: string]: number },
+  currentPriceRange: { [key: string]: number },
+  dataPriceInfo: { [key: string]: number },
 ) => {
   const fillPercent = (value: number) => {
-    const percent = Math.floor(((value - range.min) / (range.max - range.min)) * 100) * 0.01;
+    const percent =
+      Math.floor(((value - dataPriceInfo.min) / (dataPriceInfo.max - dataPriceInfo.min)) * 100) *
+      0.01;
     return percent;
   };
 
+  const minVal = currentPriceRange.min === 0 ? initSliderRange.min : currentPriceRange.min;
+  const maxVal = currentPriceRange.max === 0 ? initSliderRange.max : currentPriceRange.max;
+
   const color = { focus: '#1b1b1b', nonFocus: '#E0E0E0' };
 
-  gradient.addColorStop(fillPercent(value.min), color.nonFocus);
-  gradient.addColorStop(fillPercent(value.min), color.focus);
+  gradient.addColorStop(fillPercent(minVal), color.nonFocus);
+  gradient.addColorStop(fillPercent(minVal), color.focus);
 
-  gradient.addColorStop(fillPercent(value.max), color.focus);
-  gradient.addColorStop(fillPercent(value.max), color.nonFocus);
+  gradient.addColorStop(fillPercent(maxVal), color.focus);
+  gradient.addColorStop(fillPercent(maxVal), color.nonFocus);
 };
 
-function Chart({ sliderValue, priceData, range }: PriceInfoType) {
+function Chart({ initSliderRange, priceData, dataPriceInfo, currentPriceRange }: PriceInfoType) {
   const CANVAS_INFO = { WIDTH: 365, HEIGHT: 100, SECTIONS: 15 };
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -91,8 +97,8 @@ function Chart({ sliderValue, priceData, range }: PriceInfoType) {
     const dataInfo = {
       data: priceData,
       sections: SECTIONS,
-      maxPrice: range.max,
-      minPrice: range.min,
+      maxPrice: dataPriceInfo.max,
+      minPrice: dataPriceInfo.min,
     };
     const dataRange = getRangeInfo(dataInfo);
 
@@ -102,14 +108,14 @@ function Chart({ sliderValue, priceData, range }: PriceInfoType) {
     ctx.lineTo(WIDTH, HEIGHT);
 
     const gradient = ctx.createLinearGradient(0, HEIGHT, WIDTH, HEIGHT);
-    fillGraph(gradient, sliderValue, range);
+    fillGraph(gradient, initSliderRange, currentPriceRange, dataPriceInfo);
     ctx.fillStyle = gradient;
     ctx.fill();
   };
 
   useEffect(() => {
     draw();
-  }, [sliderValue]);
+  }, [initSliderRange, currentPriceRange]);
 
   return <StyledCanvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
 }
