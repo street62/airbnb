@@ -1,4 +1,4 @@
-import { usePersonnelState } from 'contexts/PersonnelContext';
+import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
 
 import { ClickModal } from '.';
 import ResetButton from './common/ResetButton';
@@ -6,6 +6,7 @@ import InputButton from './common/InputButton';
 
 function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
   const { personnelCounterText } = usePersonnelState();
+  const { setText } = usePersonnelDispatch();
 
   const FILTER_ID = 'PERSONNEL';
   const BUTTON_INFO = {
