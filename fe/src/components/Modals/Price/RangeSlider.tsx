@@ -1,21 +1,19 @@
-import { ChangeEvent, SetStateAction, useState } from 'react';
+import { ChangeEvent, Dispatch } from 'react';
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
 
 type PriceInfoType = {
-  minPrice: number;
-  maxPrice: number;
+  range: { [key: string]: number };
+  sliderValue: { [key: string]: number };
+  setSliderValue: { [key: string]: Dispatch<React.SetStateAction<number>> };
 };
 
-function RangeSlider({ minPrice, maxPrice }: PriceInfoType) {
-  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
-  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
-
+function RangeSlider({ range, sliderValue, setSliderValue }: PriceInfoType) {
   const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setMinSliderValue(Number(e.target.value));
+    setSliderValue.min(Number(e.target.value));
   };
   const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    setMaxSliderValue(Number(e.target.value));
+    setSliderValue.max(Number(e.target.value));
   };
 
   const STEP = 1000;
@@ -24,18 +22,18 @@ function RangeSlider({ minPrice, maxPrice }: PriceInfoType) {
     <SliderWrap>
       <CustomInput
         type="range"
-        min={minPrice}
-        max={maxPrice}
+        min={range.min}
+        max={range.max}
         step={STEP}
-        value={minSliderValue}
+        value={sliderValue.min}
         onChange={leftChangeHandle}
       />
       <CustomInput
         type="range"
-        min={minPrice}
-        max={maxPrice}
+        min={range.min}
+        max={range.max}
         step={STEP}
-        value={maxSliderValue}
+        value={sliderValue.max}
         onChange={RightChangeHandle}
       />
     </SliderWrap>

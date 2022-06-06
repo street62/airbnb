@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import styled from 'styled-components';
 import { ModalWrap } from 'components/Modals/styled';
 
@@ -21,16 +23,25 @@ function PriceModal() {
   const priceData = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
   const { minPrice, maxPrice, avgPrice } = priceInfo(priceData);
 
+  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
+  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
+
+  const range = { min: minPrice, max: maxPrice };
+  const sliderValue = { min: minSliderValue, max: maxSliderValue };
+  const setSliderValue = { min: setMinSliderValue, max: setMaxSliderValue };
+
   return (
     <PriceModalWrap>
       <PriceInfo>
         <p className="price_title">가격 범위</p>
-        <PriceRange>{`₩${toLocalString(minPrice)} - ₩${toLocalString(maxPrice)}`}</PriceRange>
+        <PriceRange>{`₩${toLocalString(minSliderValue)} - ₩${toLocalString(
+          maxSliderValue,
+        )}`}</PriceRange>
         <p className="price_avg">{`평균 1박 요금은 ₩${toLocalString(avgPrice)}원 입니다.`}</p>
       </PriceInfo>
       <SliderWrap>
-        <Chart minPrice={minPrice} maxPrice={maxPrice} priceData={priceData} />
-        <RangeSlider minPrice={minPrice} maxPrice={maxPrice} />
+        <Chart minPrice={minSliderValue} maxPrice={maxSliderValue} priceData={priceData} />
+        <RangeSlider range={range} sliderValue={sliderValue} setSliderValue={setSliderValue} />
       </SliderWrap>
     </PriceModalWrap>
   );
