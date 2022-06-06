@@ -24,7 +24,8 @@ function CalendarData(date: Date) {
 function Calendar({ date }: CalendarProps) {
   const { DAYS, month, thisMonth, nextMonth, thisYear, nextYear, nextDate, monthAfterNext } =
     CalendarData(date);
-  const setDate = usePeriodDispatch().setDate;
+
+  const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
   function increaseMonth() {
     setDate(new Date(thisYear, month + monthAfterNext));
   }
