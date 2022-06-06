@@ -12,7 +12,10 @@ type State = {
   personnelCounterText: string;
 };
 
-type Action = { type: 'INCREASE_COUNT'; age: string } | { type: 'DECREASE_COUNT'; age: string };
+type Action =
+  | { type: 'INCREASE_COUNT'; age: string }
+  | { type: 'DECREASE_COUNT'; age: string }
+  | { type: 'SET_COUNTER_TEXT'; text: string };
 
 type PersonnelDispatch = Dispatch<Action>;
 
@@ -39,7 +42,6 @@ export function PersonnalProvider({ children }: { children: ReactNode }) {
 function personnalReducer(state: State, action: Action) {
   switch (action.type) {
     case 'INCREASE_COUNT':
-      console.log(state);
       return {
         ...state,
         counter: {
@@ -48,13 +50,17 @@ function personnalReducer(state: State, action: Action) {
         },
       };
     case 'DECREASE_COUNT':
-      console.log(state);
       return {
         ...state,
         counter: {
           ...state.counter,
           [action.age]: state.counter[action.age] - 1,
         },
+      };
+    case 'SET_COUNTER_TEXT':
+      return {
+        ...state,
+        personnelCounterText: action.text,
       };
     default:
       throw new Error();
@@ -74,6 +80,6 @@ export function usePersonnelDispatch() {
 
   const increaseCount = (age: string) => dispatch({ type: 'INCREASE_COUNT', age });
   const decreaseCount = (age: string) => dispatch({ type: 'DECREASE_COUNT', age });
-
-  return { increaseCount, decreaseCount };
+  const setText = (text: string) => dispatch({ type: 'SET_COUNTER_TEXT', text });
+  return { increaseCount, decreaseCount, setText };
 }
