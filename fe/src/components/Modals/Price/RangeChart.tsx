@@ -78,10 +78,16 @@ function Chart({ sliderValue, priceData, range }: PriceInfoType) {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
+    const { WIDTH, HEIGHT, SECTIONS } = CANVAS_INFO;
+
+    // 해상도 올리기
+    const dpr = window.devicePixelRatio;
+    canvasRef.current.width = (WIDTH * dpr) / 2;
+    canvasRef.current.height = (HEIGHT * dpr) / 2;
+
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const { WIDTH, HEIGHT, SECTIONS } = CANVAS_INFO;
     const dataInfo = {
       data: priceData,
       sections: SECTIONS,
