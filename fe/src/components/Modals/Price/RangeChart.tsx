@@ -117,11 +117,7 @@ function Chart({ initSliderRange, priceData, dataPriceInfo, currentPriceRange }:
     draw();
   }, [initSliderRange, currentPriceRange]);
 
-  return <StyledCanvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
+  return <canvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
 }
-
-const StyledCanvas = styled.canvas`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grey5};
-`;
 
 export default Chart;

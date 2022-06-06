@@ -52,7 +52,7 @@ function priceReducer(state: State, action: Action): State {
         priceRangeText: updateRangeText,
       };
     case 'RESET':
-      return initState;
+      return { ...initState };
     default:
       throw new Error();
   }

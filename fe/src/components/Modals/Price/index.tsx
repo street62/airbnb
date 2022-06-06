@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 import { ModalWrap } from 'components/Modals/styled';
 
@@ -16,6 +18,11 @@ function PriceModal() {
   const maxValue = priceRange.max === 0 ? maxSliderValue : priceRange.max;
 
   const currentPriceRange = { min: minValue, max: maxValue };
+
+  useEffect(() => {
+    setSliderRange.min(dataPriceInfo.min);
+    setSliderRange.max(dataPriceInfo.max);
+  }, [priceRange]);
 
   return (
     <PriceModalWrap>

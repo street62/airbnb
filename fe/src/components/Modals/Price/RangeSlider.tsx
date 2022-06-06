@@ -24,41 +24,29 @@ function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceIn
   const STEP = 1000;
   const THUMB_GAP = 6;
 
-  const processRef = useRef<HTMLDivElement>(null);
   const leftInput = useRef<HTMLInputElement>(null);
   const rightInput = useRef<HTMLInputElement>(null);
 
   const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    if (rightInput.current === null || processRef.current === null) return;
+    if (rightInput.current === null) return;
 
     if (thumbPercent(e.target) > thumbPercent(rightInput.current) - THUMB_GAP) return;
 
     setSliderRange.min(Number(e.target.value));
     setRange({ min: Number(e.target.value), max: Number(rightInput.current.value) });
-
-    Object.assign(processRef.current.style, {
-      left: `${thumbPercent(e.target)}%`,
-      width: `${thumbPercent(rightInput.current) - thumbPercent(e.target)}%`,
-    });
   };
 
   const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
-    if (leftInput.current === null || processRef.current === null) return;
+    if (leftInput.current === null) return;
 
     if (thumbPercent(e.target) < thumbPercent(leftInput.current) + THUMB_GAP) return;
 
     setSliderRange.max(Number(e.target.value));
     setRange({ min: Number(leftInput.current.value), max: Number(e.target.value) });
-
-    Object.assign(processRef.current.style, {
-      right: `${100 - thumbPercent(e.target)}%`,
-      width: `${thumbPercent(e.target) - thumbPercent(leftInput.current)}%`,
-    });
   };
 
   return (
     <SliderWrap>
-      <Progress ref={processRef} />
       <CustomInput
         type="range"
         min={dataPriceInfo.min}
@@ -84,13 +72,6 @@ function RangeSlider({ dataPriceInfo, initSliderRange, setSliderRange }: PriceIn
 const SliderWrap = styled.div`
   position: relative;
   width: 100%;
-`;
-
-const Progress = styled.div`
-  position: absolute;
-  bottom: 5px;
-  width: 100%;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.grey1};
 `;
 
 const CustomInput = styled.input.attrs({ type: 'range' })`
