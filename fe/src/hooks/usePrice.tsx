@@ -48,5 +48,12 @@ export function usePriceDispatch() {
     });
   };
 
-  return { setRange };
+  const resetRange = () => {
+    dispatch({
+      type: 'RESET',
+      payload: null,
+    });
+  };
+
+  return { setRange, resetRange };
 }

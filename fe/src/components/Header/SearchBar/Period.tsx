@@ -31,7 +31,7 @@ function CheckIn({ clickModal, isClicked, focusModal }: ClickModal) {
         buttonInfo={BUTTON_INFO}
         styleOptions={{ paddingLeft: '24px' }}
       />
-      {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
+      {/* {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />} */}
     </CommonContainer>
   );
 }
@@ -49,7 +49,7 @@ function CheckOut({ clickModal, isClicked, focusModal }: ClickModal) {
   return (
     <CommonContainer isClicked={isClicked} focusModal={focusModal} id={FILTER_ID}>
       <InputButton clickModal={clickModal} buttonInfo={BUTTON_INFO} />
-      {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
+      {/* {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />} */}
     </CommonContainer>
   );
 }

@@ -12,7 +12,9 @@ type State = {
   priceRangeText: string;
 };
 
-type Action = { type: 'SET_RANGE'; payload: { [key: string]: number } };
+type Action =
+  | { type: 'SET_RANGE'; payload: { [key: string]: number } }
+  | { type: 'RESET'; payload: null };
 
 type PriceDispatch = Dispatch<Action>;
 
@@ -35,12 +37,13 @@ export function PriceProvider({ children }: { children: ReactNode }) {
 }
 
 function priceReducer(state: State, action: Action): State {
-  const updateRangeText = `₩${toLocalString(action.payload.min)}~${toLocalString(
-    action.payload.max,
-  )}`;
-
   switch (action.type) {
     case 'SET_RANGE':
+      // eslint-disable-next-line no-case-declarations
+      const updateRangeText = `₩${toLocalString(action.payload.min)}~${toLocalString(
+        action.payload.max,
+      )}`;
+
       return {
         priceRange: {
           min: action.payload.min,
@@ -48,6 +51,8 @@ function priceReducer(state: State, action: Action): State {
         },
         priceRangeText: updateRangeText,
       };
+    case 'RESET':
+      return initState;
     default:
       throw new Error();
   }
