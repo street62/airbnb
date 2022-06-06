@@ -40,7 +40,7 @@ function PriceModal() {
         <p className="price_avg">{`평균 1박 요금은 ₩${toLocalString(avgPrice)}원 입니다.`}</p>
       </PriceInfo>
       <SliderWrap>
-        <Chart minPrice={minSliderValue} maxPrice={maxSliderValue} priceData={priceData} />
+        <Chart range={range} sliderValue={sliderValue} priceData={priceData} />
         <RangeSlider range={range} sliderValue={sliderValue} setSliderValue={setSliderValue} />
       </SliderWrap>
     </PriceModalWrap>

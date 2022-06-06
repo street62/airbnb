@@ -2,12 +2,6 @@ import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { ObjType, PriceInfoType, DataInfo } from './types';
 
-const CANVAS_INFO = {
-  WIDTH: 365,
-  HEIGHT: 100,
-  SECTIONS: 15,
-};
-
 const getRangeInfo = ({ data, sections, maxPrice, minPrice }: DataInfo) => {
   const 고정범위 = Math.floor((maxPrice - minPrice) / sections);
 
@@ -28,7 +22,56 @@ const getRangeInfo = ({ data, sections, maxPrice, minPrice }: DataInfo) => {
   return dataRangeObj;
 };
 
-function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
+const drawLine = (
+  dataRange: ObjType,
+  canvasInfo: { [key: string]: number },
+  ctx: CanvasRenderingContext2D,
+) => {
+  const { WIDTH, HEIGHT, SECTIONS } = canvasInfo;
+  const dataValues = Object.values(dataRange);
+
+  dataValues.forEach((data: number, idx: number) => {
+    const sectionWidth = Math.floor(WIDTH / SECTIONS);
+    const pointY = Math.floor((data / Math.max(...dataValues)) * HEIGHT);
+    const prevPointY =
+      idx === 0 ? HEIGHT : HEIGHT - (dataValues[idx - 1] / Math.max(...dataValues)) * HEIGHT;
+
+    const moveCoord = { x: sectionWidth * idx, y: HEIGHT - pointY };
+    const controlPoint = { x: moveCoord.x - sectionWidth / 2, y: prevPointY };
+
+    ctx.bezierCurveTo(
+      controlPoint.x,
+      controlPoint.y,
+      controlPoint.x,
+      moveCoord.y,
+      moveCoord.x,
+      moveCoord.y,
+    );
+  });
+};
+
+const fillGraph = (
+  gradient: CanvasGradient,
+  value: { [key: string]: number },
+  range: { [key: string]: number },
+) => {
+  const fillPercent = (value: number) => {
+    const percent = Math.floor(((value - range.min) / (range.max - range.min)) * 100) * 0.01;
+    return percent;
+  };
+
+  const color = { focus: '#1b1b1b', nonFocus: '#E0E0E0' };
+
+  gradient.addColorStop(fillPercent(value.min), color.nonFocus);
+  gradient.addColorStop(fillPercent(value.min), color.focus);
+
+  gradient.addColorStop(fillPercent(value.max), color.focus);
+  gradient.addColorStop(fillPercent(value.max), color.nonFocus);
+};
+
+function Chart({ sliderValue, priceData, range }: PriceInfoType) {
+  const CANVAS_INFO = { WIDTH: 365, HEIGHT: 100, SECTIONS: 15 };
+
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const draw = () => {
@@ -39,50 +82,28 @@ function Chart({ minPrice, maxPrice, priceData }: PriceInfoType) {
     if (!ctx) return;
 
     const { WIDTH, HEIGHT, SECTIONS } = CANVAS_INFO;
-    const dataInfo = { data: priceData, sections: SECTIONS, maxPrice, minPrice };
-    const dataRange = getRangeInfo(dataInfo);
-
-    const drawLine = (dataRange: ObjType) => {
-      const dataValues = Object.values(dataRange);
-
-      dataValues.forEach((data: number, idx: number) => {
-        const sectionWidth = Math.floor(WIDTH / SECTIONS);
-        const pointY = Math.floor((data / Math.max(...dataValues)) * HEIGHT);
-        const prevPointY =
-          idx === 0 ? HEIGHT : HEIGHT - (dataValues[idx - 1] / Math.max(...dataValues)) * HEIGHT;
-
-        const moveCoord = { x: sectionWidth * idx, y: HEIGHT - pointY };
-        const controlPoint = {
-          x: moveCoord.x - sectionWidth / 2,
-          y: prevPointY,
-        };
-
-        ctx.bezierCurveTo(
-          controlPoint.x,
-          controlPoint.y,
-          controlPoint.x,
-          moveCoord.y,
-          moveCoord.x,
-          moveCoord.y,
-        );
-      });
+    const dataInfo = {
+      data: priceData,
+      sections: SECTIONS,
+      maxPrice: range.max,
+      minPrice: range.min,
     };
+    const dataRange = getRangeInfo(dataInfo);
 
     ctx.beginPath();
     ctx.moveTo(0, HEIGHT);
-    drawLine(dataRange);
+    drawLine(dataRange, CANVAS_INFO, ctx);
     ctx.lineTo(WIDTH, HEIGHT);
 
     const gradient = ctx.createLinearGradient(0, HEIGHT, WIDTH, HEIGHT);
-    gradient.addColorStop(0, '#E0E0E0');
-    gradient.addColorStop(1, 'black');
+    fillGraph(gradient, sliderValue, range);
     ctx.fillStyle = gradient;
     ctx.fill();
   };
 
   useEffect(() => {
     draw();
-  }, []);
+  }, [sliderValue]);
 
   return <StyledCanvas ref={canvasRef} width={CANVAS_INFO.WIDTH} height={CANVAS_INFO.HEIGHT} />;
 }
