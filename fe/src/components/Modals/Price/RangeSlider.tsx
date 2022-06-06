@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, SetStateAction, useState } from 'react';
 import styled from 'styled-components';
 import PauseIcon from 'images/FE_숙소예약서비스/pause-circle.svg';
 
@@ -8,8 +8,17 @@ type PriceInfoType = {
 };
 
 function RangeSlider({ minPrice, maxPrice }: PriceInfoType) {
-  const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {};
-  const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {};
+  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
+  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
+
+  const leftChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    setMinSliderValue(Number(e.target.value));
+  };
+  const RightChangeHandle = (e: ChangeEvent<HTMLInputElement>) => {
+    setMaxSliderValue(Number(e.target.value));
+  };
+
+  const STEP = 1000;
 
   return (
     <SliderWrap>
@@ -17,14 +26,16 @@ function RangeSlider({ minPrice, maxPrice }: PriceInfoType) {
         type="range"
         min={minPrice}
         max={maxPrice}
-        value={minPrice}
+        step={STEP}
+        value={minSliderValue}
         onChange={leftChangeHandle}
       />
       <CustomInput
         type="range"
         min={minPrice}
         max={maxPrice}
-        value={maxPrice}
+        step={STEP}
+        value={maxSliderValue}
         onChange={RightChangeHandle}
       />
     </SliderWrap>
@@ -58,6 +69,7 @@ const CustomInput = styled.input.attrs({ type: 'range' })`
     background-size: cover;
     pointer-events: all;
     -webkit-appearance: none;
+    cursor: pointer;
   }
 `;
 
