@@ -1,8 +1,12 @@
+import { Fragment } from 'react';
+
 import { Divider } from '@mui/material';
 import styled from 'styled-components';
+
 import { keyMaker } from 'utils/util';
-import PersonnelModalWrap from './PersonnelModalWrap';
-import { ModalWrap } from './styled';
+
+import { ModalWrap } from 'components/Modals/styled';
+import PersonnelModalWrap from 'components/Modals/Personnel/PersonnelCounter';
 
 export type PersonnselInfo = {
   title: string;
@@ -18,12 +22,13 @@ function PersonnelModal() {
   ];
 
   const PersonnelInfo = PERSONNEL_INFO.map((info: PersonnselInfo, index: number) => {
-    const [key1, key2] = [keyMaker(), keyMaker()];
+    const fragmentKey = keyMaker();
+
     return (
-      <>
-        <PersonnelModalWrap key={key1} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={key2} />}
-      </>
+      <Fragment key={fragmentKey}>
+        <PersonnelModalWrap info={info} />
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDivider />}
+      </Fragment>
     );
   });
 
@@ -39,7 +44,7 @@ const PersonnelModalContainer = styled(ModalWrap)`
   flex-direction: column;
 `;
 
-const StyledDevider = styled(Divider)`
+const StyledDivider = styled(Divider)`
   && {
     width: 100%;
     margin: 24px 0;
