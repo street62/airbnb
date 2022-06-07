@@ -1,4 +1,4 @@
-import { usePersonnelState } from 'contexts/PersonnelContext';
+import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
 
 import { ClickModal } from 'components/Header/SearchBar/';
 import ResetButton from 'components/Header/SearchBar/common/ResetButton';
@@ -6,6 +6,7 @@ import InputButton from 'components/Header/SearchBar/common/InputButton';
 
 function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
   const { personnelCounterText, counter } = usePersonnelState();
+  const { resetCount } = usePersonnelDispatch();
 
   const COMPONENT_INFO = {
     id: 'PERSONNEL',
@@ -17,6 +18,8 @@ function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
 
   const isNotInitValue = counter.adult !== 0 || counter.child !== 0 || counter.toddler !== 0;
 
+  const onClickEvent = (e: React.MouseEvent<HTMLElement>) => resetCount();
+
   return (
     <>
       <InputButton
@@ -24,7 +27,9 @@ function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
         buttonInfo={COMPONENT_INFO}
         styleOptions={{ width: '124px' }}
       />
-      {isNotInitValue && <ResetButton ariaLabel={COMPONENT_INFO.resetButtonLabel} />}
+      {isNotInitValue && (
+        <ResetButton ariaLabel={COMPONENT_INFO.resetButtonLabel} onClickEvent={onClickEvent} />
+      )}
     </>
   );
 }
