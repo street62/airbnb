@@ -8,13 +8,15 @@ type CheckInOut = {
 type Period = {
   date: Date;
   checkInOut: CheckInOut;
+  periodText: string;
 };
 
 type Action =
   | { type: 'SET_CHECK_IN'; checkIn: Date }
   | { type: 'SET_CHECK_OUT'; checkOut: Date }
   | { type: 'SET_DATE'; date: Date }
-  | { type: 'RESET_DATE'; payload: null };
+  | { type: 'RESET_DATE'; payload: null }
+  | { type: 'SET_TEXT'; text: string };
 
 type PeriodDispatch = Dispatch<Action>;
 
@@ -29,6 +31,7 @@ const initialState: Period = {
     checkIn: mockDate,
     checkOut: mockDate,
   },
+  periodText: '일정 입력',
 };
 
 export function PeriodPriovider({ children }: { children: ReactNode }) {
@@ -66,6 +69,11 @@ function reducer(state: Period, action: Action): Period {
       };
     case 'RESET_DATE':
       return { ...initialState };
+    case 'SET_TEXT':
+      return {
+        ...state,
+        periodText: action.text,
+      };
     default:
       throw new Error();
   }
@@ -79,6 +87,7 @@ export function usePeriodState() {
     checkIn: state.checkInOut.checkIn,
     checkOut: state.checkInOut.checkOut,
     date: state.date,
+    text: state.periodText,
   };
 }
 
@@ -90,6 +99,7 @@ export function usePeriodDispatch() {
   const setCheckOut = (checkOut: Date) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
   const setDate = (date: Date) => dispatch({ type: 'SET_DATE', date });
   const resetDate = () => dispatch({ type: 'RESET_DATE', payload: null });
+  const setText = (text: string) => dispatch({ type: 'SET_TEXT', text });
 
-  return { setCheckIn, setCheckOut, setDate, resetDate };
+  return { setCheckIn, setCheckOut, setDate, resetDate, setText };
 }
