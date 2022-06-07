@@ -4,9 +4,9 @@ import { CommonContainer } from 'components/Header/SearchBar/searchBar.styled';
 import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
 import { makeDateString, mockDate } from 'utils/util';
 
-import { ClickModal } from '.';
-import InputButton from './common/InputButton';
-import ResetButton from './common/ResetButton';
+import { ClickModal } from 'components/Header/SearchBar/';
+import InputButton from 'components/Header/SearchBar/common/InputButton';
+import ResetButton from 'components/Header/SearchBar/common/ResetButton';
 
 function Period({ clickModal, isClicked, focusModal }: ClickModal) {
   const { resetDate } = usePeriodDispatch();
