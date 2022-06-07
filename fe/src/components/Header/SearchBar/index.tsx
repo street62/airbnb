@@ -39,7 +39,7 @@ function SearchBar() {
 
   return (
     <SearchBarContainer>
-      <SearchBarWrap isClicked={isClicked}>
+      <SearchBarWrap isClicked={isClicked} id="search_bar">
         <Period clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
         {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
         <Price clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />

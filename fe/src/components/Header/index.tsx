@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import styled, { css } from 'styled-components';
@@ -14,25 +14,37 @@ type Position = {
   position: string;
 };
 
-function Header() {
+function Header({ containerRef }: { containerRef: React.RefObject<HTMLDivElement> | null }) {
   const location = useLocation();
-  const [miniFocus, setMiniFocus] = useState(true);
-
-  const changeSearchBar = (e: React.MouseEvent<HTMLElement>) => setMiniFocus((focus) => !focus);
-
   const path = location.pathname;
 
+  const [miniFocus, setMiniFocus] = useState(true);
+  const changeSearchBar = (e: React.MouseEvent<HTMLElement>) => setMiniFocus((focus) => !focus);
+
+  const headerRef = useRef<HTMLDivElement>(null);
+  const onClickEvent = ({ target }: MouseEvent) => {
+    if (!miniFocus && !headerRef.current?.contains(target as HTMLElement)) {
+      setMiniFocus(true);
+    }
+  };
+
+  // 모달 외부 영역 클릭시 miniSearchbar로 돌아오도록 한다.
+  useEffect(() => {
+    const parentContainer = containerRef?.current;
+
+    // undefind를 반환하지 않으면 가장 마지막에 있는 return 문에서 Arrow function expected no return value. 라는 에러가 뜬다.
+    if (!parentContainer) return undefined;
+    parentContainer.addEventListener('mousedown', onClickEvent);
+
+    return () => parentContainer.removeEventListener('mousedown', onClickEvent);
+  }, [containerRef]);
+
   return (
-    <HeaderWrap position={path}>
+    <HeaderWrap position={path} ref={headerRef}>
       <Link href="/" style={{ height: '26px' }}>
         <LogoImg aria-label="로고이미지" />
       </Link>
-      <SearchWrapper
-        changeSearchBar={changeSearchBar}
-        miniFocus={miniFocus}
-        setMiniFocus={setMiniFocus}
-        path={path}
-      />
+      <SearchWrapper changeSearchBar={changeSearchBar} miniFocus={miniFocus} path={path} />
       <UserMenu />
     </HeaderWrap>
   );
