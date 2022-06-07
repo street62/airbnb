@@ -87,7 +87,7 @@ export function usePeriodState() {
     checkIn: state.checkInOut.checkIn,
     checkOut: state.checkInOut.checkOut,
     date: state.date,
-    text: state.periodText,
+    periodText: state.periodText,
   };
 }
 
