@@ -9,7 +9,7 @@ type DayProps = {
 };
 
 function Day({ date, isThisMonth }: DayProps) {
-  const { setCheckIn, setCheckOut, setDate } = usePeriodDispatch();
+  const { setCheckIn, setCheckOut } = usePeriodDispatch();
   const isOver = new Date().getTime() > date.getTime();
   const state = usePeriodState();
   const [isClicked, setIsClicked] = useState(false);

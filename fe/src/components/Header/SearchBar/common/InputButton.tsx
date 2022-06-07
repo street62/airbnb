@@ -1,4 +1,6 @@
 import { CommonButton, Label, SelectedOption } from 'components/Header/SearchBar/searchBar.styled';
+import { makeDateString } from 'utils/util';
+import { usePeriodState, usePeriodDispatch } from 'contexts/periodContext';
 
 type ButtonInfo = {
   id: string | undefined;
@@ -18,9 +20,16 @@ type InputButtonType = {
 };
 
 function InputButton({ clickModal, buttonInfo, styleOptions }: InputButtonType) {
+  const { checkIn, checkOut } = usePeriodState();
+  const { setText } = usePeriodDispatch();
+  const [checkInString, checkOutString] = [makeDateString(checkIn), makeDateString(checkOut)];
+  const periodString = `${checkInString} ~ ${checkOutString}`;
   return (
     <CommonButton
-      onClick={clickModal}
+      onClick={(e: React.MouseEvent<HTMLElement>) => {
+        clickModal(e);
+        setText(periodString);
+      }}
       aria-label={buttonInfo.ariaLabel}
       style={styleOptions}
       data-id={buttonInfo.id}

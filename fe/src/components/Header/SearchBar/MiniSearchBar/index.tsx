@@ -4,6 +4,8 @@ import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 import { usePersonnelState } from 'contexts/PersonnelContext';
 import { usePriceState } from 'hooks/usePrice';
+import { usePeriodState, usePeriodDispatch } from 'contexts/periodContext';
+import { makeDateString } from 'utils/util';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
@@ -12,10 +14,10 @@ type MyProps = {
 function MiniSearchBar({ changeSearchBar }: MyProps) {
   const { personnelCounterText } = usePersonnelState();
   const { priceRangeText } = usePriceState();
-
+  const { text } = usePeriodState();
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
-      <MiniBarButton aria-label="일정 입력 버튼">일정 입력</MiniBarButton>
+      <MiniBarButton aria-label="일정 입력 버튼">{text}</MiniBarButton>
       <Divider orientation="vertical" />
       <PriceButton aria-label="요금 입력 버튼">{priceRangeText}</PriceButton>
       <Divider orientation="vertical" />
