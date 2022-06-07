@@ -15,7 +15,8 @@ type State = {
 type Action =
   | { type: 'INCREASE_COUNT'; age: string }
   | { type: 'DECREASE_COUNT'; age: string }
-  | { type: 'SET_COUNTER_TEXT'; text: string };
+  | { type: 'SET_COUNTER_TEXT'; text: string }
+  | { type: 'RESET_COUNT'; payload: null };
 
 type PersonnelDispatch = Dispatch<Action>;
 
@@ -71,6 +72,8 @@ function personnalReducer(state: State, action: Action) {
       };
     case 'SET_COUNTER_TEXT':
       return { ...state, personnelCounterText: action.text };
+    case 'RESET_COUNT':
+      return { ...initState };
     default:
       throw new Error();
   }
@@ -90,6 +93,7 @@ export function usePersonnelDispatch() {
   const increaseCount = (age: string) => dispatch({ type: 'INCREASE_COUNT', age });
   const decreaseCount = (age: string) => dispatch({ type: 'DECREASE_COUNT', age });
   const setText = (text: string) => dispatch({ type: 'SET_COUNTER_TEXT', text });
+  const resetCount = () => dispatch({ type: 'RESET_COUNT', payload: null });
 
-  return { increaseCount, decreaseCount, setText };
+  return { increaseCount, decreaseCount, setText, resetCount };
 }
