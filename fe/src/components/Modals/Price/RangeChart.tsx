@@ -88,8 +88,8 @@ function Chart({ initSliderRange, priceData, dataPriceInfo, currentPriceRange }:
 
     // 해상도 올리기
     const dpr = window.devicePixelRatio;
-    canvasRef.current.width = (WIDTH * dpr) / 2;
-    canvasRef.current.height = (HEIGHT * dpr) / 2;
+    canvasRef.current.width = (WIDTH * dpr) / dpr;
+    canvasRef.current.height = (HEIGHT * dpr) / dpr;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
