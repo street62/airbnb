@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { ReactComponent as SearchIcon } from 'images/FE_숙소예약서비스/Property 1=search.svg';
 import { ReactComponent as CrossIcon } from 'images/FE_숙소예약서비스/Property 1=x-circle.svg';
@@ -80,7 +81,7 @@ export const SelectedOption = styled.span`
   text-overflow: ellipsis;
 `;
 
-export const SearchButton = styled.a`
+export const SearchButton = styled(Link)`
   display: flex;
   align-items: center;
   justify-content: center;
