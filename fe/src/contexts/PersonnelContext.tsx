@@ -19,13 +19,13 @@ type Action =
 
 type PersonnelDispatch = Dispatch<Action>;
 
-const PersonnelStateContext = createContext<State | null>(null);
-const PersonnelDispatchContext = createContext<PersonnelDispatch | null>(null);
-
 const initState: State = {
   counter: { adult: 0, child: 0, toddler: 0 },
   personnelCounterText: '인원 선택',
 };
+
+const PersonnelStateContext = createContext<State | null>(initState);
+const PersonnelDispatchContext = createContext<PersonnelDispatch | null>(null);
 
 export function PersonnalProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(personnalReducer, initState);
@@ -42,26 +42,35 @@ export function PersonnalProvider({ children }: { children: ReactNode }) {
 function personnalReducer(state: State, action: Action) {
   switch (action.type) {
     case 'INCREASE_COUNT':
+      if (action.age !== 'adult' && state.counter.adult === 0) {
+        return {
+          ...state,
+          counter: {
+            ...state.counter,
+            adult: state.counter.adult + 1,
+            [action.age]: state.counter[action.age] + 1,
+          },
+        };
+      }
+
       return {
         ...state,
-        counter: {
-          ...state.counter,
-          [action.age]: state.counter[action.age] + 1,
-        },
+        counter: { ...state.counter, [action.age]: state.counter[action.age] + 1 },
       };
     case 'DECREASE_COUNT':
+      if (action.age === 'adult' && state.counter.adult - 1 === 0) {
+        return {
+          ...state,
+          counter: { ...state.counter, adult: 0, child: 0, toddler: 0 },
+        };
+      }
+
       return {
         ...state,
-        counter: {
-          ...state.counter,
-          [action.age]: state.counter[action.age] - 1,
-        },
+        counter: { ...state.counter, [action.age]: state.counter[action.age] - 1 },
       };
     case 'SET_COUNTER_TEXT':
-      return {
-        ...state,
-        personnelCounterText: action.text,
-      };
+      return { ...state, personnelCounterText: action.text };
     default:
       throw new Error();
   }
@@ -81,5 +90,6 @@ export function usePersonnelDispatch() {
   const increaseCount = (age: string) => dispatch({ type: 'INCREASE_COUNT', age });
   const decreaseCount = (age: string) => dispatch({ type: 'DECREASE_COUNT', age });
   const setText = (text: string) => dispatch({ type: 'SET_COUNTER_TEXT', text });
+
   return { increaseCount, decreaseCount, setText };
 }

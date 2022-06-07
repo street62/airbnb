@@ -13,7 +13,7 @@ import Price from 'components/Header/SearchBar/Price';
 import SearchButton from 'components/Header/SearchBar/SearchButton';
 
 import PeriodModal from 'components/Modals/PeriodModal';
-import PersonnelModal from 'components/Modals/PersonnelModal';
+import PersonnelModal from 'components/Modals/Personnel';
 import PriceModal from 'components/Modals/Price';
 
 export type ClickModal = {

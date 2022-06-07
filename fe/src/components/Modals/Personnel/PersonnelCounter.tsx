@@ -1,67 +1,76 @@
 import { useEffect } from 'react';
+
 import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
-import styled from 'styled-components';
+
+import styled, { css } from 'styled-components';
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/Property 1=plus-circle.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/Property 1=minus-circle.svg';
-import { PersonnselInfo } from './PersonnelModal';
+
+import { PersonnselInfo } from 'components/Modals/Personnel/';
 
 type InfoProps = {
   info: PersonnselInfo;
 };
 
+const [MAX_COUNTER, MIN_COUNTER] = [8, 0];
+
 function PersonnelModalWrap({ info }: InfoProps) {
   const { counter } = usePersonnelState();
   const { increaseCount, decreaseCount, setText } = usePersonnelDispatch();
-  const [MAX, MIN] = [8, 0];
-  function makeText() {
+
+  const makeText = () => {
     const { adult, child, toddler } = counter;
     const guest = adult + child;
     let text;
+
     if (toddler === 0) {
       text = `게스트 ${guest}명`;
     } else {
       text = `게스트 ${guest}명,유아 ${toddler}명`;
     }
     return text;
-  }
-  function increaseCounter() {
-    if (counter[info.desc] < MAX) {
+  };
+
+  const increaseCounter = (e: React.MouseEvent<HTMLElement>) => {
+    if (counter[info.desc] < MAX_COUNTER) {
       increaseCount(info.desc);
     }
-  }
-  function decreaseCounter() {
-    if (counter[info.desc] > MIN) {
+  };
+
+  const decreaseCounter = (e: React.MouseEvent<HTMLElement>) => {
+    if (counter[info.desc] > MIN_COUNTER) {
       decreaseCount(info.desc);
     }
-  }
+  };
+
   useEffect(() => {
     setText(makeText());
-  }, [makeText]);
+  }, [counter]);
+
   return (
-    <PersonnelModalWrapContainer>
+    <PersonnelCounter>
       <PeopleInfo>
         <Title>{info.title}</Title>
         <Caption>{info.info}</Caption>
       </PeopleInfo>
       <CounterButtons>
-        <StyledMinusIcon
-          onClick={() => {
-            decreaseCounter();
-            setText(makeText());
-          }}
-        />
+        <CounterButton onClick={decreaseCounter}>
+          <StyledMinusIcon counter={counter[info.desc]} />
+        </CounterButton>
         <span>{counter[info.desc]}</span>
-        <StyledPlusIcon
-          onClick={() => {
-            increaseCounter();
-            setText(makeText());
-          }}
-        />
+        <CounterButton onClick={increaseCounter}>
+          <StyledPlusIcon counter={counter[info.desc]} />
+        </CounterButton>
       </CounterButtons>
-    </PersonnelModalWrapContainer>
+    </PersonnelCounter>
   );
 }
-const PersonnelModalWrapContainer = styled.div`
+
+type Counter = {
+  counter: number;
+};
+
+const PersonnelCounter = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -93,20 +102,44 @@ const CounterButtons = styled.div`
   }
 `;
 
-const StyledMinusIcon = styled(MinusIcon)`
+const CounterButton = styled.button`
   width: 30px;
   height: 30px;
-
-  path {
-    stroke: ${({ theme }) => theme.colors.grey5};
-  }
 `;
-const StyledPlusIcon = styled(PlusIcon)`
+
+const StyledMinusIcon = styled(MinusIcon)<Counter>`
   width: 30px;
   height: 30px;
 
-  path {
-    stroke: ${({ theme }) => theme.colors.grey5};
-  }
+  ${({ counter }) =>
+    counter === MIN_COUNTER
+      ? css`
+          path {
+            stroke: ${({ theme }) => theme.colors.grey5};
+          }
+        `
+      : css`
+          path {
+            stroke: ${({ theme }) => theme.colors.grey3};
+          }
+        `};
+`;
+
+const StyledPlusIcon = styled(PlusIcon)<Counter>`
+  width: 30px;
+  height: 30px;
+
+  ${({ counter }) =>
+    counter === MAX_COUNTER
+      ? css`
+          path {
+            stroke: ${({ theme }) => theme.colors.grey5};
+          }
+        `
+      : css`
+          path {
+            stroke: ${({ theme }) => theme.colors.grey3};
+          }
+        `};
 `;
 export default PersonnelModalWrap;
