@@ -35,4 +35,5 @@ export function makeDateString(date: Date | string): string {
   return dateString;
 }
 
-export const mockDate = new Date(1994, 7, 12);
+const today = new Date();
+export const mockDate = new Date(today.setDate(today.getDate() - 1));
