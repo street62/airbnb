@@ -23,7 +23,7 @@ function Header({ containerRef }: { containerRef: React.RefObject<HTMLDivElement
 
   const headerRef = useRef<HTMLDivElement>(null);
   const onClickEvent = ({ target }: MouseEvent) => {
-    if (!miniFocus && !headerRef.current?.contains(target as HTMLElement)) {
+    if (!miniFocus && !headerRef.current?.contains(target as Node)) {
       setMiniFocus(true);
     }
   };
