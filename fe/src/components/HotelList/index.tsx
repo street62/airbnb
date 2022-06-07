@@ -1,7 +1,9 @@
 import styled from 'styled-components';
+import { Fragment } from 'react';
 import { Divider } from '@mui/material';
 import Hotel from 'components/HotelList/Hotel';
 import SkeletonHotel from 'components/Skeleton/Hotel';
+import { keyMaker } from 'utils/util';
 
 function HotelList() {
   const SEARCH_FILTER = [
@@ -12,11 +14,12 @@ function HotelList() {
   ];
 
   const searchFilter = SEARCH_FILTER.map((result, index) => {
+    const key = keyMaker();
     return (
-      <>
+      <Fragment key={key}>
         <FilterText>{result}</FilterText>
         {index !== SEARCH_FILTER.length - 1 && <FilterText>ㆍ</FilterText>}
-      </>
+      </Fragment>
     );
   });
 

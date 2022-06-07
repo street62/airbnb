@@ -4,7 +4,9 @@ import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 import { usePersonnelState } from 'contexts/PersonnelContext';
 import { usePriceState } from 'hooks/usePrice';
-import { usePeriodState } from 'contexts/periodContext';
+import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+import { makeDateString, mockDate } from 'utils/util';
+import { useEffect } from 'react';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
@@ -13,7 +15,21 @@ type MyProps = {
 function MiniSearchBar({ changeSearchBar }: MyProps) {
   const { personnelCounterText } = usePersonnelState();
   const { priceRangeText } = usePriceState();
-  const { periodText } = usePeriodState();
+  const { checkIn, checkOut, periodText } = usePeriodState();
+  const { setText } = usePeriodDispatch();
+  function makePeriodString() {
+    const isCheckInState = checkIn.getTime() === mockDate.getTime();
+    const isCheckOutState = checkOut.getTime() === mockDate.getTime();
+
+    if (!isCheckInState && !isCheckOutState) {
+      const [checkInString, checkOutString] = [makeDateString(checkIn), makeDateString(checkOut)];
+      const periodString = `${checkInString} ~ ${checkOutString}`;
+      setText(periodString);
+    }
+  }
+  useEffect(() => {
+    makePeriodString();
+  }, [checkIn, checkOut]);
 
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
