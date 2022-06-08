@@ -1,5 +1,5 @@
-import { Dispatch } from 'react';
 import styled from 'styled-components';
+
 import Menu from 'components/Header/Menu';
 import MiniSearchBar from 'components/Header/SearchBar/MiniSearchBar';
 import SearchBar from 'components/Header/SearchBar/';

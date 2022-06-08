@@ -1,12 +1,13 @@
 import { Divider } from '@mui/material';
-import { CommonContainer } from 'components/Header/SearchBar/searchBar.styled';
-
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
-import { makeDateString, mockDate } from 'utils/util';
 
 import { ClickModal } from 'components/Header/SearchBar/';
+import { CommonContainer } from 'components/Header/SearchBar/searchBar.styled';
 import InputButton from 'components/Header/SearchBar/common/InputButton';
 import ResetButton from 'components/Header/SearchBar/common/ResetButton';
+
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+
+import { makeDateString, mockDate } from 'utils/util';
 
 function Period({ clickModal, isClicked, searchBarFocusModal }: ClickModal) {
   const { resetDate } = usePeriodDispatch();

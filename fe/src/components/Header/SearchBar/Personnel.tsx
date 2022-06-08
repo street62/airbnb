@@ -1,10 +1,10 @@
-import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
-
 import { ClickModal } from 'components/Header/SearchBar/';
 import ResetButton from 'components/Header/SearchBar/common/ResetButton';
 import InputButton from 'components/Header/SearchBar/common/InputButton';
 
-function Personnel({ clickModal, isClicked, searchBarFocusModal }: ClickModal) {
+import { usePersonnelDispatch, usePersonnelState } from 'hooks/usePersonnel';
+
+function Personnel({ clickModal }: ClickModal) {
   const { personnelCounterText, counter } = usePersonnelState();
   const { resetCount } = usePersonnelDispatch();
 

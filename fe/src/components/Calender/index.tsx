@@ -1,9 +1,11 @@
-import { usePeriodDispatch } from 'contexts/periodContext';
+import styled from 'styled-components';
+import Day from 'components/Calender/Day';
+
 import { ReactComponent as LeftIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-left.svg';
 import { ReactComponent as RightIcon } from 'images/FE_숙소예약서비스/Property 1=chevron-right.svg';
-import styled from 'styled-components';
+
+import { usePeriodDispatch } from 'hooks/usePeriod';
 import { getDays, keyMaker } from 'utils/util';
-import Day from './Day';
 
 type CalendarProps = {
   date: Date;

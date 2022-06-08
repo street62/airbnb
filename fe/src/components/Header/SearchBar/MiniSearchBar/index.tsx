@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
-import { usePersonnelState } from 'contexts/PersonnelContext';
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+import { usePersonnelState } from 'hooks/usePersonnel';
 import { usePriceState } from 'hooks/usePrice';
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+
 import { makeDateString, mockDate } from 'utils/util';
-import { useEffect } from 'react';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
@@ -16,7 +18,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
   const { personnelCounterText } = usePersonnelState();
   const { priceRangeText } = usePriceState();
   const { checkIn, checkOut, periodText } = usePeriodState();
-  const { setText } = usePeriodDispatch();
+  const { setPeriodText } = usePeriodDispatch();
   function makePeriodString() {
     const isCheckInState = checkIn.getTime() === mockDate.getTime();
     const isCheckOutState = checkOut.getTime() === mockDate.getTime();
@@ -24,7 +26,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
     if (!isCheckInState && !isCheckOutState) {
       const [checkInString, checkOutString] = [makeDateString(checkIn), makeDateString(checkOut)];
       const periodString = `${checkInString} ~ ${checkOutString}`;
-      setText(periodString);
+      setPeriodText(periodString);
     }
   }
   useEffect(() => {

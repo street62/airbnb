@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-// import { FlexBox } from 'components/Modals/Reservation/';
+import { Divider } from '@mui/material';
 
-import { usePeriodState } from 'contexts/periodContext';
+import { usePeriodState } from 'hooks/usePeriod';
 
 import { toLocalString } from 'utils/helper';
-import { Divider } from '@mui/material';
 
 function CostInfo({ info }: any) {
   const { checkIn, checkOut } = usePeriodState();

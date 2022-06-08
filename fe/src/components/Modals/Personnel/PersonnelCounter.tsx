@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
-
 import styled, { css } from 'styled-components';
+import { PersonnselInfo } from 'components/Modals/Personnel/';
+
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/Property 1=plus-circle.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/Property 1=minus-circle.svg';
 
-import { PersonnselInfo } from 'components/Modals/Personnel/';
+import { usePersonnelDispatch, usePersonnelState } from 'hooks/usePersonnel';
 
 type InfoProps = {
   info: PersonnselInfo;
@@ -14,22 +14,24 @@ type InfoProps = {
 
 const [MAX_COUNTER, MIN_COUNTER] = [8, 0];
 
+const makePersonnelText = (personnelInfo: { [key: string]: number }) => {
+  const { adult, child, toddler } = personnelInfo;
+  const guest = adult + child;
+
+  if (!adult && !child && !toddler) {
+    return '인원 선택';
+  }
+
+  if (!toddler) {
+    return `게스트 ${guest}명`;
+  }
+
+  return `게스트 ${guest}명,유아 ${toddler}명`;
+};
+
 function PersonnelModalWrap({ info }: InfoProps) {
   const { counter } = usePersonnelState();
-  const { increaseCount, decreaseCount, setText } = usePersonnelDispatch();
-
-  const makeText = () => {
-    const { adult, child, toddler } = counter;
-    const guest = adult + child;
-    let text;
-
-    if (toddler === 0) {
-      text = `게스트 ${guest}명`;
-    } else {
-      text = `게스트 ${guest}명,유아 ${toddler}명`;
-    }
-    return text;
-  };
+  const { increaseCount, decreaseCount, setPersonnelText } = usePersonnelDispatch();
 
   const increaseCounter = (e: React.MouseEvent<HTMLElement>) => {
     if (counter[info.desc] < MAX_COUNTER) {
@@ -44,7 +46,8 @@ function PersonnelModalWrap({ info }: InfoProps) {
   };
 
   useEffect(() => {
-    setText(makeText());
+    const personnelText = makePersonnelText(counter);
+    setPersonnelText(personnelText);
   }, [counter]);
 
   return (

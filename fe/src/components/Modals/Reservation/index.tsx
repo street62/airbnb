@@ -37,16 +37,18 @@ function Reservation() {
 }
 
 const Background = styled.div`
+  z-index: 5;
   position: absolute;
-  width: 100vw;
-  height: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 100vw;
+  height: 100%;
   background: #333333b3;
 `;
 
 const ReservationBox = styled.div`
+  z-index: 5;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -56,7 +58,6 @@ const ReservationBox = styled.div`
   border-radius: 10px;
   background: white;
   text-align: center;
-  z-index: 5;
 
   .info_caption {
     color: ${({ theme }) => theme.colors.grey2};

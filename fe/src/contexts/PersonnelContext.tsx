@@ -1,4 +1,4 @@
-import { createContext, Dispatch, ReactNode, useContext, useReducer } from 'react';
+import { createContext, Dispatch, ReactNode, useReducer } from 'react';
 
 type Counter = {
   [key: string]: number;
@@ -25,8 +25,8 @@ const initState: State = {
   personnelCounterText: '인원 선택',
 };
 
-const PersonnelStateContext = createContext<State | null>(initState);
-const PersonnelDispatchContext = createContext<PersonnelDispatch | null>(null);
+export const PersonnelStateContext = createContext<State | null>(initState);
+export const PersonnelDispatchContext = createContext<PersonnelDispatch | null>(null);
 
 export function PersonnalProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(personnalReducer, initState);
@@ -77,23 +77,4 @@ function personnalReducer(state: State, action: Action) {
     default:
       throw new Error();
   }
-}
-
-export function usePersonnelState() {
-  const state = useContext(PersonnelStateContext);
-  if (!state) throw new Error();
-
-  return { counter: state.counter, personnelCounterText: state.personnelCounterText };
-}
-
-export function usePersonnelDispatch() {
-  const dispatch = useContext(PersonnelDispatchContext);
-  if (!dispatch) throw new Error();
-
-  const increaseCount = (age: string) => dispatch({ type: 'INCREASE_COUNT', age });
-  const decreaseCount = (age: string) => dispatch({ type: 'DECREASE_COUNT', age });
-  const setText = (text: string) => dispatch({ type: 'SET_COUNTER_TEXT', text });
-  const resetCount = () => dispatch({ type: 'RESET_COUNT', payload: null });
-
-  return { increaseCount, decreaseCount, setText, resetCount };
 }
