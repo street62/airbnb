@@ -35,6 +35,7 @@ function Header() {
 }
 
 const HeaderWrap = styled.header<Position>`
+  z-index: 3;
   display: flex;
   justify-content: space-between;
   position: fixed;
@@ -53,7 +54,6 @@ const HeaderWrap = styled.header<Position>`
       : css`
           background: none;
         `};
-  z-index: 1;
 `;
 
 const HeaderOutSide = styled.div`

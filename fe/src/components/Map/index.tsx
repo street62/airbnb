@@ -45,15 +45,14 @@ const MapContainer = styled.div`
   height: 90vh;
   background: skyblue;
   position: relative;
-  z-index: -1;
 `;
 
 const MoveMapCheck = styled.div`
+  z-index: 2;
   position: absolute;
   top: 32px;
   left: 50%;
   transform: translate(-50%, 0);
-  z-index: 4;
   width: 212px;
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.white};
@@ -68,10 +67,10 @@ const StyledCheckbox = styled(Checkbox)`
 `;
 
 const MapLevelButtons = styled(ButtonGroup)`
+  z-index: 2;
   position: absolute;
   top: 32px;
   right: 32px;
-  z-index: 4;
 `;
 
 const StyledButton = styled(Button)`
