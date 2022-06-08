@@ -3,9 +3,9 @@ import { Checkbox } from '@mui/material';
 import { ReactComponent as StarIcon } from 'images/FE_숙소예약서비스/Property 1=star.svg';
 import { ReactComponent as HeartIcon } from 'images/FE_숙소예약서비스/Property 1=heart.svg';
 
-function Hotel() {
+function Hotel({ onClickEvent }: any) {
   return (
-    <HotelWrap>
+    <HotelWrap onClick={onClickEvent}>
       <HotelImg />
       <HotelInfo>
         <HotelInfoTop>
