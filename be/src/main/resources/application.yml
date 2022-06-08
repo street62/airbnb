@@ -4,6 +4,14 @@ spring:
     active: dev-h2
     include: local-log
 ---
+# profile group
+spring:
+  profiles:
+    group:
+      dev-h2: "dev-h2, local-log"
+      dev-mysql: "dev-mysql, local-log"
+      deploy-mysql: "deploy-mysql, deploy-log"
+---
 # dev-h2
 spring:
   config:
@@ -29,12 +37,51 @@ spring:
     init:
       platform: h2
       mode: always
-#      schema-locations: dml.sql
-#      data-locations: ddl.sql
   h2:
     console:
       enabled: true
+---
+# dev-mysql
+spring:
+  config:
+    activate:
+      on-profile: dev-mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/airbnb
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        connection:
+          charSet: UTF-8
+        hbm2ddl:
+          import_files: classpath:dml.sql
+          import_files_sql_extractor: org.hibernate.tool.hbm2ddl.MultipleLinesSqlCommandExtractor
+  sql:
+    init:
+      platform: mysql
+      mode: always
 
+---
+# deploy-mysql
+spring:
+  config:
+    activate:
+      on-profile: deploy-mysql
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${AIRBNB_URL}
+    username: ${AIRBNB_USER}
+    password: ${AIRBNB_PW}
+logging:
+  file:
+    path: ${LOG_FILE_PATH}
 ---
 # log-group
 spring:
