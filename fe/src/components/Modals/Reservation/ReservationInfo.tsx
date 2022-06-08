@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import InputButton from 'components/Header/SearchBar/common/InputButton';
 
-import { usePersonnelState } from 'contexts/PersonnelContext';
 import { usePeriodState } from 'hooks/usePeriod';
+import { usePersonnelState } from 'hooks/usePersonnel';
 
 import { makeDateString, mockDate } from 'utils/util';
 

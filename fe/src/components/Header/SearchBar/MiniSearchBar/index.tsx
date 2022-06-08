@@ -4,8 +4,8 @@ import styled from 'styled-components';
 import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
-import { usePersonnelState } from 'contexts/PersonnelContext';
 import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+import { usePersonnelState } from 'hooks/usePersonnel';
 import { usePriceState } from 'hooks/usePrice';
 
 import { makeDateString, mockDate } from 'utils/util';

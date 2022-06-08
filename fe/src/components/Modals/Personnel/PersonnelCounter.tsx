@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 
-import { usePersonnelDispatch, usePersonnelState } from 'contexts/PersonnelContext';
-
 import styled, { css } from 'styled-components';
+import { PersonnselInfo } from 'components/Modals/Personnel/';
+
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/Property 1=plus-circle.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/Property 1=minus-circle.svg';
 
-import { PersonnselInfo } from 'components/Modals/Personnel/';
+import { usePersonnelDispatch, usePersonnelState } from 'hooks/usePersonnel';
 
 type InfoProps = {
   info: PersonnselInfo;
