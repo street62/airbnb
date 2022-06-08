@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
   <springProperty name="filePath" source="logging.file.path"/>
-  <property name="fileName"		value="sidedish" />
+  <property name="fileName"		value="airbnb" />
   <property name="maxHistory"		value="7" />
   <property name="maxFileSize"	value="100KB" />
   <property name="totalSizeCap"	value="1GB" />
