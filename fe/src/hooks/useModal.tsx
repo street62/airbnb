@@ -18,5 +18,18 @@ export function useModal() {
     setFocusModal?.('');
   };
 
-  return { focusModal, setFocusModal, isClicked, setClicked, clickModalFocus, closeModal };
+  const resetModal = () => {
+    setFocusModal?.('');
+    setClicked?.(false);
+  };
+
+  return {
+    focusModal,
+    setFocusModal,
+    isClicked,
+    setClicked,
+    clickModalFocus,
+    closeModal,
+    resetModal,
+  };
 }
