@@ -9,7 +9,7 @@ import { mockDate } from 'utils/util';
 import { useModal } from 'hooks/useModal';
 
 function SearchButton() {
-  const { focusModal, resetModal } = useModal();
+  const { focusModal, closeModal } = useModal();
   const { checkIn, checkOut } = usePeriodState();
   const { setCheckIn, setCheckOut } = usePeriodDispatch();
 
@@ -26,7 +26,7 @@ function SearchButton() {
 
   const handleClickResultButton = (e: React.MouseEvent<HTMLAnchorElement>) => {
     handleCheckInOutDay();
-    resetModal();
+    closeModal();
   };
 
   return (

@@ -16,10 +16,6 @@ export function useModal() {
 
   const closeModal = () => {
     setFocusModal?.('');
-  };
-
-  const resetModal = () => {
-    setFocusModal?.('');
     setClicked?.(false);
   };
 
@@ -30,6 +26,5 @@ export function useModal() {
     setClicked,
     clickModalFocus,
     closeModal,
-    resetModal,
   };
 }
