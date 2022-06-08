@@ -37,7 +37,7 @@ function Reservation() {
 }
 
 const Background = styled.div`
-  z-index: 4;
+  z-index: 5;
   position: absolute;
   width: 100vw;
   height: 100%;
@@ -45,7 +45,7 @@ const Background = styled.div`
 `;
 
 const ReservationBox = styled.div`
-  z-index: 4;
+  z-index: 5;
   position: absolute;
   top: 50%;
   left: 50%;

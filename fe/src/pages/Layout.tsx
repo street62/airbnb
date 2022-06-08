@@ -18,5 +18,6 @@ function Layout() {
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
 `;
 export default Layout;
