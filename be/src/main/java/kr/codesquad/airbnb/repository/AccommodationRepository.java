@@ -25,6 +25,6 @@ public interface AccommodationRepository extends JpaRepository<Accommodation, Lo
         @Param("infantCount") int infantCount
         );
 
-    @Query(value = "SELECT fee_per_one_night FROM Accommodation", nativeQuery = true)
+    @Query(value = "SELECT fee_per_one_night FROM accommodation", nativeQuery = true)
     List<Integer> findAllprices();
 }
