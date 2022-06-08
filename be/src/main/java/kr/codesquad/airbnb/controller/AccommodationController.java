@@ -1,18 +1,17 @@
 package kr.codesquad.airbnb.controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 import kr.codesquad.airbnb.dto.*;
 import kr.codesquad.airbnb.service.AccommodationService;
 import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,6 +24,13 @@ public class AccommodationController {
     public ResponseEntity<List<SearchQueryResponseDto>> loadAccommodationsBySearchCondition(
         @ModelAttribute SearchQueryRequestDto requestDto) {
         return ResponseEntity.ok(accommodationService.getSearchResult(requestDto));
+    }
+
+    @GetMapping("/range")
+    public ResponseEntity<Map<String, Object>> loadAccommodationPriceCounts(
+            @RequestParam("checkinDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate,
+            @RequestParam("checkoutDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkoutDate) {
+        return ResponseEntity.ok(accommodationService.getPriceCountsByDateRange(checkinDate, checkoutDate));
     }
 
     @GetMapping("/prices")
