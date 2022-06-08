@@ -16,7 +16,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
   const { personnelCounterText } = usePersonnelState();
   const { priceRangeText } = usePriceState();
   const { checkIn, checkOut, periodText } = usePeriodState();
-  const { setText } = usePeriodDispatch();
+  const { setPeriodText } = usePeriodDispatch();
   function makePeriodString() {
     const isCheckInState = checkIn.getTime() === mockDate.getTime();
     const isCheckOutState = checkOut.getTime() === mockDate.getTime();
@@ -24,7 +24,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
     if (!isCheckInState && !isCheckOutState) {
       const [checkInString, checkOutString] = [makeDateString(checkIn), makeDateString(checkOut)];
       const periodString = `${checkInString} ~ ${checkOutString}`;
-      setText(periodString);
+      setPeriodText(periodString);
     }
   }
   useEffect(() => {

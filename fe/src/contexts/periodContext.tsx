@@ -99,7 +99,7 @@ export function usePeriodDispatch() {
   const setCheckOut = (checkOut: Date) => dispatch({ type: 'SET_CHECK_OUT', checkOut });
   const setDate = (date: Date) => dispatch({ type: 'SET_DATE', date });
   const resetDate = () => dispatch({ type: 'RESET_DATE', payload: null });
-  const setText = (text: string) => dispatch({ type: 'SET_TEXT', text });
+  const setPeriodText = (text: string) => dispatch({ type: 'SET_TEXT', text });
 
-  return { setCheckIn, setCheckOut, setDate, resetDate, setText };
+  return { setCheckIn, setCheckOut, setDate, resetDate, setPeriodText };
 }
