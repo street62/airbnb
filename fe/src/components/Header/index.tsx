@@ -37,7 +37,7 @@ function Header({ containerRef }: { containerRef: React.RefObject<HTMLDivElement
     parentContainer.addEventListener('mousedown', onClickEvent);
 
     return () => parentContainer.removeEventListener('mousedown', onClickEvent);
-  }, [containerRef]);
+  }, [containerRef, miniFocus]);
 
   return (
     <HeaderWrap position={path} ref={headerRef}>
@@ -64,7 +64,6 @@ const HeaderWrap = styled.header<Position>`
   ${({ position }) =>
     position === '/result'
       ? css`
-          border-bottom: 1px solid black;
           background: ${({ theme }) => theme.colors.white};
         `
       : css`

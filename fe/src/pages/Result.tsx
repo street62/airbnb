@@ -16,7 +16,8 @@ const ResultContainer = styled.div`
   justify-content: center;
   margin: 0 auto;
   margin-top: 97px;
-  width: 1440px;
+  width: 100%;
+  min-width: 1440px;
 `;
 
 export default Result;
