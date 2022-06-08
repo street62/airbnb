@@ -1,15 +1,15 @@
 import { Outlet } from 'react-router-dom';
-import Header from 'components/Header/index';
+
 import styled from 'styled-components';
+import Header from 'components/Header/index';
+
 import { ModalProvider } from 'contexts/ModalContext';
-import { useRef } from 'react';
 
 function Layout() {
-  const containerRef = useRef<HTMLDivElement>(null);
   return (
     <ModalProvider>
-      <Container ref={containerRef}>
-        <Header containerRef={containerRef} />
+      <Container>
+        <Header />
         <Outlet />
       </Container>
     </ModalProvider>
