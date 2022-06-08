@@ -31,7 +31,7 @@ export const SearchBarWrap = styled.div<SearchBarContainerType>`
 
 interface ContainerType {
   isClicked?: boolean;
-  focusModal?: string;
+  searchBarFocusModal?: string;
   id: string;
 }
 
@@ -48,8 +48,8 @@ export const CommonContainer = styled.div<ContainerType>`
     background: ${({ theme }) => theme.colors.grey6};
   }
 
-  ${({ focusModal, id, isClicked }) =>
-    focusModal === id &&
+  ${({ searchBarFocusModal, id, isClicked }) =>
+    searchBarFocusModal === id &&
     isClicked &&
     css`
       background: ${({ theme }) => theme.colors.white};

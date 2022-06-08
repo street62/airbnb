@@ -8,7 +8,7 @@ import { ClickModal } from 'components/Header/SearchBar/';
 import InputButton from 'components/Header/SearchBar/common/InputButton';
 import ResetButton from 'components/Header/SearchBar/common/ResetButton';
 
-function Period({ clickModal, isClicked, focusModal }: ClickModal) {
+function Period({ clickModal, isClicked, searchBarFocusModal }: ClickModal) {
   const { resetDate } = usePeriodDispatch();
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => resetDate();
 
@@ -17,21 +17,21 @@ function Period({ clickModal, isClicked, focusModal }: ClickModal) {
       <CheckIn
         clickModal={clickModal}
         isClicked={isClicked}
-        focusModal={focusModal}
+        searchBarFocusModal={searchBarFocusModal}
         onClickEvent={onClickEvent}
       />
-      {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
+      {searchBarFocusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
       <CheckOut
         clickModal={clickModal}
         isClicked={isClicked}
-        focusModal={focusModal}
+        searchBarFocusModal={searchBarFocusModal}
         onClickEvent={onClickEvent}
       />
     </>
   );
 }
 
-function CheckIn({ clickModal, isClicked, focusModal, onClickEvent }: ClickModal) {
+function CheckIn({ clickModal, isClicked, searchBarFocusModal, onClickEvent }: ClickModal) {
   const checkinDate = usePeriodState().checkIn;
 
   const checkInString =
@@ -46,7 +46,11 @@ function CheckIn({ clickModal, isClicked, focusModal, onClickEvent }: ClickModal
   };
 
   return (
-    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={COMPONENT_INFO.id}>
+    <CommonContainer
+      isClicked={isClicked}
+      searchBarFocusModal={searchBarFocusModal}
+      id={COMPONENT_INFO.id}
+    >
       <InputButton
         clickModal={clickModal}
         buttonInfo={COMPONENT_INFO}
@@ -59,7 +63,7 @@ function CheckIn({ clickModal, isClicked, focusModal, onClickEvent }: ClickModal
   );
 }
 
-function CheckOut({ clickModal, isClicked, focusModal, onClickEvent }: ClickModal) {
+function CheckOut({ clickModal, isClicked, searchBarFocusModal, onClickEvent }: ClickModal) {
   const checkOutDate = usePeriodState().checkOut;
 
   const checkOutString =
@@ -74,7 +78,11 @@ function CheckOut({ clickModal, isClicked, focusModal, onClickEvent }: ClickModa
   };
 
   return (
-    <CommonContainer isClicked={isClicked} focusModal={focusModal} id={COMPONENT_INFO.id}>
+    <CommonContainer
+      isClicked={isClicked}
+      searchBarFocusModal={searchBarFocusModal}
+      id={COMPONENT_INFO.id}
+    >
       <InputButton clickModal={clickModal} buttonInfo={COMPONENT_INFO} />
       {checkOutString !== '날짜 입력' && (
         <ResetButton ariaLabel={COMPONENT_INFO.resetButtonLabel} onClickEvent={onClickEvent} />

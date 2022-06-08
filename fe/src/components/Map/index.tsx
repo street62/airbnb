@@ -45,7 +45,7 @@ const MapContainer = styled.div`
   height: 90vh;
   background: skyblue;
   position: relative;
-  z-index: 3;
+  z-index: -1;
 `;
 
 const MoveMapCheck = styled.div`

@@ -20,7 +20,7 @@ export type ClickModal = {
   onClickEvent?: (e: React.MouseEvent<HTMLElement>) => void;
   clickModal: (e: React.MouseEvent<HTMLElement>) => void;
   isClicked?: boolean;
-  focusModal?: string;
+  searchBarFocusModal?: string;
   id?: string;
 };
 
@@ -29,7 +29,7 @@ type Focus = {
 };
 
 function SearchBar() {
-  const { focusModal, clickModalFocus, isClicked } = useModal();
+  const { searchBarFocusModal, clickModalFocus, isClicked } = useModal();
 
   const clickModal = (e: React.MouseEvent<HTMLElement>) => {
     if (!e.currentTarget.dataset.id) return;
@@ -40,16 +40,32 @@ function SearchBar() {
   return (
     <SearchBarContainer>
       <SearchBarWrap isClicked={isClicked} id="search_bar">
-        <Period clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
-        {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
-        <Price clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
-        {focusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
-        <CommonContainer isClicked={isClicked} focusModal={focusModal} id="PERSONNEL">
-          <Personnel clickModal={clickModal} isClicked={isClicked} focusModal={focusModal} />
+        <Period
+          clickModal={clickModal}
+          isClicked={isClicked}
+          searchBarFocusModal={searchBarFocusModal}
+        />
+        {searchBarFocusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
+        <Price
+          clickModal={clickModal}
+          isClicked={isClicked}
+          searchBarFocusModal={searchBarFocusModal}
+        />
+        {searchBarFocusModal === '' && <Divider orientation="vertical" sx={{ height: '60%' }} />}
+        <CommonContainer
+          isClicked={isClicked}
+          searchBarFocusModal={searchBarFocusModal}
+          id="PERSONNEL"
+        >
+          <Personnel
+            clickModal={clickModal}
+            isClicked={isClicked}
+            searchBarFocusModal={searchBarFocusModal}
+          />
           <SearchButton />
         </CommonContainer>
       </SearchBarWrap>
-      {focusModal !== '' && <FocusModal focus={focusModal} />}
+      {searchBarFocusModal !== '' && <FocusModal focus={searchBarFocusModal} />}
     </SearchBarContainer>
   );
 }
