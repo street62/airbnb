@@ -12,7 +12,7 @@ import { keyMaker } from 'utils/util';
 import Reservation from 'components/Modals/Reservation';
 
 function HotelList() {
-  const { focusModal, clickModalFocus } = useModal();
+  const { searchBarFocusModal, clickModalFocus } = useModal();
 
   const SEARCH_FILTER = [
     '300개 이상의 숙소',
@@ -45,7 +45,7 @@ function HotelList() {
         <StyledDevider />
         <SkeletonHotel />
       </HotelListWrap>
-      {focusModal !== '' && <Reservation />}
+      {searchBarFocusModal !== '' && <Reservation />}
     </>
   );
 }

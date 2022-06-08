@@ -9,7 +9,7 @@ import { mockDate } from 'utils/util';
 import { useModal } from 'hooks/useModal';
 
 function SearchButton() {
-  const { focusModal, closeModal } = useModal();
+  const { searchBarFocusModal, closeModal } = useModal();
   const { checkIn, checkOut } = usePeriodState();
   const { setCheckIn, setCheckOut } = usePeriodDispatch();
 
@@ -36,7 +36,7 @@ function SearchButton() {
       onClick={handleClickResultButton}
     >
       <StyledSearchIcon />
-      {focusModal !== '' && <span>검색</span>}
+      {searchBarFocusModal !== '' && <span>검색</span>}
     </SearchButtonContainer>
   );
 }

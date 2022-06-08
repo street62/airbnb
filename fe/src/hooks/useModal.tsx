@@ -2,26 +2,27 @@ import { useContext } from 'react';
 import { ModalContext } from 'contexts/ModalContext';
 
 export function useModal() {
-  const { focusModal, setFocusModal, isClicked, setClicked } = useContext(ModalContext);
+  const { searchBarFocusModal, setSearchBarFocusModal, isClicked, setClicked } =
+    useContext(ModalContext);
 
   const clickModalFocus = (id: string) => {
-    if (focusModal === id) {
-      setFocusModal?.('');
+    if (searchBarFocusModal === id) {
+      setSearchBarFocusModal?.('');
       setClicked?.(false);
     } else {
-      setFocusModal?.(id);
+      setSearchBarFocusModal?.(id);
       setClicked?.(true);
     }
   };
 
   const closeModal = () => {
-    setFocusModal?.('');
+    setSearchBarFocusModal?.('');
     setClicked?.(false);
   };
 
   return {
-    focusModal,
-    setFocusModal,
+    searchBarFocusModal,
+    setSearchBarFocusModal,
     isClicked,
     setClicked,
     clickModalFocus,

@@ -4,7 +4,7 @@ import { ClickModal } from 'components/Header/SearchBar/';
 import ResetButton from 'components/Header/SearchBar/common/ResetButton';
 import InputButton from 'components/Header/SearchBar/common/InputButton';
 
-function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
+function Personnel({ clickModal, isClicked, searchBarFocusModal }: ClickModal) {
   const { personnelCounterText, counter } = usePersonnelState();
   const { resetCount } = usePersonnelDispatch();
 
