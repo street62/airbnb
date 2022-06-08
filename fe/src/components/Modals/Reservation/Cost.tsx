@@ -46,6 +46,7 @@ function CostInfo({ info }: any) {
 const InfoContainer = styled.div`
   width: 100%;
   margin-top: 24px;
+  cursor: default;
 `;
 
 const FlexBox = styled.div`

@@ -5,7 +5,7 @@ import InputButton from 'components/Header/SearchBar/common/InputButton';
 import { usePeriodState } from 'contexts/periodContext';
 import { usePersonnelState } from 'contexts/PersonnelContext';
 
-import { makeDateString } from 'utils/util';
+import { makeDateString, mockDate } from 'utils/util';
 
 function ReservationInfo() {
   const { personnelCounterText } = usePersonnelState();
@@ -15,17 +15,22 @@ function ReservationInfo() {
     console.log(e.currentTarget.dataset.id);
   };
 
+  const checkInString =
+    checkIn.getTime() === mockDate.getTime() ? '날짜 입력' : makeDateString(checkIn);
+  const checkOutString =
+    checkOut.getTime() === mockDate.getTime() ? '날짜 입력' : makeDateString(checkOut);
+
   const COMPONENTS_INFO = [
     {
       id: 'CHECK_IN',
       title: '체크인',
-      inputText: makeDateString(checkIn),
+      inputText: checkInString,
       ariaLabel: '체크인 날짜 변경 버튼',
     },
     {
       id: 'CHECK_OUT',
       title: '체크아웃',
-      inputText: makeDateString(checkOut),
+      inputText: checkOutString,
       ariaLabel: '체크아웃 날짜 변경 버튼',
     },
     {
