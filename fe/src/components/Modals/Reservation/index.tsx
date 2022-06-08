@@ -2,8 +2,10 @@ import styled from 'styled-components';
 
 import ReservationInfo from 'components/Modals/Reservation/ReservationInfo';
 import CostInfo from 'components/Modals/Reservation/Cost';
+import { useModal } from 'hooks/useModal';
 
 function Reservation() {
+  const { resetModal } = useModal();
   const hotelInfo = {
     feePerOneNight: 70000,
     cleaningFee: 25000,
@@ -11,7 +13,7 @@ function Reservation() {
   };
 
   return (
-    <Background>
+    <Background onClick={resetModal}>
       <ReservationBox>
         <TopInfo>
           <span className="info_charge">
