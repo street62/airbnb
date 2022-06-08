@@ -1,6 +1,8 @@
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+
 import { mockDate } from 'utils/util';
 
 type DayProps = {

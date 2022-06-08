@@ -3,10 +3,10 @@ import {
   StyledSearchIcon,
 } from 'components/Header/SearchBar/searchBar.styled';
 
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+import { useModal } from 'hooks/useModal';
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
 
 import { mockDate } from 'utils/util';
-import { useModal } from 'hooks/useModal';
 
 function SearchButton() {
   const { searchBarFocusModal, closeModal } = useModal();

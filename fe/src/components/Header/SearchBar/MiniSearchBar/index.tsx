@@ -1,12 +1,14 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
 import { usePersonnelState } from 'contexts/PersonnelContext';
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
 import { usePriceState } from 'hooks/usePrice';
-import { usePeriodDispatch, usePeriodState } from 'contexts/periodContext';
+
 import { makeDateString, mockDate } from 'utils/util';
-import { useEffect } from 'react';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
