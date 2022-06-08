@@ -5,15 +5,21 @@ import CostInfo from 'components/Modals/Reservation/Cost';
 import { useModal } from 'hooks/useModal';
 
 function Reservation() {
-  const { closeModal } = useModal();
+  const { clickReservationModal, reservationFocusModal } = useModal();
   const hotelInfo = {
     feePerOneNight: 70000,
     cleaningFee: 25000,
     discountRate: 0.04,
   };
 
+  const onClickEvent = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    clickReservationModal(reservationFocusModal);
+  };
+
   return (
-    <Background onClick={closeModal}>
+    <>
+      <Background onClick={onClickEvent} />
       <ReservationBox>
         <TopInfo>
           <span className="info_charge">
@@ -26,7 +32,7 @@ function Reservation() {
         <span className="info_caption">예약 확정 전에는 요금이 청구되지 않습니다.</span>
         <CostInfo info={hotelInfo} />
       </ReservationBox>
-    </Background>
+    </>
   );
 }
 
@@ -50,6 +56,7 @@ const ReservationBox = styled.div`
   border-radius: 10px;
   background: white;
   text-align: center;
+  z-index: 5;
 
   .info_caption {
     color: ${({ theme }) => theme.colors.grey2};

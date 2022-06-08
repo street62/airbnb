@@ -65,12 +65,12 @@ function SearchBar() {
           <SearchButton />
         </CommonContainer>
       </SearchBarWrap>
-      {searchBarFocusModal !== '' && <searchBarFocusModal focus={searchBarFocusModal} />}
+      {searchBarFocusModal !== '' && <FocusModal focus={searchBarFocusModal} />}
     </SearchBarContainer>
   );
 }
 
-function searchBarFocusModal({ focus }: Focus) {
+function FocusModal({ focus }: Focus) {
   switch (focus) {
     case 'CHECK_IN':
     case 'CHECK_OUT':
