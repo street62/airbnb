@@ -3,6 +3,7 @@ package kr.codesquad.airbnb.service;
 import com.google.gson.Gson;
 import kr.codesquad.airbnb.domain.member.Member;
 import kr.codesquad.airbnb.repository.MemberRepository;
+import kr.codesquad.airbnb.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,11 +24,14 @@ import java.util.Scanner;
 public class OauthService {
 
     private final MemberRepository memberRepository;
-    public Member getUserInfoAndSaveUser(String authCode) throws FileNotFoundException {
+    private final TokenProvider tokenProvider;
+
+    public String getJwtToken(String authCode) throws FileNotFoundException {
         String parsedToken = getAccessToken(authCode);
         Map<String, String> userInfo = getUserInfo(parsedToken);
         String userName = userInfo.get("login");
-        return memberRepository.save(new Member(userName));
+        Member savedMember = memberRepository.save(new Member(userName));
+        return tokenProvider.createAccessToken(savedMember.getName(), savedMember.getId());
     }
 
     private String getAccessToken(String authCode) throws FileNotFoundException {
