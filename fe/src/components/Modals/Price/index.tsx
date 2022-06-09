@@ -1,18 +1,37 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import styled from 'styled-components';
+
 import { ModalWrap } from 'components/Modals/styled';
+import Chart from 'components/Modals/Price/RangeChart';
+import RangeSlider from 'components/Modals/Price/RangeSlider';
 
-import { toLocalString } from 'utils/helper';
 import { usePriceState } from 'hooks/usePrice';
+import { toLocalString } from 'utils/helper';
+import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
 
-import Chart from './RangeChart';
-import RangeSlider from './RangeSlider';
+const priceInfo = (priceData: Array<number>) => {
+  const minPrice = Math.min(...priceData);
+  const maxPrice = Math.max(...priceData);
+  const avgPrice = Math.floor(
+    priceData.reduce((prev: number, curr: number) => prev + curr) / priceData.length,
+  );
+
+  return { minPrice, maxPrice, avgPrice };
+};
 
 function PriceModal() {
-  const { priceData, priceRange, dataPriceInfo, initSliderRange, setSliderRange } = usePriceState();
+  const { priceRange } = usePriceState();
 
-  const { min: minSliderValue, max: maxSliderValue } = initSliderRange;
+  const priceData = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
+  const { minPrice, maxPrice, avgPrice } = priceInfo(priceData);
+
+  const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
+  const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
+
+  const dataPriceInfo = { min: minPrice, max: maxPrice, avg: avgPrice };
+  const initSliderRange = { min: minSliderValue, max: maxSliderValue };
+  const setSliderRange = { min: setMinSliderValue, max: setMaxSliderValue };
 
   const minValue = priceRange.min === 0 ? minSliderValue : priceRange.min;
   const maxValue = priceRange.max === 0 ? maxSliderValue : priceRange.max;
