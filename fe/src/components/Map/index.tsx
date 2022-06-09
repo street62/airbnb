@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+/* eslint-disable prefer-const */
+import { MouseEvent, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -15,7 +16,43 @@ declare global {
     kakao: any;
   }
 }
+
+type DataTypes = {
+  coordinateX: number;
+  coordinateY: number;
+  name: string;
+  feePerOneNight: number;
+};
+
 const { kakao }: Window = window;
+
+let kakaoMap: any;
+
+function loadMap(data: any, ref: React.RefObject<HTMLDivElement>) {
+  if (!data) return;
+  const firstData = data[0];
+
+  const mapOptions = {
+    center: new kakao.maps.LatLng(firstData.coordinateX, firstData.coordinateY),
+    level: 8,
+  };
+
+  const mapContainer = ref.current;
+  kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
+
+  data.forEach((loc: DataTypes) => {
+    const marker = new kakao.maps.CustomOverlay({
+      map: kakaoMap,
+      title: loc.name,
+      position: new kakao.maps.LatLng(loc.coordinateX, loc.coordinateY),
+      content: `
+        <div style="${customMarker}">
+          ₩${toLocalString(loc.feePerOneNight)}
+        </div>
+      `,
+    });
+  });
+}
 
 function Map() {
   const location = useLocation();
@@ -24,47 +61,45 @@ function Map() {
 
   const mapRef = useRef<HTMLDivElement>(null);
 
-  const data:
-    | { coordinateX: number; coordinateY: number; name: string; feePerOneNight: number }[]
-    | undefined = fetchedData;
+  const data: DataTypes[] | undefined = fetchedData;
 
+  const [isDraggabled, setDraggabled] = useState<boolean>(true);
+
+  const setDraggable = (draggable: boolean) => {
+    kakaoMap.setDraggable(!draggable);
+    setDraggabled(!isDraggabled);
+  };
+
+  const zoomIn = (e: MouseEvent<HTMLButtonElement> | undefined) => {
+    let level = kakaoMap.getLevel();
+    kakaoMap.setLevel(level - 1);
+  };
+
+  const zoomOut = (e: MouseEvent<HTMLButtonElement> | undefined) => {
+    let level = kakaoMap.getLevel();
+    kakaoMap.setLevel(level + 1);
+  };
   useEffect(() => {
-    if (!data) return;
-    const firstData = data[0];
-
-    const mapOptions = {
-      center: new kakao.maps.LatLng(firstData.coordinateX, firstData.coordinateY),
-      level: 8,
-    };
-
-    const mapContainer = mapRef.current;
-    const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
-
-    data.forEach((loc) => {
-      const marker = new kakao.maps.CustomOverlay({
-        map: kakaoMap,
-        title: loc.name,
-        position: new kakao.maps.LatLng(loc.coordinateX, loc.coordinateY),
-        content: `
-          <div style="${customMarker}">
-            ₩${toLocalString(loc.feePerOneNight)}
-          </div>
-        `,
-      });
-    });
-  }, [data]);
+    loadMap(data, mapRef);
+  }, [fetchedData]);
 
   return (
     <MapContainer id="mapContainer" ref={mapRef}>
       <MoveMapCheck>
-        <StyledCheckbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }} />
+        <StyledCheckbox
+          defaultChecked
+          sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }}
+          onClick={() => {
+            setDraggable(isDraggabled);
+          }}
+        />
         <span>지도를 움직이며 검색하기</span>
       </MoveMapCheck>
       <MapLevelButtons orientation="vertical" aria-label="지도 확대 축소 버튼">
-        <StyledButton aria-label="지도 확대 버튼">
+        <StyledButton aria-label="지도 확대 버튼" onClick={zoomIn}>
           <PlusIcon />
         </StyledButton>
-        <StyledButton aria-label="지도 축소 버튼">
+        <StyledButton aria-label="지도 축소 버튼" onClick={zoomOut}>
           <MinusIcon />
         </StyledButton>
       </MapLevelButtons>
