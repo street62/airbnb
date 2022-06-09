@@ -23,6 +23,13 @@ export function usePriceDispatch() {
     });
   };
 
+  const setPriceText = (text: string) => {
+    dispatch({
+      type: 'SET_PRICE_TEXT',
+      payload: text,
+    });
+  };
+
   const resetRange = () => {
     dispatch({
       type: 'RESET',
@@ -30,5 +37,5 @@ export function usePriceDispatch() {
     });
   };
 
-  return { setRange, resetRange };
+  return { setRange, setPriceText, resetRange };
 }
