@@ -1,9 +1,14 @@
+import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { Checkbox, ButtonGroup, Button } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/plus.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/minus.svg';
-import { useEffect, useRef } from 'react';
+
+import { useGetFetch } from 'hooks/useFetch';
+import { toLocalString } from 'utils/helper';
 
 declare global {
   interface Window {
@@ -13,16 +18,41 @@ declare global {
 const { kakao }: Window = window;
 
 function Map() {
+  const location = useLocation();
+  const queryString = `/accommodations${location.search}`;
+  const { fetchedData } = useGetFetch(queryString);
+
   const mapRef = useRef<HTMLDivElement>(null);
 
+  const data:
+    | { coordinateX: number; coordinateY: number; name: string; feePerOneNight: number }[]
+    | undefined = fetchedData;
+
   useEffect(() => {
+    if (!data) return;
+    const firstData = data[0];
+
     const mapOptions = {
-      center: new kakao.maps.LatLng(33.450701, 126.570667),
-      level: 3,
+      center: new kakao.maps.LatLng(firstData.coordinateX, firstData.coordinateY),
+      level: 8,
     };
+
     const mapContainer = mapRef.current;
-    const map = new kakao.maps.Map(mapContainer, mapOptions);
-  }, []);
+    const kakaoMap = new kakao.maps.Map(mapContainer, mapOptions);
+
+    data.forEach((loc) => {
+      const marker = new kakao.maps.CustomOverlay({
+        map: kakaoMap,
+        title: loc.name,
+        position: new kakao.maps.LatLng(loc.coordinateX, loc.coordinateY),
+        content: `
+          <div style="${customMarker}">
+            ₩${toLocalString(loc.feePerOneNight)}
+          </div>
+        `,
+      });
+    });
+  }, [data]);
 
   return (
     <MapContainer id="mapContainer" ref={mapRef}>
@@ -41,6 +71,16 @@ function Map() {
     </MapContainer>
   );
 }
+
+const customMarker = `
+  padding: 4px 8px;
+  border: 1px solid black;
+  border-radius: 999px;
+  background: #FFFFFF;
+  font-weight: 700;
+  font-size: '12px';
+  line-height: '17.38px';
+`;
 
 const MapContainer = styled.div`
   width: 50%;
