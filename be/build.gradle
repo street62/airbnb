@@ -33,6 +33,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	compileOnly 'org.springframework.boot:spring-boot-starter-webflux'
+	runtimeOnly 'io.netty:netty-resolver-dns-native-macos:4.1.77.Final:osx-aarch_64'
+	implementation group: 'com.google.code.gson', name: 'gson', version: '2.9.0'
 }
 
 tasks.named('test') {
