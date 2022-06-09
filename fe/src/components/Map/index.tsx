@@ -3,7 +3,7 @@ import { Checkbox, ButtonGroup, Button } from '@mui/material';
 
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/plus.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/minus.svg';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 declare global {
   interface Window {
@@ -13,17 +13,19 @@ declare global {
 const { kakao }: Window = window;
 
 function Map() {
+  const mapRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const mapOptions = {
       center: new kakao.maps.LatLng(33.450701, 126.570667),
       level: 3,
     };
-    const $mapContainer = document.getElementById('mapContainer');
-    const map = new kakao.maps.Map($mapContainer, mapOptions);
+    const mapContainer = mapRef.current;
+    const map = new kakao.maps.Map(mapContainer, mapOptions);
   }, []);
 
   return (
-    <MapContainer id="mapContainer">
+    <MapContainer id="mapContainer" ref={mapRef}>
       <MoveMapCheck>
         <StyledCheckbox defaultChecked sx={{ '& .MuiSvgIcon-root': { fontSize: 32 } }} />
         <span>지도를 움직이며 검색하기</span>
