@@ -22,7 +22,7 @@ export const useGetFetch = (queryString: string) => {
     };
 
     getDatas();
-  }, []);
+  }, [URL]);
 
   return { fetchedData, loading, error };
 };
