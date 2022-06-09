@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-export const useGetFetch = (URL: string) => {
+export const useGetFetch = (queryString: string) => {
   const [fetchedData, setFetchedData] = useState<[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>();
+
+  const URL = `${process.env.REACT_APP_SERVER_URL}${queryString}`;
 
   useEffect(() => {
     setLoading(true);
