@@ -1,18 +1,31 @@
 import React, { Fragment } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
 
 import Hotel from 'components/HotelList/Hotel';
+import Reservation from 'components/Modals/Reservation';
 import SkeletonHotel from 'components/Skeleton/Hotel';
 
 import { useModal } from 'hooks/useModal';
+import { useGetFetch } from 'hooks/useFetch';
 
 import { keyMaker } from 'utils/util';
-import Reservation from 'components/Modals/Reservation';
+
+export type InfoProps = {
+  [key: string]: string | number | undefined;
+  imgUrl: string;
+  feePerOneNight: number;
+};
 
 function HotelList() {
   const { reservationFocusModal, clickReservationModal } = useModal();
+
+  const location = useLocation();
+  const URL = `http://csq-alb-313771881.ap-northeast-2.elb.amazonaws.com:8080/accommodations${location.search}`;
+
+  const { fetchedData, loading } = useGetFetch(URL);
 
   const SEARCH_FILTER = [
     '300개 이상의 숙소',
@@ -35,14 +48,21 @@ function HotelList() {
     clickReservationModal(reservationFocusModal);
   };
 
+  const hotels = fetchedData?.map((info: InfoProps) => {
+    return (
+      <Fragment key={info.id}>
+        <Hotel onClickEvent={onClickEvent} info={info} />
+        <StyledDevider />
+      </Fragment>
+    );
+  });
+
   return (
     <>
       <HotelListWrap>
         {searchFilter}
         <TypographyH2>지도에서 선택한 지역의 숙소</TypographyH2>
-        <Hotel onClickEvent={onClickEvent} />
-        <StyledDevider />
-        <SkeletonHotel />
+        <List>{loading ? <SkeletonHotel /> : hotels}</List>
       </HotelListWrap>
       {reservationFocusModal && <Reservation />}
     </>
@@ -51,9 +71,15 @@ function HotelList() {
 
 const HotelListWrap = styled.div`
   width: 50%;
-  height: 100%;
+  height: 90vh;
   max-width: 732px;
   padding: 24px 32px 0 32px;
+`;
+
+const List = styled.div`
+  height: calc(90vh - 108px);
+  padding-right: 20px;
+  overflow: auto;
 `;
 
 const TypographyH2 = styled.h2`
