@@ -30,7 +30,15 @@ export function makeDateString(date: Date | string): string {
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
     const day = date.getDate();
-    dateString = `${year}-${month}-${day}`;
+
+    const monthCheck = () => {
+      if (month < 10) {
+        return `0${String(month)}`;
+      }
+
+      return month;
+    };
+    dateString = `${year}-${monthCheck()}-${day}`;
   }
   return dateString;
 }
