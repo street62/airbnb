@@ -1,7 +1,9 @@
-import { usePeriodState } from 'contexts/periodContext';
-import Calendar from 'components/Calender/Calendar';
 import styled from 'styled-components';
-import { ModalWrap } from './styled';
+
+import { ModalWrap } from 'components/Modals/styled';
+import Calendar from 'components/Calender';
+
+import { usePeriodState } from 'hooks/usePeriod';
 
 function PeriodModal() {
   const state = usePeriodState();

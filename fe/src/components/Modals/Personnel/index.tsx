@@ -1,11 +1,14 @@
+import { Fragment } from 'react';
+
 import { Divider } from '@mui/material';
 import styled from 'styled-components';
-import PersonnelModalWrap from './PersonnelModalWrap';
 
-import { ModalWrap } from './styled';
+import { keyMaker } from 'utils/util';
+
+import { ModalWrap } from 'components/Modals/styled';
+import PersonnelModalWrap from 'components/Modals/Personnel/PersonnelCounter';
 
 export type PersonnselInfo = {
-  id: number;
   title: string;
   info: string;
   desc: string;
@@ -13,17 +16,19 @@ export type PersonnselInfo = {
 
 function PersonnelModal() {
   const PERSONNEL_INFO = [
-    { id: 1, title: '성인', info: '만 13세 이상', desc: 'adult' },
-    { id: 2, title: '어린이', info: '만 2~12세', desc: 'child' },
-    { id: 3, title: '유아', info: '만 2세 미만', desc: 'toddler' },
+    { title: '성인', info: '만 13세 이상', desc: 'adult' },
+    { title: '어린이', info: '만 2~12세', desc: 'child' },
+    { title: '유아', info: '만 2세 미만', desc: 'toddler' },
   ];
 
   const PersonnelInfo = PERSONNEL_INFO.map((info: PersonnselInfo, index: number) => {
+    const fragmentKey = keyMaker();
+
     return (
-      <>
-        <PersonnelModalWrap key={info.id} info={info} />
-        {index !== PERSONNEL_INFO.length - 1 && <StyledDevider key={info.id} />}
-      </>
+      <Fragment key={fragmentKey}>
+        <PersonnelModalWrap info={info} />
+        {index !== PERSONNEL_INFO.length - 1 && <StyledDivider />}
+      </Fragment>
     );
   });
 
@@ -39,7 +44,7 @@ const PersonnelModalContainer = styled(ModalWrap)`
   flex-direction: column;
 `;
 
-const StyledDevider = styled(Divider)`
+const StyledDivider = styled(Divider)`
   && {
     width: 100%;
     margin: 24px 0;

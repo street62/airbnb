@@ -1,9 +1,19 @@
+import React, { Fragment } from 'react';
+
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
+
 import Hotel from 'components/HotelList/Hotel';
 import SkeletonHotel from 'components/Skeleton/Hotel';
 
+import { useModal } from 'hooks/useModal';
+
+import { keyMaker } from 'utils/util';
+import Reservation from 'components/Modals/Reservation';
+
 function HotelList() {
+  const { reservationFocusModal, clickReservationModal } = useModal();
+
   const SEARCH_FILTER = [
     '300개 이상의 숙소',
     '5월 12일 - 5월 18일',
@@ -12,22 +22,30 @@ function HotelList() {
   ];
 
   const searchFilter = SEARCH_FILTER.map((result, index) => {
+    const key = keyMaker();
     return (
-      <>
+      <Fragment key={key}>
         <FilterText>{result}</FilterText>
         {index !== SEARCH_FILTER.length - 1 && <FilterText>ㆍ</FilterText>}
-      </>
+      </Fragment>
     );
   });
 
+  const onClickEvent = (e: React.MouseEvent<HTMLDivElement>) => {
+    clickReservationModal(reservationFocusModal);
+  };
+
   return (
-    <HotelListWrap>
-      {searchFilter}
-      <TypographyH2>지도에서 선택한 지역의 숙소</TypographyH2>
-      <Hotel />
-      <StyledDevider />
-      <SkeletonHotel />
-    </HotelListWrap>
+    <>
+      <HotelListWrap>
+        {searchFilter}
+        <TypographyH2>지도에서 선택한 지역의 숙소</TypographyH2>
+        <Hotel onClickEvent={onClickEvent} />
+        <StyledDevider />
+        <SkeletonHotel />
+      </HotelListWrap>
+      {reservationFocusModal && <Reservation />}
+    </>
   );
 }
 
