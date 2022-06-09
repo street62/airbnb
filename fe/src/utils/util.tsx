@@ -23,3 +23,17 @@ export function getDays(month: number) {
 export function keyMaker() {
   return Math.random().toString(36).substring(2, 11);
 }
+
+export function makeDateString(date: Date | string): string {
+  let dateString: string = '';
+  if (typeof date !== 'string') {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    dateString = `${year}-${month}-${day}`;
+  }
+  return dateString;
+}
+
+const today = new Date();
+export const mockDate = new Date(today.setDate(today.getDate() - 1));

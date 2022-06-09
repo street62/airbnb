@@ -1,7 +1,8 @@
 export type PriceInfoType = {
-  minPrice: number;
-  maxPrice: number;
   priceData: Array<number>;
+  dataPriceInfo: { [key: string]: number };
+  initSliderRange: { [key: string]: number };
+  currentPriceRange: { [key: string]: number };
 };
 
 export type ObjType = {

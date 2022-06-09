@@ -1,9 +1,14 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 import { Divider } from '@mui/material';
 import { StyledSearchIcon } from 'components/Header/SearchBar/searchBar.styled';
 
-import { usePersonnelState } from 'contexts/PersonnelContext';
-import { usePriceState } from 'contexts/PriceContext';
+import { usePeriodDispatch, usePeriodState } from 'hooks/usePeriod';
+import { usePersonnelState } from 'hooks/usePersonnel';
+import { usePriceState } from 'hooks/usePrice';
+
+import { makeDateString, mockDate } from 'utils/util';
 
 type MyProps = {
   changeSearchBar: (e: React.MouseEvent<HTMLElement>) => void;
@@ -12,13 +17,28 @@ type MyProps = {
 function MiniSearchBar({ changeSearchBar }: MyProps) {
   const { personnelCounterText } = usePersonnelState();
   const { priceRangeText } = usePriceState();
+  const { checkIn, checkOut, periodText } = usePeriodState();
+  const { setPeriodText } = usePeriodDispatch();
+  function makePeriodString() {
+    const isCheckInState = checkIn.getTime() === mockDate.getTime();
+    const isCheckOutState = checkOut.getTime() === mockDate.getTime();
+
+    if (!isCheckInState && !isCheckOutState) {
+      const [checkInString, checkOutString] = [makeDateString(checkIn), makeDateString(checkOut)];
+      const periodString = `${checkInString} ~ ${checkOutString}`;
+      setPeriodText(periodString);
+    }
+  }
+  useEffect(() => {
+    makePeriodString();
+  }, [checkIn, checkOut]);
 
   return (
     <MiniSearchBarWrap onClick={changeSearchBar}>
-      <MiniBarButton aria-label="일정 입력 버튼">일정 입력</MiniBarButton>
-      <Divider orientation="vertical" />
+      <MiniBarButton aria-label="일정 입력 버튼">{periodText}</MiniBarButton>
+      <Divider orientation="vertical" sx={{ margin: '8px' }} />
       <PriceButton aria-label="요금 입력 버튼">{priceRangeText}</PriceButton>
-      <Divider orientation="vertical" />
+      <Divider orientation="vertical" sx={{ margin: '8px' }} />
       <MiniBarButton aria-label="인원 입력 버튼">{personnelCounterText}</MiniBarButton>
       <MiniSearchBtn type="button" aria-label="결과 찾기 버튼">
         <MiniSearchIcon />
@@ -29,7 +49,7 @@ function MiniSearchBar({ changeSearchBar }: MyProps) {
 
 const MiniSearchBarWrap = styled.div`
   margin: 0 auto;
-  width: 410px;
+  min-width: 410px;
   height: 48px;
   display: flex;
   justify-content: space-around;
@@ -48,6 +68,7 @@ const MiniSearchBtn = styled.button`
   width: 32px;
   height: 32px;
   border-radius: 50%;
+  margin-left: 8px;
   padding-top: 5px;
   background: ${({ theme }) => theme.colors.primary};
 `;

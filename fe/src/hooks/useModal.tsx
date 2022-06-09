@@ -2,21 +2,41 @@ import { useContext } from 'react';
 import { ModalContext } from 'contexts/ModalContext';
 
 export function useModal() {
-  const { focusModal, setFocusModal, isClicked, setClicked } = useContext(ModalContext);
+  const {
+    reservationFocusModal,
+    setReservationFocusModal,
+    searchBarFocusModal,
+    setSearchBarFocusModal,
+    isClicked,
+    setClicked,
+  } = useContext(ModalContext);
 
   const clickModalFocus = (id: string) => {
-    if (focusModal === id) {
-      setFocusModal?.('');
+    if (searchBarFocusModal === id) {
+      setSearchBarFocusModal?.('');
       setClicked?.(false);
     } else {
-      setFocusModal?.(id);
+      setSearchBarFocusModal?.(id);
       setClicked?.(true);
     }
   };
 
   const closeModal = () => {
-    setFocusModal?.('');
+    setSearchBarFocusModal?.('');
+    setClicked?.(false);
   };
 
-  return { focusModal, setFocusModal, isClicked, setClicked, clickModalFocus, closeModal };
+  const clickReservationModal = (reservationFocusModal: boolean) =>
+    setReservationFocusModal?.(!reservationFocusModal);
+
+  return {
+    searchBarFocusModal,
+    setSearchBarFocusModal,
+    isClicked,
+    setClicked,
+    clickModalFocus,
+    closeModal,
+    reservationFocusModal,
+    clickReservationModal,
+  };
 }

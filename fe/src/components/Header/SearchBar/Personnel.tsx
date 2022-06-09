@@ -1,29 +1,35 @@
-import { usePersonnelState } from 'contexts/PersonnelContext';
+import { ClickModal } from 'components/Header/SearchBar/';
+import ResetButton from 'components/Header/SearchBar/common/ResetButton';
+import InputButton from 'components/Header/SearchBar/common/InputButton';
 
-import { ClickModal } from '.';
-import ResetButton from './common/ResetButton';
-import InputButton from './common/InputButton';
+import { usePersonnelDispatch, usePersonnelState } from 'hooks/usePersonnel';
 
-function Personnel({ clickModal, isClicked, focusModal }: ClickModal) {
-  const { personnelCounterText } = usePersonnelState();
+function Personnel({ clickModal }: ClickModal) {
+  const { personnelCounterText, counter } = usePersonnelState();
+  const { resetCount } = usePersonnelDispatch();
 
-  const FILTER_ID = 'PERSONNEL';
-  const BUTTON_INFO = {
-    id: FILTER_ID,
+  const COMPONENT_INFO = {
+    id: 'PERSONNEL',
     title: '인원',
     inputText: personnelCounterText,
     ariaLabel: '게스트 추가 버튼',
+    resetButtonLabel: '게스트 추가 취소 버튼',
   };
-  const RESET_BUTTON_ARIA_LABEL = '게스트 추가 취소 버튼';
+
+  const isNotInitValue = counter.adult !== 0 || counter.child !== 0 || counter.toddler !== 0;
+
+  const onClickEvent = (e: React.MouseEvent<HTMLElement>) => resetCount();
 
   return (
     <>
       <InputButton
         clickModal={clickModal}
-        buttonInfo={BUTTON_INFO}
+        buttonInfo={COMPONENT_INFO}
         styleOptions={{ width: '124px' }}
       />
-      {isClicked && focusModal === FILTER_ID && <ResetButton ariaLabel={RESET_BUTTON_ARIA_LABEL} />}
+      {isNotInitValue && (
+        <ResetButton ariaLabel={COMPONENT_INFO.resetButtonLabel} onClickEvent={onClickEvent} />
+      )}
     </>
   );
 }

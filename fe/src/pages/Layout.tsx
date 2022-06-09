@@ -1,6 +1,8 @@
 import { Outlet } from 'react-router-dom';
-import Header from 'components/Header/index';
+
 import styled from 'styled-components';
+import Header from 'components/Header/index';
+
 import { ModalProvider } from 'contexts/ModalContext';
 
 function Layout() {
@@ -16,5 +18,6 @@ function Layout() {
 
 const Container = styled.div`
   position: relative;
+  width: 100%;
 `;
 export default Layout;

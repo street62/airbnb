@@ -1,13 +1,29 @@
 import styled from 'styled-components';
 import { Avatar } from '@mui/material';
 import { ReactComponent as HamburgerIcon } from 'images/FE_숙소예약서비스/Property 1=menu.svg';
+import LoginModal from 'components/Modals/Login';
+import { useState } from 'react';
 
 function UserMenu() {
+  const login: boolean = true;
+  const [clicked, setClicked] = useState(false);
+  function changeModalStatus() {
+    setClicked(!clicked);
+  }
   return (
-    <UserWrapper type="button" aria-label="유저 정보 메뉴">
-      <Hamburger />
-      <CustomAvatar src="images/FE_숙소예약서비스/Property 1=user.svg" />
-    </UserWrapper>
+    <>
+      <UserWrapper
+        type="button"
+        aria-label="유저 정보 메뉴"
+        onClick={() => {
+          changeModalStatus();
+        }}
+      >
+        <Hamburger />
+        <CustomAvatar src="images/FE_숙소예약서비스/Property 1=user.svg" />
+      </UserWrapper>
+      <LoginModal login={login} isClicked={clicked} />
+    </>
   );
 }
 
