@@ -23,15 +23,15 @@ public class TokenProvider {
         this.accessTokenExpireTime = accessTokenExpireTime;
     }
 
-    public String createAccessToken(String userName, String id) {
+    public String createAccessToken(String userName, Long id) {
         Date now = getCurrentTime();
         return Jwts.builder()
-            .setIssuer(userName)
-            .setIssuedAt(now)
-            .claim("id", id)
-            .setExpiration(new Date(now.getTime() + accessTokenExpireTime))
-            .signWith(key, SignatureAlgorithm.HS256)
-            .compact();
+                .setIssuer(userName)
+                .setIssuedAt(now)
+                .setExpiration(new Date(now.getTime() + accessTokenExpireTime))
+                .claim("id", id)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 
     public boolean validateToken(String token) {
