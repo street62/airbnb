@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ModalWrap } from 'components/Modals/styled';
 import Chart from 'components/Modals/Price/RangeChart';
 import RangeSlider from 'components/Modals/Price/RangeSlider';
+import LoadingSpinner from 'components/Skeleton/LoadingSpinners';
 
 import { useGetFetch } from 'hooks/useFetch';
 import { usePriceState } from 'hooks/usePrice';
@@ -24,7 +25,13 @@ function SetPriceModal() {
   const URL = `/accommodations/prices`;
   const { fetchedData } = useGetFetch(URL);
 
-  return fetchedData ? <PriceModal priceData={fetchedData} /> : <div>로딩중</div>;
+  return fetchedData ? (
+    <PriceModal priceData={fetchedData} />
+  ) : (
+    <PriceModalWrap>
+      <LoadingSpinner size={50} />
+    </PriceModalWrap>
+  );
 }
 
 function PriceModal({ priceData }: { priceData: Array<number> }) {

@@ -16,7 +16,7 @@ function Personnel({ clickModal }: ClickModal) {
     resetButtonLabel: '게스트 추가 취소 버튼',
   };
 
-  const isNotInitValue = !counter.adult || !counter.child || !counter.toddler;
+  const isNotInitValue = counter.adult !== 0 || counter.child !== 0 || counter.toddler !== 0;
 
   const onClickEvent = (e: React.MouseEvent<HTMLElement>) => resetCount();
 

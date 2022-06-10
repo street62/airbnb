@@ -5,12 +5,12 @@ import styled from 'styled-components';
 import { Divider } from '@mui/material';
 
 import Hotel from 'components/HotelList/Hotel';
-import FilterText from 'components/HotelList/Filter';
+import FilterText, { Text } from 'components/HotelList/Filter';
 import Reservation from 'components/Modals/Reservation';
-import SkeletonHotel from 'components/Skeleton/Hotel';
 
 import { useModal } from 'hooks/useModal';
 import { useGetFetch } from 'hooks/useFetch';
+import SkeletonHotelList from 'components/Skeleton/HotelList';
 
 export type InfoProps = {
   [key: string]: string | number | undefined;
@@ -41,9 +41,9 @@ function HotelList() {
   return (
     <>
       <HotelListWrap>
-        <FilterText data={fetchedData} />
+        {loading ? <Text>숙소를 찾고있습니다</Text> : <FilterText data={fetchedData} />}
         <TypographyH2>지도에서 선택한 지역의 숙소</TypographyH2>
-        <List>{loading ? <SkeletonHotel /> : hotels}</List>
+        <List>{loading ? <SkeletonHotelList /> : hotels}</List>
       </HotelListWrap>
       {reservationFocusModal && <Reservation />}
     </>

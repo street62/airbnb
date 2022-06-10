@@ -28,7 +28,7 @@ function FilterText({ data }: DataProps) {
   return <Text>{filterText}</Text>;
 }
 
-const Text = styled.span`
+export const Text = styled.span`
   ${({ theme }) => theme.fontStyles.normal12px};
 `;
 
