@@ -6,13 +6,13 @@ import { ModalWrap } from 'components/Modals/styled';
 import Chart from 'components/Modals/Price/RangeChart';
 import RangeSlider from 'components/Modals/Price/RangeSlider';
 
+import { useGetFetch } from 'hooks/useFetch';
 import { usePriceState } from 'hooks/usePrice';
 import { toLocalString } from 'utils/helper';
-import { prices as MOCK_PRICE_DATA } from 'mocks/hotelPrices';
 
 const priceInfo = (priceData: Array<number>) => {
-  const minPrice = Math.min(...priceData);
-  const maxPrice = Math.max(...priceData);
+  const minPrice = Math.floor(Math.min(...priceData) / 10000) * 10000;
+  const maxPrice = Math.ceil(Math.max(...priceData) / 1000) * 1000;
   const avgPrice = Math.floor(
     priceData.reduce((prev: number, curr: number) => prev + curr) / priceData.length,
   );
@@ -20,11 +20,18 @@ const priceInfo = (priceData: Array<number>) => {
   return { minPrice, maxPrice, avgPrice };
 };
 
-function PriceModal() {
+function SetPriceModal() {
+  const URL = `/accommodations/prices`;
+  const { fetchedData } = useGetFetch(URL);
+
+  return fetchedData ? <PriceModal priceData={fetchedData} /> : <div>로딩중</div>;
+}
+
+function PriceModal({ priceData }: { priceData: Array<number> }) {
   const { priceRange } = usePriceState();
 
-  const priceData = [...MOCK_PRICE_DATA].sort((a, b) => a - b);
-  const { minPrice, maxPrice, avgPrice } = priceInfo(priceData);
+  const sortData = priceData.sort((a: number, b: number) => a - b);
+  const { minPrice, maxPrice, avgPrice } = priceInfo(sortData);
 
   const [minSliderValue, setMinSliderValue] = useState<number>(minPrice);
   const [maxSliderValue, setMaxSliderValue] = useState<number>(maxPrice);
@@ -102,4 +109,4 @@ const SliderWrap = styled.div`
   height: 110px;
 `;
 
-export default PriceModal;
+export default SetPriceModal;
