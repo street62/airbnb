@@ -14,4 +14,4 @@ sudo docker image rm $IMAGE_NAME
 sudo docker pull $IMAGE_NAME
 
 # start container
-sudo docker run -p 3000:3000  -d -it --name $CONTAINER_NAME $IMAGE_NAME
+sudo docker run --env-file ./env -p 3000:3000  -d -it --name $CONTAINER_NAME $IMAGE_NAME
