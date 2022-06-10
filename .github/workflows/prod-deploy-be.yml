@@ -11,6 +11,8 @@ jobs:
       run:
         shell: bash
     env:
+      AUTH_SECRET: ${{secrets.AUTH_SECRET}}
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
       WORKING_DIR: ./be
       DEPLOY_TYPE: be
       S3_BUCKET_NAME: airbnb-deploy
