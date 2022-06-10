@@ -5,6 +5,7 @@ import kr.codesquad.airbnb.domain.member.Member;
 import kr.codesquad.airbnb.repository.MemberRepository;
 import kr.codesquad.airbnb.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,8 @@ import java.util.Scanner;
 @RequiredArgsConstructor
 public class OauthService {
 
+    @Value("${auth.secret}")
+    private final String secretKey;
     private final MemberRepository memberRepository;
     private final TokenProvider tokenProvider;
 
@@ -35,8 +38,6 @@ public class OauthService {
     }
 
     private String getAccessToken(String authCode) throws FileNotFoundException {
-        String secretKey = new Scanner(new File("/Users/kylechoi/Documents/Dev/airbnb/be/src/main/resources/secret.txt")).nextLine();
-
         WebClient getAccessTokenClient = WebClient.builder()
                 .baseUrl("https://github.com")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
