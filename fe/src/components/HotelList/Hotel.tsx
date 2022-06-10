@@ -22,9 +22,11 @@ function Hotel({ onClickEvent, info }: HotelProps) {
 
   const TotlaCost = toLocalString(feePerOneNight * reserveDays);
 
+  const altText = `${name}의 숙소 이미지`;
+
   return (
     <HotelWrap data-id={id}>
-      <HotelImg onClick={onClickEvent} src={imgUrl} />
+      <HotelImg onClick={onClickEvent} src={imgUrl} alt={altText} />
       <HotelInfo>
         <HotelInfoTop>
           <RocationAndTitle>

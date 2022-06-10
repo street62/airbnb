@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 import { Checkbox, ButtonGroup, Button } from '@mui/material';
+import LoadingSpinner from 'components/Skeleton/LoadingSpinners';
 
 import { ReactComponent as PlusIcon } from 'images/FE_숙소예약서비스/plus.svg';
 import { ReactComponent as MinusIcon } from 'images/FE_숙소예약서비스/minus.svg';
@@ -57,7 +58,7 @@ function loadMap(data: any, ref: React.RefObject<HTMLDivElement>) {
 function Map() {
   const location = useLocation();
   const queryString = `/accommodations${location.search}`;
-  const { fetchedData } = useGetFetch(queryString);
+  const { fetchedData, loading } = useGetFetch(queryString);
 
   const mapRef = useRef<HTMLDivElement>(null);
 
@@ -83,7 +84,11 @@ function Map() {
     loadMap(data, mapRef);
   }, [fetchedData]);
 
-  return (
+  return loading ? (
+    <LoadingMapContainer>
+      <LoadingSpinner size={200} />
+    </LoadingMapContainer>
+  ) : (
     <MapContainer id="mapContainer" ref={mapRef}>
       <MoveMapCheck>
         <StyledCheckbox
@@ -115,6 +120,14 @@ const customMarker = `
   font-weight: 700;
   font-size: '12px';
   line-height: '17.38px';
+`;
+
+const LoadingMapContainer = styled.div`
+  width: 50%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const MapContainer = styled.div`
