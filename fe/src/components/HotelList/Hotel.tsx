@@ -28,10 +28,8 @@ function Hotel({ onClickEvent, info }: HotelProps) {
       <HotelInfo>
         <HotelInfoTop>
           <RocationAndTitle>
-            <Rocation>{name}</Rocation>
-            <Title onClick={onClickEvent}>
-              Lorem ipsum dolor sit amet conse ctetur adipisicing elit.
-            </Title>
+            <Rocation>충청남도 보령시</Rocation>
+            <Title onClick={onClickEvent}>{name}</Title>
             <span className="maximum_people">최대 인원 {maxPeople}명</span>
           </RocationAndTitle>
           <Checkbox icon={<Heart />} checkedIcon={<FillHeart />} style={{ padding: 0 }} />
