@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://csq-alb-313771881.ap-northeast-2.elb.amazonaws.com")
 @RequiredArgsConstructor
 @RequestMapping("/accommodations")
 public class AccommodationController {
