@@ -30,6 +30,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Docker Environmet Variable file
+        run:
+          echo -e "REACT_APP_MAP_API_KEY=${{secrets.REACT_APP_MAP_API_KEY}}\nREACT_APP_SERVER_URL=${{secrets.REACT_APP_SERVER_URL}}" > ./.env
+        working-directory: ${{ env.WORKING_DIR }}
+
       - name: Run "npm ci"
         run: npm ci
         working-directory: ${{ env.WORKING_DIR }}
@@ -37,12 +42,7 @@ jobs:
       - name: Run "npm run build --if-present"
         run: CI=false npm run build
         working-directory: ${{ env.WORKING_DIR }}
-
-      - name: Docker Environmet Variable file
-        run:
-          echo -e "REACT_APP_MAP_API_KEY=${{secrets.REACT_APP_MAP_API_KEY}}\nREACT_APP_SERVER_URL=${{secrets.REACT_APP_SERVER_URL}}" > ./.env
-        working-directory: ${{ env.WORKING_DIR }}
-
+        
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
