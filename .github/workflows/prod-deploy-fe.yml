@@ -40,7 +40,7 @@ jobs:
 
       - name: Docker Environmet Variable file
         run:
-          echo -e "REACT_APP_MAP_API_KEY=${{secrets.REACT_APP_MAP_API_KEY}}\nREACT_APP_SERVER_URL=${{secrets.REACT_APP_SERVER_URL}}" > ./env
+          echo -e "REACT_APP_MAP_API_KEY=${{secrets.REACT_APP_MAP_API_KEY}}\nREACT_APP_SERVER_URL=${{secrets.REACT_APP_SERVER_URL}}" > ./.env
         working-directory: ${{ env.WORKING_DIR }}
 
       - name: Set up Docker Buildx
@@ -64,7 +64,7 @@ jobs:
 
       # $GITHUB_SHA는 현재 workflow를 실행시키는 커밋의 해쉬값
       - name: Make zip file
-        run: zip -r ./$GITHUB_SHA.zip ./scripts ./appspec.yml ./env
+        run: zip -r ./$GITHUB_SHA.zip ./scripts ./appspec.yml ./.env
         shell: bash
         working-directory: ${{env.WORKING_DIR}}
 
