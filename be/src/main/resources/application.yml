@@ -12,6 +12,14 @@ spring:
       dev-mysql: "dev-mysql, local-log"
       deploy-mysql: "deploy-mysql, deploy-log"
 ---
+# profile group
+spring:
+  profiles:
+    group:
+      dev-h2: "dev-h2, local-log"
+      dev-mysql: "dev-mysql, local-log"
+      deploy-mysql: "deploy-mysql, deploy-log"
+---
 # dev-h2
 spring:
   config:
@@ -90,7 +98,6 @@ app:
   auth:
     accessTokenExpireTime: 900000 # 15분
     refreshTokenExpireTime: 604800000 # 7일
-
 ---
 # log-group
 spring:
